@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
+using System.Dynamic;
 
 namespace FarmaticaCore.DAL.Repositories
 {
@@ -22,6 +23,37 @@ namespace FarmaticaCore.DAL.Repositories
         }
 
         protected DbContext Context { get;}
+
+        /// <summary>
+        /// Method to retrieve all elements from table
+        /// </summary>
+        /// <returns>List of TEntity items</returns>
+        public abstract IEnumerable<TEntity> GetAll();
+
+        /// <summary>
+        /// Insert new TEntity into repository
+        /// </summary>
+        /// <param name="entity"> Entity to insert </param>
+        public abstract void Create(TEntity entity);
+
+        /// <summary>
+        /// Get all entities that contains the given id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>List of found entities</returns>
+        public abstract IEnumerable<TEntity> GetById(object id);
+
+        /// <summary>
+        /// Updates existing entity 
+        /// </summary>
+        /// <param name="entity"></param>
+        public abstract void Update(TEntity entity);
+
+        /// <summary>
+        /// Deletes entity by its id
+        /// </summary>
+        /// <param name="id"></param>
+        public abstract void DeleteById(object id);
 
 
         protected IEnumerable<TEntity> ToList(IDbCommand command)
