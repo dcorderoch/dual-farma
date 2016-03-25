@@ -4,7 +4,7 @@ using FarmaticaCore.DAL.Repositories;
 
 namespace FarmaticaCore.Test
 {
-    class Program
+    class UserTesting
     {
         static void Main(string[] args)
         {
