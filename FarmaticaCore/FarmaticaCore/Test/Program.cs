@@ -12,9 +12,13 @@ namespace FarmaticaCore.Test
             var factory = new DbConnectionFactory("local");
             var context = new DbContext(factory);
 
+            //creates temporal unit of work to play with
             using (var uow = context.CreateUnitOfWork())
             {
+                //initializing new user repository to commit CRUD operations
                 var userRepo = new UserRepository(context);
+
+                //Creating few new users to insert into database
                 var newUser1 = new User()
                 {
                     Name = "Manuel",
@@ -56,11 +60,29 @@ namespace FarmaticaCore.Test
                     Role = 2
                 };
 
+                //inserting into repository
                 userRepo.Create(newUser1);
                 userRepo.Create(newUser2);
                 userRepo.Create(newUser3);
                 userRepo.Create(newUser4);
 
+                //deleting previusly created user
+                userRepo.DeleteById("david");
+                //retrieving some users
+                var allusers = userRepo.GetAll();
+                var retrieveduser = userRepo.GetById("majesco");
+                //updating an existing user
+                userRepo.Update(new User()
+                {
+                    Name = "Manueleditado",
+                    IdUsuario = "manzumbado",
+                    Password = "aa",
+                    LastName1 = "Zumbado",
+                    LastName2 = "Corrales",
+                    Email = "manzumbado@itcr.ac.cr",
+                    Role = 2
+                });
+                //saving changes to the database
                 uow.SaveChanges();
             }
         }
