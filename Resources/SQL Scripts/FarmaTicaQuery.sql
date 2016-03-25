@@ -37,7 +37,7 @@ GO
 CREATE TABLE Usuario
 	(
 	ID_Usuario nvarchar(20) NOT NULL,
-	Pass nvarchar(10) NOT NULL,
+	Pass nvarchar(30) NOT NULL,
 	Nombre nvarchar(30) NOT NULL,
 	PrimerApellido nvarchar(50) NOT NULL,
 	SegundoApellido nvarchar (50),
@@ -276,4 +276,8 @@ ALTER TABLE Medicamento
 	ADD CONSTRAINT FK_Sucursal_Origen
 		FOREIGN KEY (Sucursal_Origen)
 			REFERENCES Sucursal(ID_Sucursal)
-	 				
+
+-- Modifies the allowed password length in the Pass column from User table.
+GO
+ALTER TABLE Usuario 
+	ALTER COLUMN Pass nvarchar(30) NOT NULL	 				
