@@ -4,9 +4,9 @@ using FarmaticaCore.DAL.Repositories;
 
 namespace FarmaticaCore.Test
 {
-    class UserTesting
+    static class UserTesting
     {
-        static void Main(string[] args)
+        public static void test()
         {
 
             var factory = new DbConnectionFactory("local");
@@ -27,7 +27,7 @@ namespace FarmaticaCore.Test
                     LastName1 = "Zumbado",
                     LastName2 = "Corrales",
                     Email = "manzumbado@itcr.ac.cr",
-                    Role = 1
+                    RoleId = 1
                 };
                 var newUser2 = new User()
                 {
@@ -37,7 +37,7 @@ namespace FarmaticaCore.Test
                     LastName1 = "Umana",
                     LastName2 = "Ortega",
                     Email = "kevuo@itcr.ac.cr",
-                    Role = 1
+                    RoleId = 1
                 };
                 var newUser3 = new User()
                 {
@@ -47,7 +47,7 @@ namespace FarmaticaCore.Test
                     LastName1 = "Guerrero",
                     LastName2 = "Morales",
                     Email = "eldavid@itcr.ac.cr",
-                    Role = 2
+                    RoleId = 2
                 };
                 var newUser4 = new User()
                 {
@@ -57,7 +57,7 @@ namespace FarmaticaCore.Test
                     LastName1 = "Perez",
                     LastName2 = "Gonzalez",
                     Email = "majesco@itcr.ac.cr",
-                    Role = 2
+                    RoleId = 2
                 };
 
                 //inserting into repository
@@ -80,7 +80,7 @@ namespace FarmaticaCore.Test
                     LastName1 = "Zumbado",
                     LastName2 = "Corrales",
                     Email = "manzumbado@itcr.ac.cr",
-                    Role = 2
+                    RoleId = 2
                 });
                 //saving changes to the database
                 uow.SaveChanges();
