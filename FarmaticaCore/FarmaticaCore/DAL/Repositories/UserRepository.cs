@@ -27,7 +27,7 @@ namespace FarmaticaCore.DAL.Repositories
             using (var command = Context.CreateDbCommand())
             {
                 var userProps = new object[]
-                {user.IdUsuario, user.Password, user.Name, user.LastName1, user.LastName2, user.Email, user.Role};
+                {user.IdUsuario, user.Password, user.Name, user.LastName1, user.LastName2, user.Email, user.RoleId};
                 command.CommandText = @"INSERT INTO Usuario VALUES(@userId, @pass, @name, @lastName1, @lastName2, @email, @role)";
                 var parameterNames = new string[] {"@userId", "@pass", "@name", "@lastName1", "@lastName2", "@email", "@role" };
                 for (var i = 0; i < userProps.Length; i++)
@@ -83,7 +83,7 @@ namespace FarmaticaCore.DAL.Repositories
             using (var command = Context.CreateDbCommand())
             {
                 var userProps = new object[]
-                { user.Password, user.Name, user.LastName1, user.LastName2, user.Email, user.Role};
+                { user.Password, user.Name, user.LastName1, user.LastName2, user.Email, user.RoleId};
                 command.CommandText = @"UPDATE Usuario SET Pass= @pass, Nombre= @name, PrimerApellido= @lastName1, SegundoApellido= @lastName2, Email= @email, Rol_Usuario= @role WHERE ID_Usuario=@userId";
                 var parameterNames = new string[] {"@pass", "@name", "@lastName1", "@lastName2", "@email", "@role" };
                 for (var i = 0; i < userProps.Length; i++)
