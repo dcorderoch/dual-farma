@@ -126,7 +126,7 @@ namespace FarmaticaCore.DAL.Repositories
             entity.LastName1 = (string)record["PrimerApellido"];
             entity.LastName2 = (string)record["SegundoApellido"];
             entity.Email = (string)record["Email"];
-            entity.Role = (int)record["Rol_Usuario"];
+            entity.RoleId = (int)record["Rol_Usuario"];
         }
     }
 }
