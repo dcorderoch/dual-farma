@@ -6,8 +6,9 @@ namespace FarmaticaCore.Test
     {
         static void Main(string[] args)
         {
-            RoleTesting.test();
-            UserTesting.test();
+            //RoleTesting.test();
+           // UserTesting.test();
+            ClientTesting.test();
             
         }
     }
