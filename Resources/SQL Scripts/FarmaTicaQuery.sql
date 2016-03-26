@@ -63,7 +63,7 @@ CREATE TABLE Cliente
  SegundoApellido nvarchar (50),
  CantidadMultas Integer,
  LugarResidencia nvarchar(50),
- Historial nvarchar(300),
+ Historial nvarchar(max),
  FechaNacimiento DATE,
  NumeroTelefono nvarchar(25)
 )
@@ -90,12 +90,11 @@ CREATE TABLE Pedido
 	ID_Medicamento uniqueidentifier NOT NULL,
 	Sucursal_Recojo Integer NOT NULL,
 	Codigo_Factura uniqueidentifier NOT NULL, 
-	Prescripcion Bit,
+	Prescripcion Bit NOT NULL,
 	Estado Integer NOT NULL,
 	Prioridad nchar(9) NOT NULL,
 	TelefonoPreferido nvarchar(20),
-	FechaRecojo DATE,
-	HoraRecojo TIME	
+	FechaRecojo DATETIME
 	)	
 
 --Creates table Medicine.
@@ -104,7 +103,7 @@ CREATE TABLE Medicamento
 	(
 	ID_Medicamento uniqueidentifier NOT NULL,
 	Nombre nvarchar(50) NOT NULL,
-	Prescripcion Bit,
+	Prescripcion Bit NOT NULL,
 	Precio decimal(10,2) NOT NULL,
 	Sucursal_Origen Integer NOT NULL,
 	CasaFarmaceutica nvarchar(30),
@@ -281,3 +280,28 @@ ALTER TABLE Medicamento
 GO
 ALTER TABLE Usuario 
 	ALTER COLUMN Pass nvarchar(30) NOT NULL	 				
+
+-- Modifies the record max value from Client table.
+GO
+ALTER TABLE Cliente
+	ALTER COLUMN Historial nvarchar(max)
+
+-- Deletes column HoraRecojo from Order table.
+GO
+ALTER TABLE Pedido
+	DROP COLUMN HoraRecojo
+
+-- Sets column FechaRecojo as DATETIME instead of DATE in Order table.
+GO
+ALTER TABLE Pedido
+	ALTER COLUMN FechaRecojo DATETIME
+
+-- Sets Prescripcion column as NOT NULL in table Pedido.
+GO
+ALTER TABLE Pedido
+	ALTER COLUMN Prescripcion Bit NOT NULL
+
+-- Sets Prescripcion column as NOT NULL in table Medicamento.
+GO
+ALTER TABLE Medicamento
+	ALTER COLUMN Prescripcion Bit NOT NULL
