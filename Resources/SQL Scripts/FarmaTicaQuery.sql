@@ -86,7 +86,7 @@ CREATE TABLE Pedido
 	(
 	NumeroPedido uniqueidentifier NOT NULL,
 	ID_Cliente char(9) NOT NULL,
-	ID_Receta Integer NOT NULL,
+	ID_Receta Integer,
 	ID_Medicamento uniqueidentifier NOT NULL,
 	Sucursal_Recojo Integer NOT NULL,
 	Codigo_Factura uniqueidentifier NOT NULL, 
@@ -276,6 +276,8 @@ ALTER TABLE Medicamento
 		FOREIGN KEY (Sucursal_Origen)
 			REFERENCES Sucursal(ID_Sucursal)
 
+			--********************* Correcting Mistakes from here on. Not to take into account in database creation for the first time***************************
+
 -- Modifies the allowed password length in the Pass column from User table.
 GO
 ALTER TABLE Usuario 
@@ -305,3 +307,8 @@ ALTER TABLE Pedido
 GO
 ALTER TABLE Medicamento
 	ALTER COLUMN Prescripcion Bit NOT NULL
+
+-- Removes Not Null constraint from ID_Receta in table Pedido.
+GO
+ALTER TABLE Pedido
+	ALTER COLUMN ID_Receta Integer
