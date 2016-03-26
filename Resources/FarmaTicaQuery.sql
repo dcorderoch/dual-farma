@@ -33,6 +33,7 @@ GO
 --******************************************************************************************************************************************
 
 --Creates table User. 
+
 GO
 CREATE TABLE Usuario
 	(
@@ -129,9 +130,6 @@ CREATE TABLE Receta
 	Imagen Binary,
 	)
 GO
-ALTER TABLE Receta
-	DROP CONSTRAINT FK_ID_Medicamento_Receta
-
 --Creates table Branch office.
 GO
 CREATE TABLE Sucursal
@@ -190,12 +188,6 @@ ALTER TABLE Sucursal
 	ADD CONSTRAINT PK_Sucursal
 		PRIMARY KEY (ID_Sucursal)
 
--- Defines Bill primary key.
-GO
-ALTER TABLE Factura
-	ADD CONSTRAINT PK_Factura
-		PRIMARY KEY (ID_Factura)
-
 --Defines Medicamentos_Por_Receta primary keys.
 GO
 ALTER TABLE Medicamentos_Por_Receta
@@ -250,12 +242,7 @@ ALTER TABLE Pedido
 		FOREIGN KEY (Sucursal_Recojo)
 			REFERENCES Sucursal(ID_Sucursal)
 
--- Sets a relationship between columns Codigo_Factura in Order table and ID_Factura in Bill table by creating a Foreign Key.
 GO
-ALTER TABLE Pedido
-	ADD CONSTRAINT FK_Codigo_Factura
-		FOREIGN KEY (Codigo_Factura)
-			REFERENCES Factura(ID_Factura)
 
 -- Sets a relationship between columns Doctor in Prescription table and ID_Doctor in Doctor table by creating a Foreign Key.	
 GO
@@ -264,12 +251,6 @@ ALTER TABLE Receta
 		FOREIGN KEY (Doctor)
 			REFERENCES Doctor(ID_Doctor)
 
--- Sets a relationship between columns Medicine in Prescription table and ID_Medicine in Medicine table by creating a Foreign Key.	
-GO
-ALTER TABLE Receta
-	ADD CONSTRAINT FK_ID_Medicamento_Receta
-		FOREIGN KEY (Medicamento)
-			REFERENCES Medicamento(ID_Medicamento)
 
 -- Sets a relationship between columns Sucursal_Origen in Medicine table and ID_Sucursal in Branch office table by creating a Foreign Key.	
 GO
@@ -277,6 +258,7 @@ ALTER TABLE Medicamento
 	ADD CONSTRAINT FK_Sucursal_Origen
 		FOREIGN KEY (Sucursal_Origen)
 			REFERENCES Sucursal(ID_Sucursal)
+
 
 			--********************* Correcting Mistakes from here on. Not to take into account in database creation for the first time***************************
 
