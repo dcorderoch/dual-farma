@@ -104,11 +104,11 @@ CREATE TABLE Medicamento
 	ID_Medicamento uniqueidentifier NOT NULL,
 	Nombre nvarchar(50) NOT NULL,
 	Prescripcion Bit NOT NULL,
-	Precio decimal(10,2) NOT NULL,
+	Precio int NOT NULL,
 	Sucursal_Origen Integer NOT NULL,
 	CasaFarmaceutica nvarchar(30),
 	CantidadDisponible Integer NOT NULL,
-	CantidadVentas Integer NOT NULL,
+	CantidadVentas Integer NOT NULL
 	)	
 
 --Creates table Prescription.
@@ -118,7 +118,7 @@ CREATE TABLE Receta
 	NumeroReceta Integer NOT NULL,
 	Doctor nvarchar(15) NOT NULL,
 	Medicamento uniqueidentifier NOT NULL,
-	Imagen Binary,
+	Imagen VARBINARY
 	)
 
 --Creates table Branch office.
@@ -135,7 +135,7 @@ GO
 CREATE TABLE Factura
 	(
 	ID_Factura uniqueidentifier NOT NULL,
-	Imagen Binary,
+	Imagen VARBINARY
 	)	
 
 --Creates table Order Status.
