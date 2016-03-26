@@ -89,7 +89,7 @@ CREATE TABLE Pedido
 	ID_Receta Integer,
 	ID_Medicamento uniqueidentifier NOT NULL,
 	Sucursal_Recojo Integer NOT NULL,
-	Codigo_Factura uniqueidentifier NOT NULL, 
+	Factura VARBINARY(MAX) NOT NULL, 
 	Prescripcion Bit NOT NULL,
 	Estado Integer NOT NULL,
 	Prioridad nchar(9) NOT NULL,
@@ -131,9 +131,7 @@ CREATE TABLE Receta
 GO
 ALTER TABLE Receta
 	DROP CONSTRAINT FK_ID_Medicamento_Receta
-GO
-ALTER TABLE Receta
-	DROP COLUMN Medicamento
+
 --Creates table Branch office.
 GO
 CREATE TABLE Sucursal
@@ -143,14 +141,7 @@ CREATE TABLE Sucursal
 	Telefono nvarchar(20) NOT NULL,
 	Ubicacion nvarchar(100)
 	)	
---Creates table Bill.
 GO
-CREATE TABLE Factura
-	(
-	ID_Factura uniqueidentifier NOT NULL,
-	Imagen Binary,
-	)	
-
 -- Defines User primary key.
 GO
 ALTER TABLE Usuario
@@ -289,6 +280,7 @@ ALTER TABLE Medicamento
 
 			--********************* Correcting Mistakes from here on. Not to take into account in database creation for the first time***************************
 
+/*
 -- Modifies the allowed password length in the Pass column from User table.
 GO
 ALTER TABLE Usuario 
@@ -332,3 +324,9 @@ ALTER TABLE Pedido
 --Drops Estado_Pedido table. 
 GO
 DROP TABLE Estado_Pedido
+
+GO
+ALTER TABLE Receta
+	DROP COLUMN Medicamento
+GO
+*/
