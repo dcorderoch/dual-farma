@@ -111,6 +111,14 @@ CREATE TABLE Medicamento
 	CantidadVentas Integer NOT NULL,
 	)	
 
+-- Creates table Medicamentos_Por_Pedido
+GO
+CREATE TABLE Medicamentos_Por_Pedido
+	(
+	NumeroPedido uniqueidentifier NOT NULL,
+	ID_Medicamento uniqueidentifier NOT NULL
+	)
+
 --Creates table Prescription.
 GO
 CREATE TABLE Receta
@@ -137,14 +145,6 @@ CREATE TABLE Factura
 	ID_Factura uniqueidentifier NOT NULL,
 	Imagen Binary,
 	)	
-
---Creates table Order Status.
-GO
-CREATE TABLE Estado_Pedido
-	(
-	ID_Estado Integer NOT NULL,
-	Estado nvarchar(20)
-	)
 
 -- Defines User primary key.
 GO
@@ -200,11 +200,24 @@ ALTER TABLE Factura
 	ADD CONSTRAINT PK_Factura
 		PRIMARY KEY (ID_Factura)
 
--- Defines Order status primary key.
+--Defines Medicamentos_Por_Pedido primary keys.
 GO
-ALTER TABLE Estado_Pedido
-	ADD CONSTRAINT PK_Estado_Pedido
-		PRIMARY KEY (ID_Estado)
+ALTER TABLE Medicamentos_Por_Pedido
+	ADD CONSTRAINT PK_Numero_Pedido_ID_Medicamento
+		PRIMARY KEY (NumeroPedido, ID_Medicamento)
+
+--Defines Medicamentos_Por_Pedido foreign keys.
+GO
+ALTER TABLE Medicamentos_Por_Pedido
+	ADD CONSTRAINT FK_Numero_Pedido
+		FOREIGN KEY (NumeroPedido)
+			REFERENCES Pedido(NumeroPedido)
+
+GO
+ALTER TABLE Medicamentos_Por_Pedido
+	ADD CONSTRAINT FK_ID_Medicamento_MPP
+		FOREIGN KEY (ID_Medicamento)
+			REFERENCES Medicamento(ID_Medicamento)
 
 -- Sets a relationship between columns Rol_Usuario in User table and ID_Rol in Rol table by creating a Foreign Key.
 GO
@@ -233,13 +246,6 @@ ALTER TABLE Pedido
 	ADD CONSTRAINT FK_ID_Medicamento
 		FOREIGN KEY (ID_Medicamento)
 			REFERENCES Medicamento(ID_Medicamento) 
-
--- Sets a relationship between columns Estado in Order table and ID_Estado in Order Status table by creating a Foreign Key.
-GO
-ALTER TABLE Pedido
-	ADD CONSTRAINT FK_Estado_Pedido
-		FOREIGN KEY (Estado)
-			REFERENCES Estado_Pedido(ID_Estado)
 
 -- Sets a relationship between columns Sucursal_Recojo in Order table and ID_Sucursal in Branch office table by creating a Foreign Key.
 GO
@@ -312,3 +318,12 @@ ALTER TABLE Medicamento
 GO
 ALTER TABLE Pedido
 	ALTER COLUMN ID_Receta Integer
+
+--Removes foreign key from Order table.
+GO
+ALTER TABLE Pedido
+	DROP CONSTRAINT FK_Estado_Pedido
+
+--Drops Estado_Pedido table. 
+GO
+DROP TABLE Estado_Pedido
