@@ -111,13 +111,14 @@ CREATE TABLE Medicamento
 	CantidadVentas Integer NOT NULL,
 	)	
 
--- Creates table Medicamentos_Por_Pedido
+-- Creates table Medicamentos_Por_Receta
 GO
-CREATE TABLE Medicamentos_Por_Pedido
+CREATE TABLE Medicamentos_Por_Receta
 	(
-	NumeroPedido uniqueidentifier NOT NULL,
+	NumeroReceta Integer NOT NULL,
 	ID_Medicamento uniqueidentifier NOT NULL
 	)
+
 
 --Creates table Prescription.
 GO
@@ -125,10 +126,14 @@ CREATE TABLE Receta
 	(
 	NumeroReceta Integer NOT NULL,
 	Doctor nvarchar(15) NOT NULL,
-	Medicamento uniqueidentifier NOT NULL,
 	Imagen Binary,
 	)
-
+GO
+ALTER TABLE Receta
+	DROP CONSTRAINT FK_ID_Medicamento_Receta
+GO
+ALTER TABLE Receta
+	DROP COLUMN Medicamento
 --Creates table Branch office.
 GO
 CREATE TABLE Sucursal
@@ -200,22 +205,22 @@ ALTER TABLE Factura
 	ADD CONSTRAINT PK_Factura
 		PRIMARY KEY (ID_Factura)
 
---Defines Medicamentos_Por_Pedido primary keys.
+--Defines Medicamentos_Por_Receta primary keys.
 GO
-ALTER TABLE Medicamentos_Por_Pedido
-	ADD CONSTRAINT PK_Numero_Pedido_ID_Medicamento
-		PRIMARY KEY (NumeroPedido, ID_Medicamento)
+ALTER TABLE Medicamentos_Por_Receta
+	ADD CONSTRAINT PK_Numero_Receta_ID_Medicamento
+		PRIMARY KEY (NumeroReceta, ID_Medicamento)
 
---Defines Medicamentos_Por_Pedido foreign keys.
+--Defines Medicamentos_Por_Receta foreign keys.
 GO
-ALTER TABLE Medicamentos_Por_Pedido
-	ADD CONSTRAINT FK_Numero_Pedido
-		FOREIGN KEY (NumeroPedido)
-			REFERENCES Pedido(NumeroPedido)
+ALTER TABLE Medicamentos_Por_Receta
+	ADD CONSTRAINT FK_Numero_Receta_MPR
+		FOREIGN KEY (NumeroReceta)
+			REFERENCES Receta(NumeroReceta)
 
 GO
-ALTER TABLE Medicamentos_Por_Pedido
-	ADD CONSTRAINT FK_ID_Medicamento_MPP
+ALTER TABLE Medicamentos_Por_Receta
+	ADD CONSTRAINT FK_ID_Medicamento_MPR
 		FOREIGN KEY (ID_Medicamento)
 			REFERENCES Medicamento(ID_Medicamento)
 
