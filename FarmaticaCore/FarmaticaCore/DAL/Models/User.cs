@@ -11,6 +11,6 @@
         public string LastName1 { get; set; }
         public string LastName2 { get; set; }
         public string Email { get; set; }
-        public int Role { get; set; }
+        public int RoleId { get; set; }
     }
 }

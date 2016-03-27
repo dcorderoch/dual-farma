@@ -33,6 +33,7 @@ GO
 --******************************************************************************************************************************************
 
 --Creates table User. 
+
 GO
 CREATE TABLE Usuario
 	(
@@ -63,7 +64,7 @@ CREATE TABLE Cliente
  SegundoApellido nvarchar (50),
  CantidadMultas Integer,
  LugarResidencia nvarchar(50),
- Historial nvarchar(300),
+ Historial nvarchar(max),
  FechaNacimiento DATE,
  NumeroTelefono nvarchar(25)
 )
@@ -86,16 +87,15 @@ CREATE TABLE Pedido
 	(
 	NumeroPedido uniqueidentifier NOT NULL,
 	ID_Cliente char(9) NOT NULL,
-	ID_Receta Integer NOT NULL,
+	ID_Receta Integer,
 	ID_Medicamento uniqueidentifier NOT NULL,
 	Sucursal_Recojo Integer NOT NULL,
-	Codigo_Factura uniqueidentifier NOT NULL, 
-	Prescripcion Bit,
+	Factura VARBINARY(MAX) NOT NULL, 
+	Prescripcion Bit NOT NULL,
 	Estado Integer NOT NULL,
 	Prioridad nchar(9) NOT NULL,
 	TelefonoPreferido nvarchar(20),
-	FechaRecojo DATE,
-	HoraRecojo TIME	
+	FechaRecojo DATETIME
 	)	
 
 --Creates table Medicine.
@@ -104,7 +104,7 @@ CREATE TABLE Medicamento
 	(
 	ID_Medicamento uniqueidentifier NOT NULL,
 	Nombre nvarchar(50) NOT NULL,
-	Prescripcion Bit,
+	Prescripcion Bit NOT NULL,
 	Precio decimal(10,2) NOT NULL,
 	Sucursal_Origen Integer NOT NULL,
 	CasaFarmaceutica nvarchar(30),
@@ -112,16 +112,24 @@ CREATE TABLE Medicamento
 	CantidadVentas Integer NOT NULL,
 	)	
 
+-- Creates table Medicamentos_Por_Receta
+GO
+CREATE TABLE Medicamentos_Por_Receta
+	(
+	NumeroReceta Integer NOT NULL,
+	ID_Medicamento uniqueidentifier NOT NULL
+	)
+
+
 --Creates table Prescription.
 GO
 CREATE TABLE Receta
 	(
 	NumeroReceta Integer NOT NULL,
 	Doctor nvarchar(15) NOT NULL,
-	Medicamento uniqueidentifier NOT NULL,
 	Imagen Binary,
 	)
-
+GO
 --Creates table Branch office.
 GO
 CREATE TABLE Sucursal
@@ -131,22 +139,7 @@ CREATE TABLE Sucursal
 	Telefono nvarchar(20) NOT NULL,
 	Ubicacion nvarchar(100)
 	)	
---Creates table Bill.
 GO
-CREATE TABLE Factura
-	(
-	ID_Factura uniqueidentifier NOT NULL,
-	Imagen Binary,
-	)	
-
---Creates table Order Status.
-GO
-CREATE TABLE Estado_Pedido
-	(
-	ID_Estado Integer NOT NULL,
-	Estado nvarchar(20)
-	)
-
 -- Defines User primary key.
 GO
 ALTER TABLE Usuario
@@ -195,17 +188,24 @@ ALTER TABLE Sucursal
 	ADD CONSTRAINT PK_Sucursal
 		PRIMARY KEY (ID_Sucursal)
 
--- Defines Bill primary key.
+--Defines Medicamentos_Por_Receta primary keys.
 GO
-ALTER TABLE Factura
-	ADD CONSTRAINT PK_Factura
-		PRIMARY KEY (ID_Factura)
+ALTER TABLE Medicamentos_Por_Receta
+	ADD CONSTRAINT PK_Numero_Receta_ID_Medicamento
+		PRIMARY KEY (NumeroReceta, ID_Medicamento)
 
--- Defines Order status primary key.
+--Defines Medicamentos_Por_Receta foreign keys.
 GO
-ALTER TABLE Estado_Pedido
-	ADD CONSTRAINT PK_Estado_Pedido
-		PRIMARY KEY (ID_Estado)
+ALTER TABLE Medicamentos_Por_Receta
+	ADD CONSTRAINT FK_Numero_Receta_MPR
+		FOREIGN KEY (NumeroReceta)
+			REFERENCES Receta(NumeroReceta)
+
+GO
+ALTER TABLE Medicamentos_Por_Receta
+	ADD CONSTRAINT FK_ID_Medicamento_MPR
+		FOREIGN KEY (ID_Medicamento)
+			REFERENCES Medicamento(ID_Medicamento)
 
 -- Sets a relationship between columns Rol_Usuario in User table and ID_Rol in Rol table by creating a Foreign Key.
 GO
@@ -235,13 +235,6 @@ ALTER TABLE Pedido
 		FOREIGN KEY (ID_Medicamento)
 			REFERENCES Medicamento(ID_Medicamento) 
 
--- Sets a relationship between columns Estado in Order table and ID_Estado in Order Status table by creating a Foreign Key.
-GO
-ALTER TABLE Pedido
-	ADD CONSTRAINT FK_Estado_Pedido
-		FOREIGN KEY (Estado)
-			REFERENCES Estado_Pedido(ID_Estado)
-
 -- Sets a relationship between columns Sucursal_Recojo in Order table and ID_Sucursal in Branch office table by creating a Foreign Key.
 GO
 ALTER TABLE Pedido
@@ -249,12 +242,7 @@ ALTER TABLE Pedido
 		FOREIGN KEY (Sucursal_Recojo)
 			REFERENCES Sucursal(ID_Sucursal)
 
--- Sets a relationship between columns Codigo_Factura in Order table and ID_Factura in Bill table by creating a Foreign Key.
 GO
-ALTER TABLE Pedido
-	ADD CONSTRAINT FK_Codigo_Factura
-		FOREIGN KEY (Codigo_Factura)
-			REFERENCES Factura(ID_Factura)
 
 -- Sets a relationship between columns Doctor in Prescription table and ID_Doctor in Doctor table by creating a Foreign Key.	
 GO
@@ -263,12 +251,6 @@ ALTER TABLE Receta
 		FOREIGN KEY (Doctor)
 			REFERENCES Doctor(ID_Doctor)
 
--- Sets a relationship between columns Medicine in Prescription table and ID_Medicine in Medicine table by creating a Foreign Key.	
-GO
-ALTER TABLE Receta
-	ADD CONSTRAINT FK_ID_Medicamento_Receta
-		FOREIGN KEY (Medicamento)
-			REFERENCES Medicamento(ID_Medicamento)
 
 -- Sets a relationship between columns Sucursal_Origen in Medicine table and ID_Sucursal in Branch office table by creating a Foreign Key.	
 GO
@@ -277,7 +259,56 @@ ALTER TABLE Medicamento
 		FOREIGN KEY (Sucursal_Origen)
 			REFERENCES Sucursal(ID_Sucursal)
 
+
+			--********************* Correcting Mistakes from here on. Not to take into account in database creation for the first time***************************
+
+/*
 -- Modifies the allowed password length in the Pass column from User table.
 GO
 ALTER TABLE Usuario 
 	ALTER COLUMN Pass nvarchar(30) NOT NULL	 				
+
+-- Modifies the record max value from Client table.
+GO
+ALTER TABLE Cliente
+	ALTER COLUMN Historial nvarchar(max)
+
+-- Deletes column HoraRecojo from Order table.
+GO
+ALTER TABLE Pedido
+	DROP COLUMN HoraRecojo
+
+-- Sets column FechaRecojo as DATETIME instead of DATE in Order table.
+GO
+ALTER TABLE Pedido
+	ALTER COLUMN FechaRecojo DATETIME
+
+-- Sets Prescripcion column as NOT NULL in table Pedido.
+GO
+ALTER TABLE Pedido
+	ALTER COLUMN Prescripcion Bit NOT NULL
+
+-- Sets Prescripcion column as NOT NULL in table Medicamento.
+GO
+ALTER TABLE Medicamento
+	ALTER COLUMN Prescripcion Bit NOT NULL
+
+-- Removes Not Null constraint from ID_Receta in table Pedido.
+GO
+ALTER TABLE Pedido
+	ALTER COLUMN ID_Receta Integer
+
+--Removes foreign key from Order table.
+GO
+ALTER TABLE Pedido
+	DROP CONSTRAINT FK_Estado_Pedido
+
+--Drops Estado_Pedido table. 
+GO
+DROP TABLE Estado_Pedido
+
+GO
+ALTER TABLE Receta
+	DROP COLUMN Medicamento
+GO
+*/
