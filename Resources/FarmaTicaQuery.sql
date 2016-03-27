@@ -90,7 +90,7 @@ CREATE TABLE Pedido
 	ID_Cliente char(9) NOT NULL,
 	ID_Receta uniqueidentifier,
 	Sucursal_Recojo Integer NOT NULL,
-	Factura VARBINARY(MAX), 
+	ImagenFactura VARBINARY(MAX), 
 	Prescripcion Bit NOT NULL,
 	Estado Integer NOT NULL,
 	Prioridad nchar(9) NOT NULL,
