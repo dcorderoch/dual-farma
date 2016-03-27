@@ -7,10 +7,13 @@ namespace dual_farma.Business_Logic_Layer
 {
     public class Account_Manager
     {
-        private 
-    public Account_Manager()
-        {
+        private string userID;
+        private string password;
 
+        public Account_Manager(string userID, string password)
+        {
+            userID = this.userID;
+            password = this.password;
         }
     }
 }
