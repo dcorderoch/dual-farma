@@ -41,6 +41,7 @@ CREATE TABLE Usuario
 	Nombre nvarchar(30) NOT NULL,
 	PrimerApellido nvarchar(50) NOT NULL,
 	SegundoApellido nvarchar (50),
+	Compañia nvarchar(50),
 	Email nvarchar(50),
 	Rol_Usuario Integer NOT NULL 
 	)
@@ -332,3 +333,8 @@ ALTER TABLE Pedido
 --Drops Estado_Pedido table. 
 GO
 DROP TABLE Estado_Pedido
+
+--Adds a column Company to User table.
+GO
+ALTER TABLE Usuario
+	ADD Compañia nvarchar(50)
