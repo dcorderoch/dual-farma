@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="BLL\Account_Manager.cs" />
     <Compile Include="DAL\DbConnectionFactory.cs" />
     <Compile Include="DAL\DbContext.cs" />
     <Compile Include="DAL\IConnectionFactory.cs" />
