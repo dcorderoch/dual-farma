@@ -31,12 +31,5 @@ namespace dual_farma.Controllers
         {
             return 200 + pArg;
         }
-
-        [HttpPost]
-        [Route("api/complete/post/{pArg}")]
-        public int PostNumber([FromUri] int pArg)
-        {
-            return 200 + pArg;
-        }
     }
 }
