@@ -2,8 +2,6 @@
 using FarmaticaCore.DAL;
 using FarmaticaCore.DAL.Repositories;
 using System.Collections.Generic;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using FarmaticaCore.DAL.Models;
 
 namespace dual_farma.BLL
@@ -17,7 +15,6 @@ namespace dual_farma.BLL
         /// Class members which allow connecting to the Database.
         /// </summary>
         private DbConnectionFactory factory;
-
         private DbContext context;
 
         public Account_Manager()
@@ -68,21 +65,139 @@ namespace dual_farma.BLL
             }
         }
 
+        /// <summary>
+        /// Function that creates a new user.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns> Integer indicating whether the creation was successful.</returns>
         public int CreateUser(string[] user)
         {
             int response = 0;
             using (var uow = context.CreateUnitOfWork())
             {
                 var userRepo = new UserRepository(context);
-                var userList = (List<User>)userRepo.GetAll();
-                bool doesUserExist;
+                User newUser = new User();
                 string userId = user[0];
+                try
+                {
+                        newUser.IdUsuario = user[0];
+                        newUser.Password = user[1];
+                        newUser.Name = user[2];
+                        newUser.LastName1 = user[3];
+                        newUser.LastName2 = user[4];
+                        newUser.Email = user[5];
+                        //newUser.Company = user[6];
+                        newUser.RoleId = Convert.ToInt32(user[7]);
+                        userRepo.Create(newUser);
+                        uow.SaveChanges();
+                        response = Constants.USER_CREATED;
+                    
+                       }
+                catch (Exception)
+                {
+                    response = Constants.ALREADY_REGISTERED;
+                }
+                }
+            return response;
+        }
 
-
-
-
-
+        /// <summary>
+        /// Obtains all users from a specific company.
+        /// </summary>
+        /// <param name="company"></param>
+        /// <returns>List<User> that contains all the users of the specified column</returns>
+        public List<User> GetAllUsers(string company)
+        {
+            List<User> userList =new List<User>();
+            using (var uow = context.CreateUnitOfWork())
+            {
+                var userRepo = new UserRepository(context);
+                try
+                {
+                    //userList = (List<User>) userRepo.GetAll(company);
+                }
+                catch (Exception)
+                {
+                    userList = null;
+                }
             }
+            return userList;
+        }
+
+        /// <summary>
+        /// Updates given user if possible.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>Integer with the result of the update.</returns>
+        public int UpdateUser(string[] user)
+        {
+            var response = 0;
+            using (var uow = context.CreateUnitOfWork())
+            {
+                var userRepo = new UserRepository(context);
+                User newUser = new User();
+                try
+                {
+                    newUser.IdUsuario = user[0];
+                    newUser.Password = user[1];
+                    newUser.Name = user[2];
+                    newUser.LastName1 = user[3];
+                    newUser.LastName2 = user[4];
+                    newUser.Email = user[5];
+                    //newUser.Company = user[6];
+                    newUser.RoleId = Convert.ToInt32(user[7]);
+                    userRepo.Update(newUser);
+                    uow.SaveChanges();
+                    response = Constants.USER_UPDATED;
+                }
+                catch (Exception)
+                {
+                    response = Constants.USER_NOT_UPDATED;
+                }
+            }
+            return response;
+        }
+        /// <summary>
+        /// Deletes the given user.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>Integer indicating whether the deletion completed successfully.</returns>
+        public int DeleteUser(string userId)
+        {
+            int response = 0;
+            using (var uow = context.CreateUnitOfWork())
+            {
+                var userRepo = new UserRepository(context);
+                    try
+                    {
+                        userRepo.DeleteById(userId);
+                        uow.SaveChanges();
+                        response = Constants.USER_DELETED;
+                    }
+                    catch (Exception)
+                    {
+                        response = Constants.USER_NOT_DELETED;
+                    }
+                
+            }
+            return response;
+        }
+
+        /// <summary>
+        /// Auxiliary function that finds out the existence of a User.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>Boolean indicating the existence of the given user.</returns>
+        private bool DoesUserExist(string userId)
+        {
+            bool exists;
+            using (var uow = context.CreateUnitOfWork())
+            {
+                var userRepo = new UserRepository(context);
+                var userList = (List<User>)userRepo.GetById(userId);
+                exists = userList.Count != 0;
+            }
+            return exists;
         }
 
         /// <summary>
@@ -94,23 +209,22 @@ namespace dual_farma.BLL
         private int VerifyUser(string userID, string password)
         {
             var result = 0;
-
             using (var uow = context.CreateUnitOfWork())
             {
-                var userRepo = new UserRepository(context);
-                var userList = (List<User>) userRepo.GetById(userID);
 
-                if (userList.Count == 0)
+            var doesExist = DoesUserExist(userID);
+                if (!doesExist)
                 {
                     result = Constants.INVALID_USER;
                 }
                 else
                 {
+                    var userRepo =new UserRepository(context);
+                    var userList = (List<User>)userRepo.GetById(userID);
                     result = userList[0].Password != password ? Constants.INVALID_PASSWORD : Constants.SUCCESSFUL_LOGIN;
                 }
             }
             return result;
         }
-    
       }
 }
