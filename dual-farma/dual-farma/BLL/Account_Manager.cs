@@ -56,7 +56,8 @@ namespace dual_farma.BLL
                         response[3] = user.LastName1;
                         response[4] = user.LastName2;
                         response[5] = user.Email;
-                        response[6] = user.RoleId.ToString();
+                      //response[6] = user.Company;
+                        response[7] = user.RoleId.ToString();
                         return response;
                     default:
                         response[0] = Constants.INVALID_USER.ToString();
