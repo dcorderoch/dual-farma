@@ -275,3 +275,25 @@ ALTER TABLE Medicamento
 	ADD CONSTRAINT FK_Sucursal_Origen
 		FOREIGN KEY (Sucursal_Origen)
 			REFERENCES Sucursal(ID_Sucursal)
+
+-- Insertion of Roles
+
+INSERT INTO Rol
+VALUES (1, 'Administrador');
+
+INSERT INTO Rol
+VALUES (2, 'Dependiente');
+
+-- Insertion of Branch offices.
+INSERT INTO Sucursal
+VALUES (1, 'Farmatica Medio Queso', '27849596', 'Los Chiles'),
+	   (2, 'Phischel Manuel Antonio', '26709596', 'Quepos'),
+	   (3, 'Farmatica Cariari', '25325960', 'Pococi'),
+	   (4, 'Phischel San Antonio', '22395960', 'Belen'),
+	   (5, 'Phischel La Aurora', '22934364', 'Heredia'),
+	   (6, 'Farmatica Chomes', '22934364', 'Puntarenas'),
+	   (7, 'Farmatica Miami', '1998293451', 'Florida'),
+	   (8, 'Farmatica Escazu', '1998293451', 'San Jose')
+	   ;
+
+
