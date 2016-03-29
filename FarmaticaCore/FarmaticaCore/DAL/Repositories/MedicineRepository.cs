@@ -81,7 +81,7 @@ namespace FarmaticaCore.DAL.Repositories
         {
             using (var command = Context.CreateDbCommand())
             {
-                command.CommandText = @"SELECT * FROM Medicamento WHERE ID_Medicamento = @medicineId ORDER BY CantidadVentas DESC";
+                command.CommandText = @"SELECT * FROM Medicamento ORDER BY CantidadVentas DESC";
                 var newParameter = command.CreateParameter();
                 var result = ToList(command);
                 return result;
@@ -112,7 +112,7 @@ namespace FarmaticaCore.DAL.Repositories
         /// <returns></returns>
         public int GetAmmountSoldByCompany(string company)
         {
-            var ammount = 0;
+            int ammount = 0;
             using (var command = Context.CreateDbCommand())
             {
                 command.CommandText = @"SELECT SUM(CantidadVentas) AS Ventas FROM Medicamento WHERE CasaFarmaceutica=@casaFarma";
@@ -124,7 +124,9 @@ namespace FarmaticaCore.DAL.Repositories
                 {
                     while (reader.Read())
                     {
-                        ammount = (int) reader["Ventas"];
+                        var result = reader["Ventas"];
+                        ammount = result == DBNull.Value ? 0 : (int)result;
+                        
                     }
                 }
             }
@@ -143,7 +145,7 @@ namespace FarmaticaCore.DAL.Repositories
                  {medicine.Name, medicine.RequiresPrescription, medicine.Price, medicine.OriginOffice, medicine.House,
                  medicine.Stock, medicine.NumberSold};
                 command.CommandText = @"UPDATE Medicamento SET Nombre=@name, Prescripcion=@reqPresc, Precio=@price, Sucursal_Origen=@originOffice, "+
-                                       "CasaFarmaceutica=@house, CantidadDisponible=@stock, CantidadVentas=@numberSold";
+                                       "CasaFarmaceutica=@house, CantidadDisponible=@stock, CantidadVentas=@numberSold WHERE ID_Medicamento=@medicineId";
                 var parameterNames = new string[] { "@name", "@reqPresc", "@price", "@originOffice", "@house",
                                                     "@stock", "@numberSold"};
                 for (var i = 0; i < medicineProps.Length; i++)
