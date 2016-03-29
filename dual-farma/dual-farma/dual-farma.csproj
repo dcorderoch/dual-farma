@@ -86,23 +86,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="DAL\DbConnectionFactory.cs" />
-    <Compile Include="DAL\DbContext.cs" />
-    <Compile Include="DAL\IConnectionFactory.cs" />
-    <Compile Include="DAL\IDbContext.cs" />
-    <Compile Include="DAL\IUnitOfWork.cs" />
-    <Compile Include="DAL\Models\Client.cs" />
-    <Compile Include="DAL\Models\Medicine.cs" />
-    <Compile Include="DAL\Models\Order.cs" />
-    <Compile Include="DAL\Models\Role.cs" />
-    <Compile Include="DAL\Models\User.cs" />
-    <Compile Include="DAL\Repositories\ClientRepository.cs" />
-    <Compile Include="DAL\Repositories\MedicineRepository.cs" />
-    <Compile Include="DAL\Repositories\OrderRepository.cs" />
-    <Compile Include="DAL\Repositories\Repository.cs" />
-    <Compile Include="DAL\Repositories\RoleRepository.cs" />
-    <Compile Include="DAL\Repositories\UserRepository.cs" />
-    <Compile Include="DAL\UnitOfWork.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
