@@ -110,7 +110,7 @@ namespace FarmaticaCore.DAL.Repositories
         /// Get a list of the total most sold medicines for the given company
         /// </summary>
         /// <returns></returns>
-        public int GetAmmounSoldByCompany(string company)
+        public int GetAmmountSoldByCompany(string company)
         {
             var ammount = 0;
             using (var command = Context.CreateDbCommand())
