@@ -17,7 +17,7 @@ namespace FarmaticaCore.Test
             {
                 //initializing new user repository to commit CRUD operations
                 var userRepo = new UserRepository(context);
-
+               
                 //Creating few new users to insert into database
                 var newUser1 = new User()
                 {
