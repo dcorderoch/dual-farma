@@ -71,24 +71,23 @@ namespace dual_farma.BLL
         /// </summary>
         /// <param name="user"></param>
         /// <returns> Integer indicating whether the creation was successful.</returns>
-        public int CreateUser(string[] user)
+        public int CreateUser(string userId, string password, string name, string lastName1, string lastName2, string email, string company, string roleId)
         {
             int response = 0;
             using (var uow = context.CreateUnitOfWork())
             {
                 var userRepo = new UserRepository(context);
                 User newUser = new User();
-                string userId = user[0];
                 try
                 {
-                        newUser.IdUsuario = user[0];
-                        newUser.Password = user[1];
-                        newUser.Name = user[2];
-                        newUser.LastName1 = user[3];
-                        newUser.LastName2 = user[4];
-                        newUser.Email = user[5];
-                        //newUser.Company = user[6];
-                        newUser.RoleId = Convert.ToInt32(user[7]);
+                        newUser.IdUsuario =userId;
+                        newUser.Password = password;
+                        newUser.Name = name;
+                        newUser.LastName1 = lastName1;
+                        newUser.LastName2 = lastName2;
+                        newUser.Email = email;
+                        //newUser.Company = company;
+                        newUser.RoleId = Convert.ToInt32(roleId);
                         userRepo.Create(newUser);
                         uow.SaveChanges();
                         response = Constants.USER_CREATED;
@@ -130,7 +129,7 @@ namespace dual_farma.BLL
         /// </summary>
         /// <param name="user"></param>
         /// <returns>Integer with the result of the update.</returns>
-        public int UpdateUser(string[] user)
+        public int UpdateUser(string userId, string password, string name, string lastName1, string lastName2, string email, string company, string roleId)
         {
             var response = 0;
             using (var uow = context.CreateUnitOfWork())
@@ -139,14 +138,14 @@ namespace dual_farma.BLL
                 User newUser = new User();
                 try
                 {
-                    newUser.IdUsuario = user[0];
-                    newUser.Password = user[1];
-                    newUser.Name = user[2];
-                    newUser.LastName1 = user[3];
-                    newUser.LastName2 = user[4];
-                    newUser.Email = user[5];
-                    //newUser.Company = user[6];
-                    newUser.RoleId = Convert.ToInt32(user[7]);
+                    newUser.IdUsuario = userId;
+                    newUser.Password = password;
+                    newUser.Name = name;
+                    newUser.LastName1 = lastName1;
+                    newUser.LastName2 = lastName2;
+                    newUser.Email = email;
+                    //newUser.Company = company;
+                    newUser.RoleId = Convert.ToInt32(roleId);
                     userRepo.Update(newUser);
                     uow.SaveChanges();
                     response = Constants.USER_UPDATED;
