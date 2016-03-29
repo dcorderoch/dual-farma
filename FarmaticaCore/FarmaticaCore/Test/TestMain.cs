@@ -1,4 +1,6 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
+using FarmaticaCore.DAL.Models;
 
 namespace FarmaticaCore.Test
 {
@@ -6,11 +8,12 @@ namespace FarmaticaCore.Test
     {
         static void Main(string[] args)
         {
-            RoleTesting.test();
             UserTesting.test();
+            DoctorTesting.test();
+            MedicineTesting.test();
             ClientTesting.test();
+            PrescriptionTesting.test();
             OrderTesting.test();
-            
         }
     }
 }

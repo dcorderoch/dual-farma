@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlTypes;
+using System.Drawing;
+using System.IO;
 using FarmaticaCore.DAL.Models;
 
 namespace FarmaticaCore.DAL.Repositories
@@ -37,26 +40,41 @@ namespace FarmaticaCore.DAL.Repositories
             using (var command = Context.CreateDbCommand())
             {
                 var orderProps = new object[]
-                {newOrder.OrderId, newOrder.ClientId, newOrder.PrescriptionId, newOrder.MedicationId, newOrder.PickUpOffice, newOrder.InvoiceCode,
+                {newOrder.OrderId.ToString(), newOrder.ClientId, newOrder.PrescriptionId, newOrder.PickUpOffice, ConvertImageToByteArray(newOrder.InvoiceImage),
                  newOrder.HasPrescription, newOrder.State, newOrder.Priority, newOrder.PrefPhoneNum, newOrder.PickUpdDate};
-                command.CommandText = @"INSERT INTO Pedido VALUES(@orderId, @clientId, @prescriptionId, @medicationId, @pickUpOffice, @invoiceCode, "+
+                command.CommandText = @"INSERT INTO Pedido VALUES(@orderId, @clientId, @prescriptionId, @pickUpOffice, @invoiceImage, "+
                                                                  "@hasPrescription, @state, @priority, @prefPhoneNum, @pickUpDate)";
-                var parameterNames = new string[] { "@orderId", "@clientId", "@prescriptionId", "@medicationId", "@pickUpOffice", "@invoiceCode",
+                var parameterNames = new string[] { "@orderId", "@clientId", "@prescriptionId", "@pickUpOffice", "@invoiceImage",
                                                     "@hasPrescription", "@state", "@priority", "@prefPhoneNum", "@pickUpDate"};
                 for (var i = 0; i < orderProps.Length; i++)
                 {
                     var newParameter = command.CreateParameter();
                     newParameter.ParameterName = parameterNames[i];
                     //Null handler
-                    if (orderProps[i] == null)
-                    {
-                        newParameter.Value = DBNull.Value;
-                    }
-                    else
-                    {
-                        newParameter.Value = orderProps[i];
-                    }
-                    
+                    newParameter.Value = orderProps[i] ?? DBNull.Value;
+                    command.Parameters.Add(newParameter);
+                }
+                command.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// Adds a new medicine into an order
+        /// </summary>
+        /// <param name="medicineId"></param>
+        /// <param name="orderId"></param>
+        public void AddMedicineintoOrder(Guid medicineId, Guid orderId)
+        {
+            using (var command = Context.CreateDbCommand())
+            {
+                var mediOrderProps = new object[] {orderId, medicineId }; 
+                command.CommandText = @"INSERT INTO Medicamentos_Por_Pedido VALUES(@orderId, @medicineId)";
+                var parameterNames = new string[] { "@orderId", "@medicineId"};
+                for (var i = 0; i < mediOrderProps.Length; i++)
+                {
+                    var newParameter = command.CreateParameter();
+                    newParameter.ParameterName = parameterNames[i];
+                    newParameter.Value = mediOrderProps[i];
                     command.Parameters.Add(newParameter);
                 }
                 command.ExecuteNonQuery();
@@ -75,35 +93,54 @@ namespace FarmaticaCore.DAL.Repositories
                 command.CommandText = @"SELECT * FROM Pedido WHERE NumeroPedido = @orderId";
                 var newParameter = command.CreateParameter();
                 newParameter.ParameterName = "@orderId";
-                newParameter.Value = id;
+                newParameter.Value = id.ToString();
                 command.Parameters.Add(newParameter);
                 var result = ToList(command);
                 return result;
             }
         }
 
+        public IEnumerable<Medicine> GetOrderMedicines(Guid orderId)
+        {
+            using (var command = Context.CreateDbCommand())
+            {
+                command.CommandText = @"SELECT * FROM Medicamentos_Por_Pedido JOIN Medicamento WHERE NumeroPedido = @orderId";
+                var newParameter = command.CreateParameter();
+                newParameter.ParameterName = "@orderId";
+                newParameter.Value = orderId.ToString();
+                command.Parameters.Add(newParameter);
+                var result = ToListMedicines(command);
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// updates an existing order
+        /// </summary>
+        /// <param name="order"></param>
         public override void Update(Order order)
         {
             using (var command = Context.CreateDbCommand())
             {
                 var orderProps = new object[]
-               { order.ClientId, order.PrescriptionId, order.MedicationId, order.PickUpOffice, order.InvoiceCode,
+               { order.ClientId, order.PrescriptionId, order.PickUpOffice, ConvertImageToByteArray(order.InvoiceImage),
                  order.HasPrescription, order.State, order.Priority, order.PrefPhoneNum, order.PickUpdDate};
-                command.CommandText = @"UPDATE  Pedido SET  ID_Cliente=@clientId, ID_Receta=@prescriptionId, ID_Medicamento=@medicationId,"+ 
-                                       "Sucursal_Recojo=@pickUpOffice,  CodigoFactura=@invoiceCode, Prescripcion=@hasPrescription, Estado=@state, " +
-                                       "Prioridad=@priority, TelefonoPreferido=@prefPhoneNum,FechaRecojo= @pickUpDate)";
-                var parameterNames = new string[] { "@ordenId", "@clientId", "@prescriptionId", "@medicationId", "@pickUpOffice", "@invoiceCode",
+                command.CommandText = @"UPDATE  Pedido SET  ID_Cliente=@clientId, ID_Receta=@prescriptionId, "+ 
+                                       "Sucursal_Recojo=@pickUpOffice,  ImagenFactura=@invoiceImage, Prescripcion=@hasPrescription, Estado=@state, " +
+                                       "Prioridad=@priority, TelefonoPreferido=@prefPhoneNum,FechaRecojo= @pickUpDate WHERE NumeroPedido=@orderId";
+                var parameterNames = new string[] { "@clientId", "@prescriptionId", "@pickUpOffice", "@invoiceImage",
                                                     "@hasPrescription", "@state", "@priority", "@prefPhoneNum", "@pickUpDate"};
                 for (var i = 0; i < orderProps.Length; i++)
                 {
                     var newParameter = command.CreateParameter();
                     newParameter.ParameterName = parameterNames[i];
-                    newParameter.Value = orderProps[i];
+                    //Null handler
+                    newParameter.Value = orderProps[i] ?? DBNull.Value;
                     command.Parameters.Add(newParameter);
                 }
                 var idParameter = command.CreateParameter();
-                idParameter.ParameterName = "@userId";
-                idParameter.Value = order.OrderId;
+                idParameter.ParameterName = "@orderId";
+                idParameter.Value = order.OrderId.ToString();
                 command.Parameters.Add(idParameter);
                 command.ExecuteNonQuery();
             }
@@ -120,7 +157,7 @@ namespace FarmaticaCore.DAL.Repositories
                 command.CommandText = @"DELETE FROM Pedido WHERE NumeroPedido= @orderId";
                 var newParameter = command.CreateParameter();
                 newParameter.ParameterName = "@orderId";
-                newParameter.Value = id;
+                newParameter.Value = id.ToString();
                 command.Parameters.Add(newParameter);
                 command.ExecuteNonQuery();
             }
@@ -133,17 +170,70 @@ namespace FarmaticaCore.DAL.Repositories
         /// <param name="order"></param>
         protected override void Map(IDataRecord record, Order order)
         {
-            order.OrderId = (Guid) record["NumeroPedido"];
+            order.OrderId = (Guid)record["NumeroPedido"];
             order.ClientId = (string) record["ID_Cliente"];
-            order.PrescriptionId = (int) record["ID_Medicamento"];
-            order.MedicationId = (Guid) record["ID_Medication"];
+            var myGuid = record["ID_Receta"];
+            order.PrescriptionId = myGuid == DBNull.Value ? (Guid?) null : Guid.Parse((string)myGuid);
             order.PickUpOffice = (int)record["Sucursal_Recojo"];
-            order.InvoiceCode = (Guid)record["CodigoFactura"];
             order.HasPrescription = (bool)record["Prescripcion"];
             order.State = (int)record["Estado"];
             order.Priority = (string)record["Prioridad"];
             order.PrefPhoneNum = (string)record["TelefonoPreferido"];
             order.PickUpdDate = (DateTime)record["FechaRecojo"];
+            order.InvoiceImage= ConvertByteArrayToImage((byte[]) record["ImagenFactura"]);
+        }
+
+        /// <summary>
+        /// Method to create a list o medicines from the result of the query
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        protected IEnumerable<Medicine> ToListMedicines(IDbCommand command)
+        {
+            using (var reader = command.ExecuteReader())
+            {
+                var itemList = new List<Medicine>();
+                while (reader.Read())
+                {
+                    var item = new Medicine
+                    {
+                        MedicineId = (Guid)reader["ID_Medicamento"],
+                        Name = (string)reader["Nombre"],
+                        RequiresPrescription = (bool)reader["Prescripcion"],
+                        Price = (int)reader["Precio"],
+                        OriginOffice = (int)reader["Sucursal_Origen"],
+                        House = (string)reader["CasaFarmaceutica"],
+                        Stock = (int)reader["CantidadDisponible"],
+                        NumberSold = (int)reader["CantidadVentas"]
+                    };
+                    itemList.Add(item);
+                }
+                return itemList;
+            }
+        }
+
+        /// <summary>
+        /// Converts a byte array into an Image type
+        /// </summary>
+        /// <param name="array"></param>
+        /// <returns></returns>
+        protected Image ConvertByteArrayToImage(byte[] array)
+        {
+            var ms = new MemoryStream(array);
+            Image res = array.Length == 0 ? null : res = Image.FromStream(ms);
+            return res;
+        }
+
+        /// <summary>
+        /// Converts an image to byte array
+        /// </summary>
+        /// <param name="img"></param>
+        /// <returns></returns>
+        protected byte[] ConvertImageToByteArray(Image img)
+        {
+            ImageConverter imgconv = new ImageConverter();
+            byte[] xByte = (byte[])imgconv.ConvertTo(img, typeof(byte[]));
+            return xByte;
         }
     }
 }

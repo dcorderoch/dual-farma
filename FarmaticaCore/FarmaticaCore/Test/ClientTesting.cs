@@ -30,7 +30,7 @@ namespace FarmaticaCore.Test
                     PhoneMum = "22388484",
                     MedicalHistory = "Alergias, nariz taponeada",
                     PlaceResidence = "Bel'en",
-                    PenaltiesNumber = 0
+                    PenaltiesNumber = 0,
                     };
                 var newClient2 = new Client()
                 {
