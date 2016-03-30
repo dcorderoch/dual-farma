@@ -2,8 +2,9 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading;
+using dual_farma.DAL;
 
-namespace FarmaticaCore.DAL
+namespace dual_farma.DAL
 {
     /// <summary>
     /// Data base context
@@ -12,8 +13,8 @@ namespace FarmaticaCore.DAL
     {
         private IDbConnection mConnection;
         private IConnectionFactory mConnectionFactory;
-        private ReaderWriterLockSlim mRwLockSlim= new ReaderWriterLockSlim();
-        private LinkedList<UnitOfWork> mUowList =new LinkedList<UnitOfWork>();
+        private ReaderWriterLockSlim mRwLockSlim = new ReaderWriterLockSlim();
+        private LinkedList<UnitOfWork> mUowList = new LinkedList<UnitOfWork>();
 
         /// <summary>
         /// Initialize a new database Context
@@ -23,7 +24,7 @@ namespace FarmaticaCore.DAL
         {
             mConnectionFactory = connectionFactory;
             mConnection = mConnectionFactory.CreateConnection();
-        } 
+        }
 
         /// <summary>
         /// Creates a unit of work

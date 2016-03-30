@@ -1,4 +1,4 @@
-﻿namespace FarmaticaCore.DAL.Models
+﻿namespace dual_farma.DAL.Models
 {
     /// <summary>
     /// POCO class to represent a user in the database

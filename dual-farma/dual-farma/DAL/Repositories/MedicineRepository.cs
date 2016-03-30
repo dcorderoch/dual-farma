@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using FarmaticaCore.DAL.Models;
+using dual_farma.DAL.Models;
 
-namespace FarmaticaCore.DAL.Repositories
+namespace dual_farma.DAL.Repositories
 {
     /// <summary>
     /// Medicine Repository
@@ -126,7 +126,7 @@ namespace FarmaticaCore.DAL.Repositories
                     {
                         var result = reader["Ventas"];
                         ammount = result == DBNull.Value ? 0 : (int)result;
-                        
+
                     }
                 }
             }
@@ -144,7 +144,7 @@ namespace FarmaticaCore.DAL.Repositories
                 var medicineProps = new object[]
                  {medicine.Name, medicine.RequiresPrescription, medicine.Price, medicine.OriginOffice, medicine.House,
                  medicine.Stock, medicine.NumberSold};
-                command.CommandText = @"UPDATE Medicamento SET Nombre=@name, Prescripcion=@reqPresc, Precio=@price, Sucursal_Origen=@originOffice, "+
+                command.CommandText = @"UPDATE Medicamento SET Nombre=@name, Prescripcion=@reqPresc, Precio=@price, Sucursal_Origen=@originOffice, " +
                                        "CasaFarmaceutica=@house, CantidadDisponible=@stock, CantidadVentas=@numberSold WHERE ID_Medicamento=@medicineId";
                 var parameterNames = new string[] { "@name", "@reqPresc", "@price", "@originOffice", "@house",
                                                     "@stock", "@numberSold"};
@@ -182,14 +182,14 @@ namespace FarmaticaCore.DAL.Repositories
 
         protected override void Map(IDataRecord record, Medicine medicine)
         {
-            medicine.MedicineId = (Guid) record["ID_Medicamento"];
-            medicine.Name = (string) record["Nombre"];
-            medicine.RequiresPrescription = (bool) record["Prescripcion"];
-            medicine.Price = (decimal) record["Precio"];
-            medicine.OriginOffice = (int) record["Sucursal_Origen"];
-            medicine.House = (string) record["CasaFarmaceutica"];
-            medicine.Stock = (int) record["CantidadDisponible"];
-            medicine.NumberSold = (int) record["CantidadVentas"];
+            medicine.MedicineId = (Guid)record["ID_Medicamento"];
+            medicine.Name = (string)record["Nombre"];
+            medicine.RequiresPrescription = (bool)record["Prescripcion"];
+            medicine.Price = (decimal)record["Precio"];
+            medicine.OriginOffice = (int)record["Sucursal_Origen"];
+            medicine.House = (string)record["CasaFarmaceutica"];
+            medicine.Stock = (int)record["CantidadDisponible"];
+            medicine.NumberSold = (int)record["CantidadVentas"];
         }
     }
 }

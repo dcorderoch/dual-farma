@@ -2,7 +2,7 @@
 using System.Data.SqlTypes;
 using System.Drawing;
 
-namespace FarmaticaCore.DAL.Models
+namespace dual_farma.DAL.Models
 {
     public class Order
     {
@@ -15,6 +15,6 @@ namespace FarmaticaCore.DAL.Models
         public int State { get; set; }
         public string Priority { get; set; }
         public string PrefPhoneNum { get; set; }
-        public DateTime PickUpdDate { get; set; } 
+        public DateTime PickUpdDate { get; set; }
     }
 }
