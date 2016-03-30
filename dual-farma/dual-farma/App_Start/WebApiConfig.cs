@@ -16,6 +16,8 @@ namespace dual_farma
             // Web API routes
             config.MapHttpAttributeRoutes();
 
+            config.Routes.MapHttpRoute("DefaultApiWithAction", "api/{controller}/{action}");
+            config.Routes.MapHttpRoute("DefaultApiWithId", "api/{controller}/{id}", new { id = RouteParameter.Optional }, new { id = @"\d+" });
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
