@@ -41,9 +41,8 @@ CREATE TABLE Usuario
 	Pass nvarchar(30) NOT NULL,
 	Nombre nvarchar(30) NOT NULL,
 	PrimerApellido nvarchar(50) NOT NULL,
-	SegundoApellido nvarchar (50) NOT NULL,
-	Email nvarchar(50) NOT NULL,
-	Compañia nvarchar(50) NOT NULL,
+	SegundoApellido nvarchar (50),
+	Email nvarchar(50),
 	Rol_Usuario Integer NOT NULL 
 	)
 
@@ -62,12 +61,12 @@ CREATE TABLE Cliente
  NumeroCedula CHAR(9) NOT NULL,
  Nombre nvarchar(30) NOT NULL,
  PrimerApellido nvarchar(50) NOT NULL,
- SegundoApellido nvarchar (50) NOT NULL,
- CantidadMultas Integer NOT NULL,
- LugarResidencia nvarchar(50) NOT NULL,
- Historial nvarchar(max) NOT NULL,
- FechaNacimiento DATE NOT NULL,
- NumeroTelefono nvarchar(25) NOT NULL
+ SegundoApellido nvarchar (50),
+ CantidadMultas Integer,
+ LugarResidencia nvarchar(50),
+ Historial nvarchar(max),
+ FechaNacimiento DATE,
+ NumeroTelefono nvarchar(25)
 )
 
 --Creates table Doctor.
@@ -78,8 +77,8 @@ CREATE TABLE Doctor
 	NumeroCedula nvarchar(15) NOT NULL,
 	Nombre nvarchar(30) NOT NULL,
 	PrimerApellido nvarchar(50) NOT NULL,
-	SegundoApellido nvarchar (50) NOT NULL,
-	LugarResidencia nvarchar(50) NOT NULL
+	SegundoApellido nvarchar (50),
+	LugarResidencia nvarchar(50)
  	)
 
 --Creates table Order.
@@ -88,14 +87,15 @@ CREATE TABLE Pedido
 	(
 	NumeroPedido uniqueidentifier NOT NULL,
 	ID_Cliente char(9) NOT NULL,
-	ID_Receta uniqueidentifier,
+	ID_Receta Integer,
+	ID_Medicamento uniqueidentifier NOT NULL,
 	Sucursal_Recojo Integer NOT NULL,
-	ImagenFactura VARBINARY(MAX), 
+	Factura VARBINARY(MAX) NOT NULL, 
 	Prescripcion Bit NOT NULL,
 	Estado Integer NOT NULL,
 	Prioridad nchar(9) NOT NULL,
-	TelefonoPreferido nvarchar(20) NOT NULL,
-	FechaRecojo DATETIME NOT NULL
+	TelefonoPreferido nvarchar(20),
+	FechaRecojo DATETIME
 	)	
 
 --Creates table Medicine.
@@ -107,7 +107,7 @@ CREATE TABLE Medicamento
 	Prescripcion Bit NOT NULL,
 	Precio decimal(10,2) NOT NULL,
 	Sucursal_Origen Integer NOT NULL,
-	CasaFarmaceutica nvarchar(30) NOT NULL,
+	CasaFarmaceutica nvarchar(30),
 	CantidadDisponible Integer NOT NULL,
 	CantidadVentas Integer NOT NULL,
 	)	
@@ -116,27 +116,20 @@ CREATE TABLE Medicamento
 GO
 CREATE TABLE Medicamentos_Por_Receta
 	(
-	NumeroReceta uniqueidentifier NOT NULL,
+	NumeroReceta Integer NOT NULL,
 	ID_Medicamento uniqueidentifier NOT NULL
 	)
 
--- Creates table Medicamentos_Por_Pedido
-GO
-CREATE TABLE Medicamentos_Por_Pedido
-	(
-	NumeroPedido uniqueidentifier NOT NULL,
-	ID_Medicamento uniqueidentifier NOT NULL
-	)
 
 --Creates table Prescription.
 GO
 CREATE TABLE Receta
 	(
-	NumeroReceta uniqueidentifier NOT NULL,
+	NumeroReceta Integer NOT NULL,
 	Doctor nvarchar(15) NOT NULL,
-	Imagen VARBINARY(max) NOT NULL,
+	Imagen Binary,
 	)
-
+GO
 --Creates table Branch office.
 GO
 CREATE TABLE Sucursal
@@ -144,9 +137,9 @@ CREATE TABLE Sucursal
 	ID_Sucursal Integer NOT NULL,
 	Nombre nvarchar(50) NOT NULL,
 	Telefono nvarchar(20) NOT NULL,
-	Ubicacion nvarchar(100) NOT NULL
+	Ubicacion nvarchar(100)
 	)	
-
+GO
 -- Defines User primary key.
 GO
 ALTER TABLE Usuario
@@ -214,25 +207,6 @@ ALTER TABLE Medicamentos_Por_Receta
 		FOREIGN KEY (ID_Medicamento)
 			REFERENCES Medicamento(ID_Medicamento)
 
---Defines Medicamentos_Por_Pedido primary keys.
-GO
-ALTER TABLE Medicamentos_Por_Pedido
-	ADD CONSTRAINT PK_Numero_Pedido_ID_Medicamento
-		PRIMARY KEY (NumeroPedido, ID_Medicamento)
-
---Defines Medicamentos_Por_Pedido foreign keys.
-GO
-ALTER TABLE Medicamentos_Por_Pedido
-	ADD CONSTRAINT FK_Numero_Pedido_MPP
-		FOREIGN KEY (NumeroPedido)
-			REFERENCES Pedido(NumeroPedido)
-
-GO
-ALTER TABLE Medicamentos_Por_Pedido
-	ADD CONSTRAINT FK_ID_Medicamento_MPP
-		FOREIGN KEY (ID_Medicamento)
-			REFERENCES Medicamento(ID_Medicamento)
-
 -- Sets a relationship between columns Rol_Usuario in User table and ID_Rol in Rol table by creating a Foreign Key.
 GO
 ALTER TABLE Usuario 
@@ -254,12 +228,21 @@ ALTER TABLE Pedido
 		FOREIGN KEY (ID_Receta)
 			REFERENCES Receta(NumeroReceta) 
 
+-- Sets a relationship between columns ID_Medicamento in Order table and ID_Medicamento in Medicine table by creating a Foreign Key.
+GO			
+ALTER TABLE Pedido
+	ADD CONSTRAINT FK_ID_Medicamento
+		FOREIGN KEY (ID_Medicamento)
+			REFERENCES Medicamento(ID_Medicamento) 
+
 -- Sets a relationship between columns Sucursal_Recojo in Order table and ID_Sucursal in Branch office table by creating a Foreign Key.
 GO
 ALTER TABLE Pedido
 	ADD CONSTRAINT FK_ID_Sucursal_Recojo
 		FOREIGN KEY (Sucursal_Recojo)
 			REFERENCES Sucursal(ID_Sucursal)
+
+GO
 
 -- Sets a relationship between columns Doctor in Prescription table and ID_Doctor in Doctor table by creating a Foreign Key.	
 GO
@@ -275,3 +258,57 @@ ALTER TABLE Medicamento
 	ADD CONSTRAINT FK_Sucursal_Origen
 		FOREIGN KEY (Sucursal_Origen)
 			REFERENCES Sucursal(ID_Sucursal)
+
+
+			--********************* Correcting Mistakes from here on. Not to take into account in database creation for the first time***************************
+
+/*
+-- Modifies the allowed password length in the Pass column from User table.
+GO
+ALTER TABLE Usuario 
+	ALTER COLUMN Pass nvarchar(30) NOT NULL	 				
+
+-- Modifies the record max value from Client table.
+GO
+ALTER TABLE Cliente
+	ALTER COLUMN Historial nvarchar(max)
+
+-- Deletes column HoraRecojo from Order table.
+GO
+ALTER TABLE Pedido
+	DROP COLUMN HoraRecojo
+
+-- Sets column FechaRecojo as DATETIME instead of DATE in Order table.
+GO
+ALTER TABLE Pedido
+	ALTER COLUMN FechaRecojo DATETIME
+
+-- Sets Prescripcion column as NOT NULL in table Pedido.
+GO
+ALTER TABLE Pedido
+	ALTER COLUMN Prescripcion Bit NOT NULL
+
+-- Sets Prescripcion column as NOT NULL in table Medicamento.
+GO
+ALTER TABLE Medicamento
+	ALTER COLUMN Prescripcion Bit NOT NULL
+
+-- Removes Not Null constraint from ID_Receta in table Pedido.
+GO
+ALTER TABLE Pedido
+	ALTER COLUMN ID_Receta Integer
+
+--Removes foreign key from Order table.
+GO
+ALTER TABLE Pedido
+	DROP CONSTRAINT FK_Estado_Pedido
+
+--Drops Estado_Pedido table. 
+GO
+DROP TABLE Estado_Pedido
+
+GO
+ALTER TABLE Receta
+	DROP COLUMN Medicamento
+GO
+*/

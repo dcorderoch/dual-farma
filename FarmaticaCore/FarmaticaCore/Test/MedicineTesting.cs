@@ -23,11 +23,11 @@ namespace FarmaticaCore.Test
                 //Creating few new users to insert into database
                 var newMedicine1 = new Medicine()
                 {
-                    MedicineId = Guid.Empty,
+                    MedicineId = Guid.NewGuid(),
                     Name = "Cloretmazol",
                     RequiresPrescription = false,
                     Price = 2000,
-                    OriginOffice = 0,
+                    OriginOffice = 1,
                     Stock = 100,
                     NumberSold = 0,
                     House="bayer"
@@ -40,7 +40,7 @@ namespace FarmaticaCore.Test
                     Name = "ritalina",
                     RequiresPrescription = false,
                     Price = 5000,
-                    OriginOffice = 0,
+                    OriginOffice = 2,
                     Stock = 100,
                     NumberSold = 0,
                     House = "csde"
@@ -51,7 +51,7 @@ namespace FarmaticaCore.Test
                     Name = "bentroato",
                     RequiresPrescription = false,
                     Price = 100,
-                    OriginOffice = 0,
+                    OriginOffice = 3,
                     Stock = 100,
                     NumberSold = 0,
                     House = "neotopic"
@@ -74,7 +74,7 @@ namespace FarmaticaCore.Test
                     Name = "Cloretmazol",
                     RequiresPrescription = false,
                     Price = 212434,
-                    OriginOffice = 0,
+                    OriginOffice = 1,
                     Stock = 100,
                     NumberSold = 0,
                     House = "bayer"
