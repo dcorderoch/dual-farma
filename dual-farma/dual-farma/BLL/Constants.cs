@@ -20,5 +20,19 @@
         //Delete user constants.
         public const int USER_NOT_DELETED = 0;
         public const int USER_DELETED = 1;
+
+        //Create medicine constants.
+        public const int ALREADY_EXISTS = 0;
+        public const int MEDICINE_CREATED = 1;
+
+        //Update medicine constants.
+        public const int MEDICINE_NOT_UPDATED = 0;
+        public const int MEDICINE_UPDATED = 1;
+
+        //Delete user constants.
+        public const int MEDICINE_NOT_DELETED = 0;
+        public const int MEDICINE_DELETED = 1;
+
+
     }
 }
