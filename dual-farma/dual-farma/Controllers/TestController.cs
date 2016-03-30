@@ -22,6 +22,8 @@ namespace dual_farma.Controllers
         // POST api/test/post
         public string Post([FromBody] string test)
         {
+            // CURL command is:
+            // curl -H "Content-Type: application/json" -d "'id=algo&ok=cosa'" -X POST http://localhost:7506/api/test/post
             //body is id=something&ok=something
             var parts = test.Split('&');
             if (parts.Length != 2)
@@ -35,6 +37,8 @@ namespace dual_farma.Controllers
         // POST api/test/json
         public string Json([FromBody] string json)
         {
+            // CURL command is:
+            // curl -H "Content-Type: application/json" -d "'{\"id\":\"vida\",\"ok\":\"muerte\"}'" -X POST http://localhost:7506/api/test/json
             //body is '{\"id\":\"vida\",\"ok\":\"muerte\"} (\ used to escape character, to really send it from CURL)
             JToken theJson = JToken.Parse(json);
 
