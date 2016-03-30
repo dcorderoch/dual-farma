@@ -7,7 +7,6 @@ using System.Net.Http;
 using System.Web.Http;
 
 using dual_farma.BLL;
-using dual_farma.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -36,18 +35,10 @@ namespace dual_farma.Controllers
         // POST api/test/json
         public string Json([FromBody] string json)
         {
+            //body is '{\"id\":\"vida\",\"ok\":\"muerte\"} (\ used to escape character, to really send it from CURL)
             JToken theJson = JToken.Parse(json);
-            //string cosa
-            //string nalga = "{'id':'vida','ok':'muerte'}";
-            //string nalga = data.ToString();
-            //dynamic js = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
-            //JObject json = JObject.Parse(data.ToString());
-            //string id = (string)json["id"];
-            //string ok = (string)json["ok"];
-            //return "id: " + id + " ok:" + ok;
-            //return "" + js["id"].ToString();
+
             return theJson.Value<string>("id") + theJson.Value<string>("ok");
-            //return json["id"].ToString();
         }
     }
 }
