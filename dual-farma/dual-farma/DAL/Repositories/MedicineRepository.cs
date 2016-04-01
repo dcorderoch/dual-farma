@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using FarmaticaCore.DAL.Models;
+using dual_farma.DAL.Models;
 
-namespace FarmaticaCore.DAL.Repositories
+namespace dual_farma.DAL.Repositories
 {
     /// <summary>
     /// Medicine Repository
@@ -81,7 +81,7 @@ namespace FarmaticaCore.DAL.Repositories
         {
             using (var command = Context.CreateDbCommand())
             {
-                command.CommandText = @"SELECT * FROM Medicamento WHERE ID_Medicamento = @medicineId ORDER BY CantidadVentas DESC";
+                command.CommandText = @"SELECT * FROM Medicamento ORDER BY CantidadVentas DESC";
                 var newParameter = command.CreateParameter();
                 var result = ToList(command);
                 return result;
@@ -110,9 +110,9 @@ namespace FarmaticaCore.DAL.Repositories
         /// Get a list of the total most sold medicines for the given company
         /// </summary>
         /// <returns></returns>
-        public int GetAmmounSoldByCompany(string company)
+        public int GetAmmountSoldByCompany(string company)
         {
-            var ammount = 0;
+            int ammount = 0;
             using (var command = Context.CreateDbCommand())
             {
                 command.CommandText = @"SELECT SUM(CantidadVentas) AS Ventas FROM Medicamento WHERE CasaFarmaceutica=@casaFarma";
@@ -124,7 +124,9 @@ namespace FarmaticaCore.DAL.Repositories
                 {
                     while (reader.Read())
                     {
-                        ammount = (int) reader["Ventas"];
+                        var result = reader["Ventas"];
+                        ammount = result == DBNull.Value ? 0 : (int)result;
+
                     }
                 }
             }
@@ -142,8 +144,8 @@ namespace FarmaticaCore.DAL.Repositories
                 var medicineProps = new object[]
                  {medicine.Name, medicine.RequiresPrescription, medicine.Price, medicine.OriginOffice, medicine.House,
                  medicine.Stock, medicine.NumberSold};
-                command.CommandText = @"UPDATE Medicamento SET Nombre=@name, Prescripcion=@reqPresc, Precio=@price, Sucursal_Origen=@originOffice, "+
-                                       "CasaFarmaceutica=@house, CantidadDisponible=@stock, CantidadVentas=@numberSold";
+                command.CommandText = @"UPDATE Medicamento SET Nombre=@name, Prescripcion=@reqPresc, Precio=@price, Sucursal_Origen=@originOffice, " +
+                                       "CasaFarmaceutica=@house, CantidadDisponible=@stock, CantidadVentas=@numberSold WHERE ID_Medicamento=@medicineId";
                 var parameterNames = new string[] { "@name", "@reqPresc", "@price", "@originOffice", "@house",
                                                     "@stock", "@numberSold"};
                 for (var i = 0; i < medicineProps.Length; i++)
@@ -180,14 +182,14 @@ namespace FarmaticaCore.DAL.Repositories
 
         protected override void Map(IDataRecord record, Medicine medicine)
         {
-            medicine.MedicineId = (Guid) record["ID_Medicamento"];
-            medicine.Name = (string) record["Nombre"];
-            medicine.RequiresPrescription = (bool) record["Prescripcion"];
-            medicine.Price = (decimal) record["Precio"];
-            medicine.OriginOffice = (int) record["Sucursal_Origen"];
-            medicine.House = (string) record["CasaFarmaceutica"];
-            medicine.Stock = (int) record["CantidadDisponible"];
-            medicine.NumberSold = (int) record["CantidadVentas"];
+            medicine.MedicineId = (Guid)record["ID_Medicamento"];
+            medicine.Name = (string)record["Nombre"];
+            medicine.RequiresPrescription = (bool)record["Prescripcion"];
+            medicine.Price = (decimal)record["Precio"];
+            medicine.OriginOffice = (int)record["Sucursal_Origen"];
+            medicine.House = (string)record["CasaFarmaceutica"];
+            medicine.Stock = (int)record["CantidadDisponible"];
+            medicine.NumberSold = (int)record["CantidadVentas"];
         }
     }
 }

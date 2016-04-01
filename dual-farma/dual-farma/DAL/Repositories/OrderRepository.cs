@@ -4,9 +4,9 @@ using System.Data;
 using System.Data.SqlTypes;
 using System.Drawing;
 using System.IO;
-using FarmaticaCore.DAL.Models;
+using dual_farma.DAL.Models;
 
-namespace FarmaticaCore.DAL.Repositories
+namespace dual_farma.DAL.Repositories
 {
     /// <summary>
     /// Order repository
@@ -30,7 +30,7 @@ namespace FarmaticaCore.DAL.Repositories
                 return result;
             }
         }
-        
+
         /// <summary>
         /// insert given orden object into repository
         /// </summary>
@@ -42,7 +42,7 @@ namespace FarmaticaCore.DAL.Repositories
                 var orderProps = new object[]
                 {newOrder.OrderId.ToString(), newOrder.ClientId, newOrder.PrescriptionId, newOrder.PickUpOffice, ConvertImageToByteArray(newOrder.InvoiceImage),
                  newOrder.HasPrescription, newOrder.State, newOrder.Priority, newOrder.PrefPhoneNum, newOrder.PickUpdDate};
-                command.CommandText = @"INSERT INTO Pedido VALUES(@orderId, @clientId, @prescriptionId, @pickUpOffice, @invoiceImage, "+
+                command.CommandText = @"INSERT INTO Pedido VALUES(@orderId, @clientId, @prescriptionId, @pickUpOffice, @invoiceImage, " +
                                                                  "@hasPrescription, @state, @priority, @prefPhoneNum, @pickUpDate)";
                 var parameterNames = new string[] { "@orderId", "@clientId", "@prescriptionId", "@pickUpOffice", "@invoiceImage",
                                                     "@hasPrescription", "@state", "@priority", "@prefPhoneNum", "@pickUpDate"};
@@ -67,9 +67,9 @@ namespace FarmaticaCore.DAL.Repositories
         {
             using (var command = Context.CreateDbCommand())
             {
-                var mediOrderProps = new object[] {orderId, medicineId }; 
+                var mediOrderProps = new object[] { orderId, medicineId };
                 command.CommandText = @"INSERT INTO Medicamentos_Por_Pedido VALUES(@orderId, @medicineId)";
-                var parameterNames = new string[] { "@orderId", "@medicineId"};
+                var parameterNames = new string[] { "@orderId", "@medicineId" };
                 for (var i = 0; i < mediOrderProps.Length; i++)
                 {
                     var newParameter = command.CreateParameter();
@@ -125,7 +125,7 @@ namespace FarmaticaCore.DAL.Repositories
                 var orderProps = new object[]
                { order.ClientId, order.PrescriptionId, order.PickUpOffice, ConvertImageToByteArray(order.InvoiceImage),
                  order.HasPrescription, order.State, order.Priority, order.PrefPhoneNum, order.PickUpdDate};
-                command.CommandText = @"UPDATE  Pedido SET  ID_Cliente=@clientId, ID_Receta=@prescriptionId, "+ 
+                command.CommandText = @"UPDATE  Pedido SET  ID_Cliente=@clientId, ID_Receta=@prescriptionId, " +
                                        "Sucursal_Recojo=@pickUpOffice,  ImagenFactura=@invoiceImage, Prescripcion=@hasPrescription, Estado=@state, " +
                                        "Prioridad=@priority, TelefonoPreferido=@prefPhoneNum,FechaRecojo= @pickUpDate WHERE NumeroPedido=@orderId";
                 var parameterNames = new string[] { "@clientId", "@prescriptionId", "@pickUpOffice", "@invoiceImage",
@@ -171,16 +171,16 @@ namespace FarmaticaCore.DAL.Repositories
         protected override void Map(IDataRecord record, Order order)
         {
             order.OrderId = (Guid)record["NumeroPedido"];
-            order.ClientId = (string) record["ID_Cliente"];
+            order.ClientId = (string)record["ID_Cliente"];
             var myGuid = record["ID_Receta"];
-            order.PrescriptionId = myGuid == DBNull.Value ? (Guid?) null : Guid.Parse((string)myGuid);
+            order.PrescriptionId = myGuid == DBNull.Value ? (Guid?)null : Guid.Parse((string)myGuid);
             order.PickUpOffice = (int)record["Sucursal_Recojo"];
             order.HasPrescription = (bool)record["Prescripcion"];
             order.State = (int)record["Estado"];
             order.Priority = (string)record["Prioridad"];
             order.PrefPhoneNum = (string)record["TelefonoPreferido"];
             order.PickUpdDate = (DateTime)record["FechaRecojo"];
-            order.InvoiceImage= ConvertByteArrayToImage((byte[]) record["ImagenFactura"]);
+            order.InvoiceImage = ConvertByteArrayToImage((byte[])record["ImagenFactura"]);
         }
 
         /// <summary>

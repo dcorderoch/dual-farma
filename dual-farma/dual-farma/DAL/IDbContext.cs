@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Security.Cryptography.X509Certificates;
 
-namespace FarmaticaCore.DAL
+namespace dual_farma.DAL
 {
     /// <summary>
     /// DB context 

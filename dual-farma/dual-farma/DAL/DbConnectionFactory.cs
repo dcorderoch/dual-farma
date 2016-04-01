@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FarmaticaCore.DAL
+namespace dual_farma.DAL
 {
     /// <summary>
     /// This class creates and manages the database connection

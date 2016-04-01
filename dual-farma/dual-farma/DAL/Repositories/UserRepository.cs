@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Runtime.InteropServices;
-using FarmaticaCore.DAL.Models;
+using dual_farma.DAL.Models;
 
-namespace FarmaticaCore.DAL.Repositories
+namespace dual_farma.DAL.Repositories
 {
     /// <summary>
     /// User repository to perform CRUDs operations
@@ -29,7 +29,7 @@ namespace FarmaticaCore.DAL.Repositories
                 var userProps = new object[]
                 {user.IdUsuario, user.Password, user.Name, user.LastName1, user.LastName2, user.Email, user.RoleId, user.Company};
                 command.CommandText = @"INSERT INTO Usuario VALUES(@userId, @pass, @name, @lastName1, @lastName2, @email, @company, @role)";
-                var parameterNames = new string[] {"@userId", "@pass", "@name", "@lastName1", "@lastName2", "@email", "@role", "@company" };
+                var parameterNames = new string[] { "@userId", "@pass", "@name", "@lastName1", "@lastName2", "@email", "@role", "@company" };
                 for (var i = 0; i < userProps.Length; i++)
                 {
                     var newParameter = command.CreateParameter();
@@ -103,7 +103,7 @@ namespace FarmaticaCore.DAL.Repositories
                 var userProps = new object[]
                 { user.Password, user.Name, user.LastName1, user.LastName2, user.Email, user.RoleId, user.Company};
                 command.CommandText = @"UPDATE Usuario SET Pass= @pass, Nombre= @name, PrimerApellido= @lastName1, SegundoApellido= @lastName2, Email= @email, Rol_Usuario= @role, Compañia=@company WHERE ID_Usuario=@userId";
-                var parameterNames = new string[] {"@pass", "@name", "@lastName1", "@lastName2", "@email", "@role", "@company" };
+                var parameterNames = new string[] { "@pass", "@name", "@lastName1", "@lastName2", "@email", "@role", "@company" };
                 for (var i = 0; i < userProps.Length; i++)
                 {
                     var newParameter = command.CreateParameter();
@@ -145,7 +145,7 @@ namespace FarmaticaCore.DAL.Repositories
             entity.LastName2 = (string)record["SegundoApellido"];
             entity.Email = (string)record["Email"];
             entity.RoleId = (int)record["Rol_Usuario"];
-            entity.Company = (string) record["Compañia"];
+            entity.Company = (string)record["Compañia"];
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace FarmaticaCore.DAL
+namespace dual_farma.DAL
 {
     /// <summary>
     /// Creates, opens and retrieves DB conections.

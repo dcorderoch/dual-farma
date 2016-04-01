@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using FarmaticaCore.DAL.Models;
+using dual_farma.DAL.Models;
 
-namespace FarmaticaCore.DAL.Repositories
+namespace dual_farma.DAL.Repositories
 {
     /// <summary>
     /// Client repository
@@ -39,7 +39,7 @@ namespace FarmaticaCore.DAL.Repositories
                 var clientProps = new object[]
                 {newClient.Id, newClient.Name, newClient.LastName1, newClient.LastName2,newClient.PenaltiesNumber,newClient.PlaceResidence,newClient.MedicalHistory,newClient.BornDate,newClient.PhoneMum};
                 command.CommandText = @"INSERT INTO Cliente VALUES(@id, @name, @lastName1, @lastName2, @penaltiesNumber, @placeResidence, @medicalHistory, @bornDate, @phoneNum)";
-                var parameterNames = new string[] { "@id", "@name", "@lastName1", "@lastName2", "@penaltiesNumber", "@placeResidence", "@medicalHistory", "@bornDate", "@phoneNum"};
+                var parameterNames = new string[] { "@id", "@name", "@lastName1", "@lastName2", "@penaltiesNumber", "@placeResidence", "@medicalHistory", "@bornDate", "@phoneNum" };
                 for (var i = 0; i < clientProps.Length; i++)
                 {
                     var newParameter = command.CreateParameter();
@@ -122,15 +122,15 @@ namespace FarmaticaCore.DAL.Repositories
         /// <param name="client">entity to map values into</param>
         protected override void Map(IDataRecord record, Client client)
         {
-            client.Id = (string) record["NumeroCedula"];
-            client.Name = (string) record["Nombre"];
-            client.LastName1=(string) record["PrimerApellido"];
-            client.LastName2 = (string) record["SegundoApellido"];
-            client.PenaltiesNumber = (int) record["CantidadMultas"];
-            client.PlaceResidence = (string) record["LugarResidencia"];
-            client.MedicalHistory = (string) record["Historial"];
-            client.BornDate = (DateTime) record["FechaNacimiento"];
-            client.PhoneMum = (string) record["NumeroTelefono"];
+            client.Id = (string)record["NumeroCedula"];
+            client.Name = (string)record["Nombre"];
+            client.LastName1 = (string)record["PrimerApellido"];
+            client.LastName2 = (string)record["SegundoApellido"];
+            client.PenaltiesNumber = (int)record["CantidadMultas"];
+            client.PlaceResidence = (string)record["LugarResidencia"];
+            client.MedicalHistory = (string)record["Historial"];
+            client.BornDate = (DateTime)record["FechaNacimiento"];
+            client.PhoneMum = (string)record["NumeroTelefono"];
         }
     }
 }
