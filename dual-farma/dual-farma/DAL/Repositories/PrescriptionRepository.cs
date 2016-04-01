@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.IO;
-using FarmaticaCore.DAL.Models;
+using dual_farma.DAL.Models;
 
-namespace FarmaticaCore.DAL.Repositories
+namespace dual_farma.DAL.Repositories
 {
     public class PrescriptionRepository : Repository<Prescription>
     {
@@ -38,7 +38,7 @@ namespace FarmaticaCore.DAL.Repositories
                 var prescriotionProps = new object[]
                 {prescription.PrescriptionID.ToString(), prescription.Doctor,ConvertImageToByteArray(prescription.Image)};
                 command.CommandText = @"INSERT INTO Receta VALUES(@prescriptionId, @doctor, @image)";
-                var parameterNames = new string[] { "@prescriptionId", "@doctor", "@image"};
+                var parameterNames = new string[] { "@prescriptionId", "@doctor", "@image" };
                 for (var i = 0; i < prescriotionProps.Length; i++)
                 {
                     var newParameter = command.CreateParameter();
@@ -104,7 +104,7 @@ namespace FarmaticaCore.DAL.Repositories
                 var prescriptionProps = new object[]
                {prescription.Doctor, ConvertImageToByteArray(prescription.Image)};
                 command.CommandText = @"UPDATE  Receta SET  Doctor=@doctor, Imagen=@image";
-                var parameterNames = new string[] { "@doctor", "@image"};
+                var parameterNames = new string[] { "@doctor", "@image" };
                 for (var i = 0; i < prescriptionProps.Length; i++)
                 {
                     var newParameter = command.CreateParameter();
@@ -168,14 +168,14 @@ namespace FarmaticaCore.DAL.Repositories
                 {
                     var item = new Medicine
                     {
-                        MedicineId = (Guid) reader["ID_Medicamento"],
-                        Name = (string) reader["Nombre"],
-                        RequiresPrescription = (bool) reader["Prescripcion"],
-                        Price = (int) reader["Precio"],
-                        OriginOffice = (int) reader["Sucursal_Origen"],
-                        House = (string) reader["CasaFarmaceutica"],
-                        Stock = (int) reader["CantidadDisponible"],
-                        NumberSold = (int) reader["CantidadVentas"]
+                        MedicineId = (Guid)reader["ID_Medicamento"],
+                        Name = (string)reader["Nombre"],
+                        RequiresPrescription = (bool)reader["Prescripcion"],
+                        Price = (int)reader["Precio"],
+                        OriginOffice = (int)reader["Sucursal_Origen"],
+                        House = (string)reader["CasaFarmaceutica"],
+                        Stock = (int)reader["CantidadDisponible"],
+                        NumberSold = (int)reader["CantidadVentas"]
                     };
                     itemList.Add(item);
                 }
@@ -186,7 +186,7 @@ namespace FarmaticaCore.DAL.Repositories
         protected override void Map(IDataRecord record, Prescription entity)
         {
             entity.PrescriptionID = (Guid)record["NumeroReceta"];
-            entity.Doctor = (string) record["Doctor"];
+            entity.Doctor = (string)record["Doctor"];
             entity.Image = ConvertByteArrayToImage((byte[])record["Imagen"]);
         }
 

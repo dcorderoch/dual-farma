@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Data;
-using FarmaticaCore.DAL.Models;
+using dual_farma.DAL.Models;
 
-namespace FarmaticaCore.DAL.Repositories
+namespace dual_farma.DAL.Repositories
 {
     public class DoctorRepository : Repository<Doctor>
     {

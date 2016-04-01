@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace FarmaticaCore.DAL.Models
+namespace dual_farma.DAL.Models
 {
     public class Prescription
     {
