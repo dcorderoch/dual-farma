@@ -19,6 +19,13 @@ namespace dual_farma.Controllers
         {
             return "ok, this is interesting";
         }
+        // GET api/test/cheat
+        public string Cheat([FromBody]string json)
+        {
+            JToken theJson = JToken.Parse(json);
+
+            return theJson.Value<string>("id") + theJson.Value<string>("ok");
+        }
         // POST api/test/post
         public string Post([FromBody] string test)
         {
