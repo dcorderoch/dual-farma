@@ -98,10 +98,14 @@
     <Compile Include="BLL\Account_Manager.cs" />
     <Compile Include="BLL\Constants.cs" />
     <Compile Include="BLL\Medicine_Manager.cs" />
+    <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\InfoController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MedicineController.cs" />
+    <Compile Include="Controllers\PedidoController.cs" />
+    <Compile Include="Controllers\PrescriptionController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\UserMgmController.cs" />
     <Compile Include="DAL\DbConnectionFactory.cs" />
     <Compile Include="DAL\DbContext.cs" />
     <Compile Include="DAL\IConnectionFactory.cs" />

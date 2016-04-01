@@ -49,7 +49,7 @@ namespace dual_farma.Controllers
             }
             return "{medicine:still-not-updated}";
         }
-
+        // PUT api/medicine/delete
         public string Delete([FromBody] string mID)
         {
             var MM = new Medicine_Manager();
