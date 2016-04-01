@@ -44,7 +44,8 @@ CREATE TABLE Usuario
 	SegundoApellido nvarchar (50) NOT NULL,
 	Email nvarchar(50) NOT NULL,
 	Compañia nvarchar(50) NOT NULL,
-	Rol_Usuario Integer NOT NULL 
+	Rol_Usuario Integer NOT NULL,
+	ID_Sucursal uniqueidentifier NOT NULL 
 	)
 
 --Creates table Role.
@@ -67,7 +68,8 @@ CREATE TABLE Cliente
  LugarResidencia nvarchar(50) NOT NULL,
  Historial nvarchar(max) NOT NULL,
  FechaNacimiento DATE NOT NULL,
- NumeroTelefono nvarchar(25) NOT NULL
+ NumeroTelefono nvarchar(25) NOT NULL,
+ Pass nvarchar(30) NOT NULL,
 )
 
 --Creates table Doctor.
@@ -89,13 +91,14 @@ CREATE TABLE Pedido
 	NumeroPedido uniqueidentifier NOT NULL,
 	ID_Cliente char(9) NOT NULL,
 	ID_Receta uniqueidentifier,
-	Sucursal_Recojo Integer NOT NULL,
+	Sucursal_Recojo uniqueidentifier NOT NULL,
 	ImagenFactura VARBINARY(MAX), 
 	Prescripcion Bit NOT NULL,
 	Estado Integer NOT NULL,
 	Prioridad nchar(9) NOT NULL,
 	TelefonoPreferido nvarchar(20) NOT NULL,
-	FechaRecojo DATETIME NOT NULL
+	FechaRecojo DATETIME NOT NULL,
+	Tipo_Pedido Bit NOT NULL
 	)	
 
 --Creates table Medicine.
@@ -104,12 +107,7 @@ CREATE TABLE Medicamento
 	(
 	ID_Medicamento uniqueidentifier NOT NULL,
 	Nombre nvarchar(50) NOT NULL,
-	Prescripcion Bit NOT NULL,
-	Precio decimal(10,2) NOT NULL,
-	Sucursal_Origen Integer NOT NULL,
-	CasaFarmaceutica nvarchar(30) NOT NULL,
-	CantidadDisponible Integer NOT NULL,
-	CantidadVentas Integer NOT NULL,
+	Prescripcion Bit NOT NULL
 	)	
 
 -- Creates table Medicamentos_Por_Receta
@@ -125,7 +123,19 @@ GO
 CREATE TABLE Medicamentos_Por_Pedido
 	(
 	NumeroPedido uniqueidentifier NOT NULL,
-	ID_Medicamento uniqueidentifier NOT NULL
+	ID_Medicamento uniqueidentifier NOT NULL,
+	ID_Sucursal uniqueidentifier NOT NULL
+	)
+
+-- Creates table Medicamentos_Por_Sucursal
+GO
+CREATE TABLE Medicamentos_Por_Sucursal
+	(
+	ID_Sucursal uniqueidentifier NOT NULL,
+	ID_Medicamento uniqueidentifier NOT NULL,
+	CantidadDisponible Integer NOT NULL,
+	CantidadVentas Integer NOT NULL,
+	Precio decimal(10,2) NOT NULL
 	)
 
 --Creates table Prescription.
@@ -141,10 +151,11 @@ CREATE TABLE Receta
 GO
 CREATE TABLE Sucursal
 	(
-	ID_Sucursal Integer NOT NULL,
+	ID_Sucursal uniqueidentifier NOT NULL,
 	Nombre nvarchar(50) NOT NULL,
 	Telefono nvarchar(20) NOT NULL,
-	Ubicacion nvarchar(100) NOT NULL
+	Ubicacion nvarchar(100) NOT NULL,
+	Compañia nvarchar(20) NOT NULL
 	)	
 
 -- Defines User primary key.
@@ -218,7 +229,7 @@ ALTER TABLE Medicamentos_Por_Receta
 GO
 ALTER TABLE Medicamentos_Por_Pedido
 	ADD CONSTRAINT PK_Numero_Pedido_ID_Medicamento
-		PRIMARY KEY (NumeroPedido, ID_Medicamento)
+		PRIMARY KEY (NumeroPedido, ID_Medicamento, ID_Sucursal)
 
 --Defines Medicamentos_Por_Pedido foreign keys.
 GO
@@ -233,12 +244,44 @@ ALTER TABLE Medicamentos_Por_Pedido
 		FOREIGN KEY (ID_Medicamento)
 			REFERENCES Medicamento(ID_Medicamento)
 
+GO
+ALTER TABLE Medicamentos_Por_Pedido
+	ADD CONSTRAINT FK_ID_Sucursal_MPP
+		FOREIGN KEY (ID_Sucursal)
+			REFERENCES Sucursal(ID_Sucursal)
+
+--Defines Medicamentos_Por_Sucursal primary keys.
+GO
+ALTER TABLE Medicamentos_Por_Sucursal
+	ADD CONSTRAINT PK_ID_Sucursal_ID_Medicamento
+		PRIMARY KEY (ID_Sucursal, ID_Medicamento)
+
+--Defines Medicamentos_Por_Sucursal foreign keys.
+GO
+ALTER TABLE Medicamentos_Por_Sucursal
+	ADD CONSTRAINT FK_ID_Sucursal_MPS
+		FOREIGN KEY (ID_Sucursal)
+			REFERENCES Sucursal(ID_Sucursal)
+
+GO
+ALTER TABLE Medicamentos_Por_Sucursal
+	ADD CONSTRAINT FK_ID_Medicamento_MPS
+		FOREIGN KEY (ID_Medicamento)
+			REFERENCES Medicamento(ID_Medicamento)
+
 -- Sets a relationship between columns Rol_Usuario in User table and ID_Rol in Rol table by creating a Foreign Key.
 GO
 ALTER TABLE Usuario 
 	ADD CONSTRAINT FK_Rol_Usuario
 		FOREIGN KEY (Rol_Usuario)
 			REFERENCES Rol(ID_Rol)
+
+-- Sets a relationship between columns Rol_Usuario in User table and ID_Rol in Rol table by creating a Foreign Key.
+GO
+ALTER TABLE Usuario 
+	ADD CONSTRAINT FK_ID_Sucursal_Usuario
+		FOREIGN KEY (ID_Sucursal)
+			REFERENCES Sucursal(ID_Sucursal)
 
 -- Sets a relationship between columns ID_Cliente in Order table and NumeroCedula in Client table by creating a Foreign Key.
 GO			
@@ -268,14 +311,6 @@ ALTER TABLE Receta
 		FOREIGN KEY (Doctor)
 			REFERENCES Doctor(ID_Doctor)
 
-
--- Sets a relationship between columns Sucursal_Origen in Medicine table and ID_Sucursal in Branch office table by creating a Foreign Key.	
-GO
-ALTER TABLE Medicamento
-	ADD CONSTRAINT FK_Sucursal_Origen
-		FOREIGN KEY (Sucursal_Origen)
-			REFERENCES Sucursal(ID_Sucursal)
-
 -- Insertion of Roles
 
 INSERT INTO Rol
@@ -286,14 +321,12 @@ VALUES (2, 'Dependiente');
 
 -- Insertion of Branch offices.
 INSERT INTO Sucursal
-VALUES (1, 'Farmatica Medio Queso', '27849596', 'Los Chiles'),
-	   (2, 'Phischel Manuel Antonio', '26709596', 'Quepos'),
-	   (3, 'Farmatica Cariari', '25325960', 'Pococi'),
-	   (4, 'Phischel San Antonio', '22395960', 'Belen'),
-	   (5, 'Phischel La Aurora', '22934364', 'Heredia'),
-	   (6, 'Farmatica Chomes', '22934364', 'Puntarenas'),
-	   (7, 'Farmatica Miami', '1998293451', 'Florida'),
-	   (8, 'Farmatica Escazu', '1998293451', 'San Jose')
+VALUES (NEWID(), 'Medio Queso', '27849596', 'Los Chiles', 'Farmatica'),
+	   (NEWID(), 'Manuel Antonio', '26709596', 'Quepos', 'Phischel'),
+	   (NEWID(), 'Cariari', '25325960', 'Pococi','Farmatica'),
+	   (NEWID(), 'San Antonio', '22395960', 'Belen', 'Phischel'),
+	   (NEWID(), 'La Aurora', '22934364', 'Heredia', 'Phischel'),
+	   (NEWID(), 'Chomes', '28734364', 'Puntarenas','Farmatica'),
+	   (NEWID(), 'Miami', '1998293451', 'Florida','Farmatica'),
+	   (NEWID(), 'Escazu', '22157084', 'San Jose', 'Farmatica')
 	   ;
-
-
