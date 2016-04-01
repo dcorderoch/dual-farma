@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-
+using System.Web.Http.Cors;
 using dual_farma.BLL;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -43,6 +43,11 @@ namespace dual_farma.Controllers
             JToken theJson = JToken.Parse(json);
 
             return theJson.Value<string>("id") + theJson.Value<string>("ok");
+        }
+        // POST api/test/res
+        public string Res([FromBody] string jsonstr)
+        {
+            return jsonstr;
         }
     }
 }
