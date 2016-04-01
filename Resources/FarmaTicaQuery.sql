@@ -311,15 +311,21 @@ ALTER TABLE Receta
 		FOREIGN KEY (Doctor)
 			REFERENCES Doctor(ID_Doctor)
 
+--******************************************************************************************************************************************
+--**
+--**                                     Populating DB 
+--**
+--******************************************************************************************************************************************	
+
 -- Insertion of Roles
-
+GO
 INSERT INTO Rol
-VALUES (1, 'Administrador');
-
-INSERT INTO Rol
-VALUES (2, 'Dependiente');
+VALUES (1, 'Administrador'),
+	   (2, 'Dependiente')
+	   ;
 
 -- Insertion of Branch offices.
+GO
 INSERT INTO Sucursal
 VALUES (NEWID(), 'Medio Queso', '27849596', 'Los Chiles', 'Farmatica'),
 	   (NEWID(), 'Manuel Antonio', '26709596', 'Quepos', 'Phischel'),
@@ -330,3 +336,79 @@ VALUES (NEWID(), 'Medio Queso', '27849596', 'Los Chiles', 'Farmatica'),
 	   (NEWID(), 'Miami', '1998293451', 'Florida','Farmatica'),
 	   (NEWID(), 'Escazu', '22157084', 'San Jose', 'Farmatica')
 	   ;
+
+-- Insertion of Users.
+GO
+INSERT INTO Usuario
+VALUES ('kevuo', 'moradodecorazon32', 'Kevin', 'Umaña', 'Ortega', 'kevgiso@hotmail.com', 'Phischel', '1', 'f507a394-1adf-4783-96b6-f9838fb3af0d'),
+	   ('manu3193', 'frenteampliorocks', 'Manuel', 'Zumbado', 'Corrales', 'manu3193@gmail.com', 'Farmatica', '1', '9bc74d68-cfda-4529-bd6e-1241ded80332'),
+	   ('majesco', 'miamigohelo', 'Nicolas', 'Jimenez', 'Garcia', 'n.jimenez@gmail.com', 'Farmatica', '2', '20fa0743-8f74-4031-b2bb-1818a72a8d60'),
+	   ('eldavid', 'soypoliglota', 'David', 'Cordero', 'Chavarria', 'dacoch@outlook.com', 'Farmatica', '2', '9b5d52be-f4a6-4603-8cd2-73bcf326ee6c')
+	   ;
+
+--Insertion of Clients
+GO
+INSERT INTO Cliente
+VALUES ('123456789', 'Alonso', 'Huertas', 'Vargas', '1', 'Guapiles', 'Constantes dolores de espalda', '1958-09-19','85479587','alonhuervar'),
+	   ('143676785', 'Arnoldo', 'Martinez', 'Perez', '5', 'San Jose', 'Migrañas', '1967-09-02','85509480','armape'),
+	   ('403341797', 'Marta', 'Peña', 'Angulo', '2', 'Heredia', 'Problemas en el colon', '1948-12-13','87475581','marpean'),
+	   ('106720579', 'Rosa', 'Aguilar', 'Lizano', '2', 'Ft. Lauderdale', 'Diabetes', '1970-12-15','1755356814','roagli')
+	   ;
+
+-- Insertion of Medicine.
+GO
+INSERT INTO Medicamento
+VALUES (NEWID(), 'Acetaminofén', '0'),
+	   (NEWID(), 'Ibuprofeno', '0'),
+	   (NEWID(), 'Dorival', '0'),
+	   (NEWID(), 'Panadol', '0'),
+	   (NEWID(), 'Espasmo Canulase', '0'),
+	   (NEWID(), 'Ritalina', '1'),
+	   (NEWID(), 'Concerta', '1'),
+	   (NEWID(), 'Selfemra', '1')
+	   ;
+
+--Insertion in Medicines-per-Branch Office
+
+--Miami
+GO
+INSERT INTO Medicamentos_Por_Sucursal
+VALUES ('9bc74d68-cfda-4529-bd6e-1241ded80332', '67d563fc-9fb9-47bc-a6fa-2ff656df7c3e', '20', '11', '13.50'),
+	   ('9bc74d68-cfda-4529-bd6e-1241ded80332', 'f46a4627-3e2d-4083-bd8a-321331f92b48', '50', '25', '2.00'),
+	   ('9bc74d68-cfda-4529-bd6e-1241ded80332', '7a68b1fa-220e-4caa-ac49-636c00fef0cd', '30', '2',  '5.00'),
+	   ('9bc74d68-cfda-4529-bd6e-1241ded80332', '0f2d6a63-0fc9-492a-9d9a-ef4d2f04d51b', '95', '80', '3.00')
+	   ;
+
+--Cariari
+GO
+INSERT INTO Medicamentos_Por_Sucursal
+VALUES ('20fa0743-8f74-4031-b2bb-1818a72a8d60', '67d563fc-9fb9-47bc-a6fa-2ff656df7c3e', '20', '15', '10000'),
+	   ('20fa0743-8f74-4031-b2bb-1818a72a8d60', 'f46a4627-3e2d-4083-bd8a-321331f92b48', '40', '35', '1500'),
+	   ('20fa0743-8f74-4031-b2bb-1818a72a8d60', '7a68b1fa-220e-4caa-ac49-636c00fef0cd', '30', '26',  '3000'),
+	   ('20fa0743-8f74-4031-b2bb-1818a72a8d60', '0f2d6a63-0fc9-492a-9d9a-ef4d2f04d51b', '95', '74', '2000'),
+	   ('20fa0743-8f74-4031-b2bb-1818a72a8d60', 'c71da982-ddf8-4f6a-b7ed-e099318e2561', '15', '10', '1850'),
+	   ('20fa0743-8f74-4031-b2bb-1818a72a8d60', 'd4111e82-3cb2-4fcc-ab97-8d57c2fd5ad5', '20', '8', '12500')
+	   ;
+
+--Chomes
+GO
+INSERT INTO Medicamentos_Por_Sucursal
+VALUES ('9b5d52be-f4a6-4603-8cd2-73bcf326ee6c', '67d563fc-9fb9-47bc-a6fa-2ff656df7c3e', '20', '15', '10000'),
+	   ('9b5d52be-f4a6-4603-8cd2-73bcf326ee6c', 'f46a4627-3e2d-4083-bd8a-321331f92b48', '40', '35', '1500'),
+	   ('9b5d52be-f4a6-4603-8cd2-73bcf326ee6c', '7a68b1fa-220e-4caa-ac49-636c00fef0cd', '30', '26',  '3000'),
+	   ('9b5d52be-f4a6-4603-8cd2-73bcf326ee6c', '0f2d6a63-0fc9-492a-9d9a-ef4d2f04d51b', '95', '74', '2000'),
+	   ('9b5d52be-f4a6-4603-8cd2-73bcf326ee6c', 'c71da982-ddf8-4f6a-b7ed-e099318e2561', '15', '10', '1850'),
+	   ('9b5d52be-f4a6-4603-8cd2-73bcf326ee6c', 'd4111e82-3cb2-4fcc-ab97-8d57c2fd5ad5', '20', '8', '12500'),
+	   ('9b5d52be-f4a6-4603-8cd2-73bcf326ee6c', '06fb5c48-ede2-45fb-be2e-a1e7c0c66c6f', '30', '24', '950')
+	   ;
+
+GO
+INSERT INTO Doctor
+VALUES ('ABC001', '101230456','Alberto', 'Del Rio', ' ', 'Puntarenas'),
+	   ('ABC005', '991230456','Ben', 'Smith', ' ', 'Miami'),
+	   ('CR003', '322304561','Gerardo', 'Guzman', 'Lopez', 'San Jose'),
+	   ('CR023', '517902233','Alejandra', 'Saenz', 'Cardenas', 'Rio Frio')
+	   ;
+
+
+
