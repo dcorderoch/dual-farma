@@ -105,12 +105,16 @@
     <Compile Include="DAL\IDbContext.cs" />
     <Compile Include="DAL\IUnitOfWork.cs" />
     <Compile Include="DAL\Models\Client.cs" />
+    <Compile Include="DAL\Models\Doctor.cs" />
     <Compile Include="DAL\Models\Medicine.cs" />
     <Compile Include="DAL\Models\Order.cs" />
+    <Compile Include="DAL\Models\Prescription.cs" />
     <Compile Include="DAL\Models\User.cs" />
     <Compile Include="DAL\Repositories\ClientRepository.cs" />
+    <Compile Include="DAL\Repositories\DoctorRepository.cs" />
     <Compile Include="DAL\Repositories\MedicineRepository.cs" />
     <Compile Include="DAL\Repositories\OrderRepository.cs" />
+    <Compile Include="DAL\Repositories\PrescriptionRepository.cs" />
     <Compile Include="DAL\Repositories\Repository.cs" />
     <Compile Include="DAL\Repositories\UserRepository.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
@@ -118,6 +122,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTesting\ClientTesting.cs" />
+    <Compile Include="UnitTesting\DoctorTesting.cs" />
+    <Compile Include="UnitTesting\MedicineTesting.cs" />
+    <Compile Include="UnitTesting\OrderTesting.cs" />
+    <Compile Include="UnitTesting\PrescriptionTesting.cs" />
+    <Compile Include="UnitTesting\TestMain.cs" />
+    <Compile Include="UnitTesting\UserTesting.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

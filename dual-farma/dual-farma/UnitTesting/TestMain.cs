@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Data;
-using FarmaticaCore.DAL.Models;
+using dual_farma.DAL.Models;
 
-namespace FarmaticaCore.Test
+namespace dual_farma.UnitTesting
 {
     public class TestMain
     {
