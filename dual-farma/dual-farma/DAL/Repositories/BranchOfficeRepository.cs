@@ -49,7 +49,7 @@ namespace dual_farma.DAL.Repositories
             entity.Name = (string) record["Nombre"];
             entity.Phone = (string) record["Telefono"];
             entity.Location = (string) record["Ubicacion"];
-            
+            entity.Company = (string) record["Compañia"];
         }
     }
 }
