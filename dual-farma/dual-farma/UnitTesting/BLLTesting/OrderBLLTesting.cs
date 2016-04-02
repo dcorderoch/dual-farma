@@ -10,16 +10,16 @@ namespace dual_farma.UnitTesting.BLLTesting
     {
         public static void Test()
         {
-
+            /*
             OrderManager orderManager = new OrderManager();
             string[] medicinesToOrderWithPresc =
             {
-                "5ca6da9a - 07c6 - 4f10 - 8f34 - 0bb2bd8f1de8","248e75af - 0336 - 465c - a85c - 1a7e4cfe0dee",
-                "c0f93db8 - 548f - 4708 - 87c0 - 2d6272cdbb3f","aeddf1eb - 033d - 49f0 - 83ed - 74c239b03a00"
+                "5ca6da9a-07c6-4f10-8f34-0bb2bd8f1de8","248e75af-0336-465c-a85c-1a7e4cfe0dee",
+                "c0f93db8-548f-4708-87c0-2d6272cdbb3f","aeddf1eb-033d-49f0-83ed-74c239b03a00"
             };
             string[] medicinesWithPresc =
             {
-                "c0f93db8 - 548f - 4708 - 87c0 - 2d6272cdbb3f","aeddf1eb-033d-49f0-83ed-74c239b03a00"
+                "c0f93db8-548f-4708-87c0-2d6272cdbb3f","aeddf1eb-033d-49f0-83ed-74c239b03a00"
             };
             var resultcreateWPresc = orderManager.CreateOrderWithPrescription("403341797", medicinesToOrderWithPresc,
                 medicinesWithPresc, null, "ABC005", "75ed37b7-c0d4-4c73-a618-a7b118f1cb50", "22344444",
@@ -41,7 +41,7 @@ namespace dual_farma.UnitTesting.BLLTesting
             var ordersFound0 = orderManager.GetAllOrdersByBranchOffice("030d3a63-2dad-4663-b88e-7dfdf487edff");
 
             int updateResult = orderManager.UpdateOrderStatus("fe910acf-15d2-4266-b63c-88337a3f65a0", Constants.PREPARED_ORDER_STATUS);
-            int deleteResult = orderManager.DeleteOrder("dc0c496b-d5a3-4580-a0ff-f5551d108671");
+            int deleteResult = orderManager.DeleteOrder("dc0c496b-d5a3-4580-a0ff-f5551d108671");*/
         }
     }
 }
