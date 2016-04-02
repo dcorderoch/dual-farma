@@ -123,8 +123,7 @@ GO
 CREATE TABLE Medicamentos_Por_Pedido
 	(
 	NumeroPedido uniqueidentifier NOT NULL,
-	ID_Medicamento uniqueidentifier NOT NULL,
-	ID_Sucursal uniqueidentifier NOT NULL
+	ID_Medicamento uniqueidentifier NOT NULL
 	)
 
 -- Creates table Medicamentos_Por_Sucursal
@@ -229,8 +228,8 @@ ALTER TABLE Medicamentos_Por_Receta
 GO
 ALTER TABLE Medicamentos_Por_Pedido
 	ADD CONSTRAINT PK_Numero_Pedido_ID_Medicamento
-		PRIMARY KEY (NumeroPedido, ID_Medicamento, ID_Sucursal)
-
+		PRIMARY KEY (NumeroPedido, ID_Medicamento)
+	
 --Defines Medicamentos_Por_Pedido foreign keys.
 GO
 ALTER TABLE Medicamentos_Por_Pedido
@@ -243,12 +242,6 @@ ALTER TABLE Medicamentos_Por_Pedido
 	ADD CONSTRAINT FK_ID_Medicamento_MPP
 		FOREIGN KEY (ID_Medicamento)
 			REFERENCES Medicamento(ID_Medicamento)
-
-GO
-ALTER TABLE Medicamentos_Por_Pedido
-	ADD CONSTRAINT FK_ID_Sucursal_MPP
-		FOREIGN KEY (ID_Sucursal)
-			REFERENCES Sucursal(ID_Sucursal)
 
 --Defines Medicamentos_Por_Sucursal primary keys.
 GO
@@ -324,85 +317,101 @@ VALUES (1, 'Administrador'),
 	   (2, 'Dependiente')
 	   ;
 
--- Insertion of Branch offices.
 GO
+--Declaration of variables used to store branch offices id
+GO
+DECLARE @MedioQuesoId UNIQUEIDENTIFIER = NEWID();
+DECLARE @ManuelAntonioId UNIQUEIDENTIFIER = NEWID();
+DECLARE @CariariId UNIQUEIDENTIFIER = NEWID();
+DECLARE @SanAntonioId UNIQUEIDENTIFIER = NEWID();
+DECLARE @LaAuroraId UNIQUEIDENTIFIER = NEWID();
+DECLARE @ChomesId UNIQUEIDENTIFIER = NEWID();
+DECLARE @MiamiId UNIQUEIDENTIFIER = NEWID();
+DECLARE @EscazuId UNIQUEIDENTIFIER = NEWID();
+
+
+-- Insertion of Branch offices.
+
 INSERT INTO Sucursal
-VALUES (NEWID(), 'Medio Queso', '27849596', 'Los Chiles', 'Farmatica'),
-	   (NEWID(), 'Manuel Antonio', '26709596', 'Quepos', 'Phischel'),
-	   (NEWID(), 'Cariari', '25325960', 'Pococi','Farmatica'),
-	   (NEWID(), 'San Antonio', '22395960', 'Belen', 'Phischel'),
-	   (NEWID(), 'La Aurora', '22934364', 'Heredia', 'Phischel'),
-	   (NEWID(), 'Chomes', '28734364', 'Puntarenas','Farmatica'),
-	   (NEWID(), 'Miami', '1998293451', 'Florida','Farmatica'),
-	   (NEWID(), 'Escazu', '22157084', 'San Jose', 'Farmatica')
+VALUES (@MedioQuesoId, 'Medio Queso', '27849596', 'Los Chiles', 'Farmatica'),
+	   (@ManuelAntonioId, 'Manuel Antonio', '26709596', 'Quepos', 'Phischel'),
+	   (@CariariId, 'Cariari', '25325960', 'Pococi','Farmatica'),
+	   (@SanAntonioId, 'San Antonio', '22395960', 'Belen', 'Phischel'),
+	   (@LaAuroraId, 'La Aurora', '22934364', 'Heredia', 'Phischel'),
+	   (@ChomesId, 'Chomes', '28734364', 'Puntarenas','Farmatica'),
+	   (@MiamiId, 'Miami', '1998293451', 'Florida','Farmatica'),
+	   (@EscazuId, 'Escazu', '22157084', 'San Jose', 'Farmatica')
 	   ;
+
 
 -- Insertion of Users.
-GO
+
 INSERT INTO Usuario
-VALUES ('kevuo', 'moradodecorazon32', 'Kevin', 'Umaña', 'Ortega', 'kevgiso@hotmail.com', 'Phischel', '1', 'f507a394-1adf-4783-96b6-f9838fb3af0d'),
-	   ('manu3193', 'frenteampliorocks', 'Manuel', 'Zumbado', 'Corrales', 'manu3193@gmail.com', 'Farmatica', '1', '9bc74d68-cfda-4529-bd6e-1241ded80332'),
-	   ('majesco', 'miamigohelo', 'Nicolas', 'Jimenez', 'Garcia', 'n.jimenez@gmail.com', 'Farmatica', '2', '20fa0743-8f74-4031-b2bb-1818a72a8d60'),
-	   ('eldavid', 'soypoliglota', 'David', 'Cordero', 'Chavarria', 'dacoch@outlook.com', 'Farmatica', '2', '9b5d52be-f4a6-4603-8cd2-73bcf326ee6c')
+VALUES ('kevuo', 'moradodecorazon32', 'Kevin', 'Umaña', 'Ortega', 'kevgiso@hotmail.com', 'Phischel', '1', @LaAuroraId),
+	   ('manu3193', 'frenteampliorocks', 'Manuel', 'Zumbado', 'Corrales', 'manu3193@gmail.com', 'Farmatica', '1', @SanAntonioId),
+	   ('majesco', 'miamigohelo', 'Nicolas', 'Jimenez', 'Garcia', 'n.jimenez@gmail.com', 'Farmatica', '2', @EscazuId),
+	   ('eldavid', 'soypoliglota', 'David', 'Cordero', 'Chavarria', 'dacoch@outlook.com', 'Farmatica', '2', @ChomesId)
 	   ;
 
---Insertion of Clients
-GO
-INSERT INTO Cliente
-VALUES ('123456789', 'Alonso', 'Huertas', 'Vargas', '1', 'Guapiles', 'Constantes dolores de espalda', '1958-09-19','85479587','alonhuervar'),
-	   ('143676785', 'Arnoldo', 'Martinez', 'Perez', '5', 'San Jose', 'Migrañas', '1967-09-02','85509480','armape'),
-	   ('403341797', 'Marta', 'Peña', 'Angulo', '2', 'Heredia', 'Problemas en el colon', '1948-12-13','87475581','marpean'),
-	   ('106720579', 'Rosa', 'Aguilar', 'Lizano', '2', 'Ft. Lauderdale', 'Diabetes', '1970-12-15','1755356814','roagli')
-	   ;
+--Declaration of variables used to store medicines id
+
+DECLARE @AcetaminofenId UNIQUEIDENTIFIER = NEWID();
+DECLARE @IbuprofenoId UNIQUEIDENTIFIER = NEWID();
+DECLARE @DorivalId UNIQUEIDENTIFIER = NEWID();
+DECLARE @PanadolId UNIQUEIDENTIFIER = NEWID();
+DECLARE @EspalmoCanuId UNIQUEIDENTIFIER = NEWID();
+DECLARE @RitalinId UNIQUEIDENTIFIER = NEWID();
+DECLARE @ConcertaId UNIQUEIDENTIFIER = NEWID();
+DECLARE @SelfemraId UNIQUEIDENTIFIER = NEWID();
+
 
 -- Insertion of Medicine.
-GO
+
 INSERT INTO Medicamento
-VALUES (NEWID(), 'Acetaminofén', '0'),
-	   (NEWID(), 'Ibuprofeno', '0'),
-	   (NEWID(), 'Dorival', '0'),
-	   (NEWID(), 'Panadol', '0'),
-	   (NEWID(), 'Espasmo Canulase', '0'),
-	   (NEWID(), 'Ritalina', '1'),
-	   (NEWID(), 'Concerta', '1'),
-	   (NEWID(), 'Selfemra', '1')
+VALUES (@AcetaminofenId, 'Acetaminofén', '0'),
+	   (@IbuprofenoId, 'Ibuprofeno', '0'),
+	   (@DorivalId, 'Dorival', '0'),
+	   (@PanadolId, 'Panadol', '0'),
+	   (@EspalmoCanuId, 'Espasmo Canulase', '0'),
+	   (@RitalinId, 'Ritalina', '1'),
+	   (@ConcertaId, 'Concerta', '1'),
+	   (@SelfemraId, 'Selfemra', '1')
 	   ;
 
 --Insertion in Medicines-per-Branch Office
 
 --Miami
-GO
+
 INSERT INTO Medicamentos_Por_Sucursal
-VALUES ('9bc74d68-cfda-4529-bd6e-1241ded80332', '67d563fc-9fb9-47bc-a6fa-2ff656df7c3e', '20', '11', '13.50'),
-	   ('9bc74d68-cfda-4529-bd6e-1241ded80332', 'f46a4627-3e2d-4083-bd8a-321331f92b48', '50', '25', '2.00'),
-	   ('9bc74d68-cfda-4529-bd6e-1241ded80332', '7a68b1fa-220e-4caa-ac49-636c00fef0cd', '30', '2',  '5.00'),
-	   ('9bc74d68-cfda-4529-bd6e-1241ded80332', '0f2d6a63-0fc9-492a-9d9a-ef4d2f04d51b', '95', '80', '3.00')
+VALUES (@MiamiId, @AcetaminofenId, '20', '11', '13.50'),
+	   (@MiamiId, @ConcertaId, '50', '25', '2.00'),
+	   (@MiamiId, @PanadolId, '30', '2',  '5.00'),
+	   (@MiamiId, @IbuprofenoId, '95', '80', '3.00')
 	   ;
 
 --Cariari
-GO
+
 INSERT INTO Medicamentos_Por_Sucursal
-VALUES ('20fa0743-8f74-4031-b2bb-1818a72a8d60', '67d563fc-9fb9-47bc-a6fa-2ff656df7c3e', '20', '15', '10000'),
-	   ('20fa0743-8f74-4031-b2bb-1818a72a8d60', 'f46a4627-3e2d-4083-bd8a-321331f92b48', '40', '35', '1500'),
-	   ('20fa0743-8f74-4031-b2bb-1818a72a8d60', '7a68b1fa-220e-4caa-ac49-636c00fef0cd', '30', '26',  '3000'),
-	   ('20fa0743-8f74-4031-b2bb-1818a72a8d60', '0f2d6a63-0fc9-492a-9d9a-ef4d2f04d51b', '95', '74', '2000'),
-	   ('20fa0743-8f74-4031-b2bb-1818a72a8d60', 'c71da982-ddf8-4f6a-b7ed-e099318e2561', '15', '10', '1850'),
-	   ('20fa0743-8f74-4031-b2bb-1818a72a8d60', 'd4111e82-3cb2-4fcc-ab97-8d57c2fd5ad5', '20', '8', '12500')
+VALUES (@CariariId, @EspalmoCanuId, '20', '15', '10000'),
+	   (@CariariId, @SelfemraId, '40', '35', '1500'),
+	   (@CariariId, @AcetaminofenId, '30', '26',  '3000'),
+	   (@CariariId, @ConcertaId, '95', '74', '2000'),
+	   (@CariariId, @RitalinId, '15', '10', '1850'),
+	   (@CariariId, @IbuprofenoId, '20', '8', '12500')
 	   ;
 
 --Chomes
-GO
+
 INSERT INTO Medicamentos_Por_Sucursal
-VALUES ('9b5d52be-f4a6-4603-8cd2-73bcf326ee6c', '67d563fc-9fb9-47bc-a6fa-2ff656df7c3e', '20', '15', '10000'),
-	   ('9b5d52be-f4a6-4603-8cd2-73bcf326ee6c', 'f46a4627-3e2d-4083-bd8a-321331f92b48', '40', '35', '1500'),
-	   ('9b5d52be-f4a6-4603-8cd2-73bcf326ee6c', '7a68b1fa-220e-4caa-ac49-636c00fef0cd', '30', '26',  '3000'),
-	   ('9b5d52be-f4a6-4603-8cd2-73bcf326ee6c', '0f2d6a63-0fc9-492a-9d9a-ef4d2f04d51b', '95', '74', '2000'),
-	   ('9b5d52be-f4a6-4603-8cd2-73bcf326ee6c', 'c71da982-ddf8-4f6a-b7ed-e099318e2561', '15', '10', '1850'),
-	   ('9b5d52be-f4a6-4603-8cd2-73bcf326ee6c', 'd4111e82-3cb2-4fcc-ab97-8d57c2fd5ad5', '20', '8', '12500'),
-	   ('9b5d52be-f4a6-4603-8cd2-73bcf326ee6c', '06fb5c48-ede2-45fb-be2e-a1e7c0c66c6f', '30', '24', '950')
+VALUES (@ChomesId, @AcetaminofenId, '20', '15', '10000'),
+	   (@ChomesId, @IbuprofenoId, '40', '35', '1500'),
+	   (@ChomesId, @DorivalId, '30', '26',  '3000'),
+	   (@ChomesId, @PanadolId, '95', '74', '2000'),
+	   (@ChomesId, @RitalinId, '15', '10', '1850'),
+	   (@ChomesId, @ConcertaId, '20', '8', '12500'),
+	   (@ChomesId, @SelfemraId, '30', '24', '950')
 	   ;
 
-GO
 INSERT INTO Doctor
 VALUES ('ABC001', '101230456','Alberto', 'Del Rio', ' ', 'Puntarenas'),
 	   ('ABC005', '991230456','Ben', 'Smith', ' ', 'Miami'),
@@ -410,5 +419,15 @@ VALUES ('ABC001', '101230456','Alberto', 'Del Rio', ' ', 'Puntarenas'),
 	   ('CR023', '517902233','Alejandra', 'Saenz', 'Cardenas', 'Rio Frio')
 	   ;
 
+GO
+--Insertion of Clients
+
+INSERT INTO Cliente
+VALUES ('123456789', 'Alonso', 'Huertas', 'Vargas', '1', 'Guapiles', 'Constantes dolores de espalda', '1958-09-19','85479587','alonhuervar'),
+	   ('143676785', 'Arnoldo', 'Martinez', 'Perez', '5', 'San Jose', 'Migrañas', '1967-09-02','85509480','armape'),
+	   ('403341797', 'Marta', 'Peña', 'Angulo', '2', 'Heredia', 'Problemas en el colon', '1948-12-13','87475581','marpean'),
+	   ('106720579', 'Rosa', 'Aguilar', 'Lizano', '2', 'Ft. Lauderdale', 'Diabetes', '1970-12-15','1755356814','roagli')
+	   ;
+GO
 
 
