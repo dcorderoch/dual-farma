@@ -170,12 +170,7 @@ namespace dual_farma.DAL.Repositories
                     {
                         MedicineId = (Guid)reader["ID_Medicamento"],
                         Name = (string)reader["Nombre"],
-                        RequiresPrescription = (bool)reader["Prescripcion"],
-                        Price = (int)reader["Precio"],
-                        OriginOffice = (int)reader["Sucursal_Origen"],
-                        House = (string)reader["CasaFarmaceutica"],
-                        Stock = (int)reader["CantidadDisponible"],
-                        NumberSold = (int)reader["CantidadVentas"]
+                        RequiresPrescription = (bool)reader["Prescripcion"]
                     };
                     itemList.Add(item);
                 }

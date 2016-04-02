@@ -32,6 +32,25 @@ namespace dual_farma.DAL.Repositories
         }
 
         /// <summary>
+        /// Get all orders for the given branchoffice
+        /// </summary>
+        /// <param name="branchOfficeId"></param>
+        /// <returns></returns>
+        public IEnumerable<Order> GetAllOrdersByBranchOffice(int branchOfficeId)
+        {
+            using (var command = Context.CreateDbCommand())
+            {
+                command.CommandText = @"SELECT * FROM Pedido WHERE Sucursal_Recojo=@branchOfficeId ORDER BY FechaRecojo";
+                var newParameter = command.CreateParameter();
+                newParameter.ParameterName = "@branchOfficeId";
+                newParameter.Value = branchOfficeId;
+                command.Parameters.Add(newParameter);
+                var result = ToList(command);
+                return result;
+            }
+        }
+
+        /// <summary>
         /// insert given orden object into repository
         /// </summary>
         /// <param name="newOrder"></param>
@@ -41,11 +60,11 @@ namespace dual_farma.DAL.Repositories
             {
                 var orderProps = new object[]
                 {newOrder.OrderId.ToString(), newOrder.ClientId, newOrder.PrescriptionId, newOrder.PickUpOffice, ConvertImageToByteArray(newOrder.InvoiceImage),
-                 newOrder.HasPrescription, newOrder.State, newOrder.Priority, newOrder.PrefPhoneNum, newOrder.PickUpdDate};
+                 newOrder.HasPrescription, newOrder.State, newOrder.Priority, newOrder.PrefPhoneNum, newOrder.PickUpdDate, newOrder.Type};
                 command.CommandText = @"INSERT INTO Pedido VALUES(@orderId, @clientId, @prescriptionId, @pickUpOffice, @invoiceImage, " +
-                                                                 "@hasPrescription, @state, @priority, @prefPhoneNum, @pickUpDate)";
+                                                                 "@hasPrescription, @state, @priority, @prefPhoneNum, @pickUpDate, @type)";
                 var parameterNames = new string[] { "@orderId", "@clientId", "@prescriptionId", "@pickUpOffice", "@invoiceImage",
-                                                    "@hasPrescription", "@state", "@priority", "@prefPhoneNum", "@pickUpDate"};
+                                                    "@hasPrescription", "@state", "@priority", "@prefPhoneNum", "@pickUpDate", "@type"};
                 for (var i = 0; i < orderProps.Length; i++)
                 {
                     var newParameter = command.CreateParameter();
@@ -63,7 +82,7 @@ namespace dual_farma.DAL.Repositories
         /// </summary>
         /// <param name="medicineId"></param>
         /// <param name="orderId"></param>
-        public void AddMedicineintoOrder(Guid medicineId, Guid orderId)
+        public void AddMedicineinToOrder(Guid medicineId, Guid orderId)
         {
             using (var command = Context.CreateDbCommand())
             {
@@ -124,12 +143,12 @@ namespace dual_farma.DAL.Repositories
             {
                 var orderProps = new object[]
                { order.ClientId, order.PrescriptionId, order.PickUpOffice, ConvertImageToByteArray(order.InvoiceImage),
-                 order.HasPrescription, order.State, order.Priority, order.PrefPhoneNum, order.PickUpdDate};
+                 order.HasPrescription, order.State, order.Priority, order.PrefPhoneNum, order.PickUpdDate, order.Type};
                 command.CommandText = @"UPDATE  Pedido SET  ID_Cliente=@clientId, ID_Receta=@prescriptionId, " +
                                        "Sucursal_Recojo=@pickUpOffice,  ImagenFactura=@invoiceImage, Prescripcion=@hasPrescription, Estado=@state, " +
-                                       "Prioridad=@priority, TelefonoPreferido=@prefPhoneNum,FechaRecojo= @pickUpDate WHERE NumeroPedido=@orderId";
+                                       "Prioridad=@priority, TelefonoPreferido=@prefPhoneNum,FechaRecojo= @pickUpDate, Tipo_Pedido=@type WHERE NumeroPedido=@orderId";
                 var parameterNames = new string[] { "@clientId", "@prescriptionId", "@pickUpOffice", "@invoiceImage",
-                                                    "@hasPrescription", "@state", "@priority", "@prefPhoneNum", "@pickUpDate"};
+                                                    "@hasPrescription", "@state", "@priority", "@prefPhoneNum", "@pickUpDate","@type"};
                 for (var i = 0; i < orderProps.Length; i++)
                 {
                     var newParameter = command.CreateParameter();
@@ -181,6 +200,7 @@ namespace dual_farma.DAL.Repositories
             order.PrefPhoneNum = (string)record["TelefonoPreferido"];
             order.PickUpdDate = (DateTime)record["FechaRecojo"];
             order.InvoiceImage = ConvertByteArrayToImage((byte[])record["ImagenFactura"]);
+            order.Type = (bool) record["Tipo_Pedido"];
         }
 
         /// <summary>
@@ -199,12 +219,7 @@ namespace dual_farma.DAL.Repositories
                     {
                         MedicineId = (Guid)reader["ID_Medicamento"],
                         Name = (string)reader["Nombre"],
-                        RequiresPrescription = (bool)reader["Prescripcion"],
-                        Price = (int)reader["Precio"],
-                        OriginOffice = (int)reader["Sucursal_Origen"],
-                        House = (string)reader["CasaFarmaceutica"],
-                        Stock = (int)reader["CantidadDisponible"],
-                        NumberSold = (int)reader["CantidadVentas"]
+                        RequiresPrescription = (bool)reader["Prescripcion"]
                     };
                     itemList.Add(item);
                 }
