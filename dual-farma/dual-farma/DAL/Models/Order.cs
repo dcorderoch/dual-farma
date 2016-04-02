@@ -16,5 +16,6 @@ namespace dual_farma.DAL.Models
         public string Priority { get; set; }
         public string PrefPhoneNum { get; set; }
         public DateTime PickUpdDate { get; set; }
+        public Boolean Type { get; set; }
     }
 }
