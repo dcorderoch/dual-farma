@@ -6,6 +6,10 @@ using FarmaticaCore.DAL.Models;
 
 namespace dual_farma.BLL
 {
+
+    /// <summary>
+    /// Client_Manager is intended to validate most of the business rules related to the Clients. 
+    /// </summary>
     public class Client_Manager
     {
         /// <summary>

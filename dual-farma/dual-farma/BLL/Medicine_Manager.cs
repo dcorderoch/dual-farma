@@ -6,6 +6,10 @@ using FarmaticaCore.DAL.Repositories;
 
 namespace dual_farma.BLL
 {
+
+    /// <summary>
+    /// Medicine_Manager is intended to validate most of the business rules related to the medicines. 
+    /// </summary>
     public class Medicine_Manager
     {
         /// <summary>
