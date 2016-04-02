@@ -87,6 +87,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BLL\Account_Manager.cs" />
+    <Compile Include="BLL\Client_Manager.cs" />
     <Compile Include="BLL\Constants.cs" />
     <Compile Include="BLL\Medicine_Manager.cs" />
     <Compile Include="DAL\DbConnectionFactory.cs" />
