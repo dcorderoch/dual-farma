@@ -54,6 +54,76 @@ namespace dual_farma.DAL.Repositories
         }
 
         /// <summary>
+        /// Creates a new medicine in the given branch office
+        /// </summary>
+        /// <param name="medicine"></param>
+        /// <param name="branchOfficeId"></param>
+        public void CreateMedicineInBranchOffice(Medicine medicine, Guid branchOfficeId)
+        {
+            using (var command = Context.CreateDbCommand())
+            {
+                var medicineProps = new object[]
+                {branchOfficeId.ToString(),medicine.MedicineId.ToString(),medicine.Stock,medicine.AmmountSold,medicine.Price};
+                command.CommandText = @"INSERT INTO Medicamentos_Por_Sucursal VALUES(@branchOfficeId,@medicineId, @stock, @ammountSold, @price)";
+                var parameterNames = new string[] { "@branchOfficeId", "@medicineId", "@stock", "@ammountSold", "@price" };
+                for (var i = 0; i < medicineProps.Length; i++)
+                {
+                    var newParameter = command.CreateParameter();
+                    newParameter.ParameterName = parameterNames[i];
+                    newParameter.Value = medicineProps[i];
+                    command.Parameters.Add(newParameter);
+                }
+                command.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// Updates an existing medicine in the given branch office
+        /// </summary>
+        /// <param name="medicine"></param>
+        /// <param name="branchOfficeId"></param>
+        public void UpdateMedicineInBranchOffice(Medicine medicine, Guid branchOfficeId)
+        {
+            using (var command = Context.CreateDbCommand())
+            {
+                var medicineProps = new object[]
+                {medicine.Stock,medicine.AmmountSold,medicine.Price,medicine.MedicineId.ToString(),branchOfficeId.ToString()};
+                command.CommandText = @"UPDATE Medicamentos_Por_Sucursal SET  CantidadDisponible=@stock, CantidadVentas= @ammountSold, Precio= @price WHERE ID_Medicamento=@medicineId AND ID_Sucursal=@branchOfficeId";
+                var parameterNames = new string[] {  "@stock", "@ammountSold", "@price","@medicineId","@branchOfficeId" };
+                for (var i = 0; i < medicineProps.Length; i++)
+                {
+                    var newParameter = command.CreateParameter();
+                    newParameter.ParameterName = parameterNames[i];
+                    newParameter.Value = medicineProps[i];
+                    command.Parameters.Add(newParameter);
+                }
+                command.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// Deletes an existing medicine in the given branch office
+        /// </summary>
+        /// <param name="medicineId"></param>
+        /// <param name="branchOfficeId"></param>
+        public void DeleteMedicineFromBranchOffice(Guid medicineId, Guid branchOfficeId)
+        {
+            using (var command = Context.CreateDbCommand())
+            {
+                command.CommandText = @"DELETE FROM Medicamentos_Por_Sucursal WHERE ID_Medicamento= @medicineId AND ID_Sucursal=@branchOfficeId";
+                var newParameter1 = command.CreateParameter();
+                newParameter1.ParameterName = "@medicineId";
+                newParameter1.Value = medicineId.ToString();
+                command.Parameters.Add(newParameter1);
+                var newParameter2 = command.CreateParameter();
+                newParameter2.ParameterName = "@branchOfficeId";
+                newParameter2.Value = branchOfficeId.ToString();
+                command.Parameters.Add(newParameter2);
+                command.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
         /// Gets an existing medicine 
         /// </summary>
         /// <param name="id"></param>
@@ -72,6 +142,11 @@ namespace dual_farma.DAL.Repositories
             }
         }
 
+        /// <summary>
+        /// Gets all medicines for the given branch office
+        /// </summary>
+        /// <param name="branchOfficeId"></param>
+        /// <returns></returns>
         public IEnumerable<Medicine> GetAllByBranchOffice(Guid branchOfficeId)
         {
             using (var command = Context.CreateDbCommand())
