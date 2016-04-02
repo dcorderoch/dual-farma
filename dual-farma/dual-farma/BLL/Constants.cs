@@ -33,6 +33,8 @@
         public const int MEDICINE_NOT_DELETED = 0;
         public const int MEDICINE_DELETED = 1;
 
-
+        //Standardized constants
+        public const int SUCCESS = 1;
+        public const int ERROR = 0;
     }
 }
