@@ -1,8 +1,8 @@
 ﻿using System;
-using FarmaticaCore.DAL;
-using FarmaticaCore.DAL.Repositories;
 using System.Collections.Generic;
-using FarmaticaCore.DAL.Models;
+using dual_farma.DAL;
+using dual_farma.DAL.Models;
+using dual_farma.DAL.Repositories;
 
 namespace dual_farma.BLL
 {
@@ -48,7 +48,7 @@ namespace dual_farma.BLL
                 try
                 {
                     newClient.Id = cedula;
-                    //newClient.Password = password;
+                    newClient.Password = password;
                     newClient.Name = name;
                     newClient.LastName1 = lastName1;
                     newClient.LastName2 = lastName2;
@@ -115,7 +115,7 @@ namespace dual_farma.BLL
                 try
                 {
                     newClient.Id = cedula;
-                    //newClient.Password = password;
+                    newClient.Password = password;
                     newClient.Name = name;
                     newClient.LastName1 = lastName1;
                     newClient.LastName2 = lastName2;

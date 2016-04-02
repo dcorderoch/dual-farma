@@ -1,8 +1,8 @@
 ﻿using System;
-using FarmaticaCore.DAL;
-using FarmaticaCore.DAL.Repositories;
 using System.Collections.Generic;
-using FarmaticaCore.DAL.Models;
+using dual_farma.DAL;
+using dual_farma.DAL.Models;
+using dual_farma.DAL.Repositories;
 
 namespace dual_farma.BLL
 {
@@ -40,24 +40,24 @@ namespace dual_farma.BLL
             int response = 0;
             using (var uow = context.CreateUnitOfWork())
             {
-                //var doctorRepo = new DoctorRepository(context);
-                //Doctor newDoctor = new Doctor();
-                //try
-                //{
-                //    newDoctor.DoctorId = doctorId;
-                //    newDoctor.Cedula = numeroCedula;
-                //    newDoctor.Name = name;
-                //    newDoctor.LastName1 = lastName1;
-                //    newDoctor.LastName2 = lastName2;
-                //    newDoctor.Home = home;
-                //    doctorRepo.Create(newDoctor);
-                //    uow.SaveChanges();
-                //    response = Constants.SUCCESS;
-                //}
-            //    catch (Exception)
-            //    {
-            //        response = Constants.FAIL;
-            //    }
+                var doctorRepo = new DoctorRepository(context);
+                Doctor newDoctor = new Doctor();
+                try
+                {
+                    newDoctor.DoctorId = doctorId;
+                    newDoctor.IdNumber = numeroCedula;
+                    newDoctor.Name = name;
+                    newDoctor.LastName1 = lastName1;
+                    newDoctor.LastName2 = lastName2;
+                    newDoctor.PlaceResidence = home;
+                    doctorRepo.Create(newDoctor);
+                    uow.SaveChanges();
+                    response = Constants.SUCCESS;
+                }
+                catch (Exception)
+                {
+                    response = Constants.FAIL;
+                }
             }
             return response;
         }
@@ -66,23 +66,23 @@ namespace dual_farma.BLL
         /// Returns the list of doctors in the DB.
         /// </summary>
         /// <returns>1 or 0 depending whether the operation completed or not.</returns>
-        //public List<Doctor> GetAllDoctors()
-        //{
-        //    List<Doctor> doctorList = new List<Doctor>();
-        //    using (var uow = context.CreateUnitOfWork())
-        //    {
-        //        var doctorRepo = new doctorRepository(context);
-        //        try
-        //        {
-        //            doctorList = (List<Doctor>)doctorRepo.GetAll();
-        //        }
-        //        catch (Exception)
-        //        {
-        //            doctorList = null;
-        //        }
-        //    }
-        //    return doctorList;
-        //}
+        public List<Doctor> GetAllDoctors()
+        {
+            List<Doctor> doctorList = new List<Doctor>();
+            using (var uow = context.CreateUnitOfWork())
+            {
+                var doctorRepo = new DoctorRepository(context);
+                try
+                {
+                    doctorList = (List<Doctor>)doctorRepo.GetAll();
+                }
+                catch (Exception)
+                {
+                    doctorList = null;
+                }
+            }
+            return doctorList;
+        }
 
         /// <summary>
         /// Updates doctor with given values.
@@ -99,18 +99,18 @@ namespace dual_farma.BLL
             var response = 0;
             using (var uow = context.CreateUnitOfWork())
             {
-                //var doctorRepo = new DoctorRepository(context);
-                //Doctor newDoctor = new Doctor();
+                var doctorRepo = new DoctorRepository(context);
+                Doctor newDoctor = new Doctor();
                 try
                 {
-                    //newDoctor.DoctorId = doctorId;
-                    //newDoctor.Cedula = numeroCedula;
-                    //newDoctor.Name = name;
-                    //newDoctor.LastName1 = lastName1;
-                    //newDoctor.LastName2 = lastName2;
-                    //newDoctor.Home = home;
-                    //doctorRepo.Update(newDoctor);
-                    //uow.SaveChanges();
+                    newDoctor.DoctorId = doctorId;
+                    newDoctor.IdNumber = numeroCedula;
+                    newDoctor.Name = name;
+                    newDoctor.LastName1 = lastName1;
+                    newDoctor.LastName2 = lastName2;
+                    newDoctor.PlaceResidence = home;
+                    doctorRepo.Update(newDoctor);
+                    uow.SaveChanges();
                     response = Constants.SUCCESS;
                 }
                 catch (Exception)
@@ -131,10 +131,10 @@ namespace dual_farma.BLL
             int response = 0;
             using (var uow = context.CreateUnitOfWork())
             {
-                //var doctorRepo = new DoctorRepository(context);
+                var doctorRepo = new DoctorRepository(context);
                 try
                 {
-                  //  doctorRepo.DeleteById(doctorId);
+                    doctorRepo.DeleteById(doctorId);
                     uow.SaveChanges();
                     response = Constants.SUCCESS;
                 }
