@@ -1,9 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+<<<<<<< HEAD
 using System.Web.UI.WebControls;
 using FarmaticaCore.DAL;
 using FarmaticaCore.DAL.Models;
 using FarmaticaCore.DAL.Repositories;
+=======
+using dual_farma.DAL;
+using dual_farma.DAL.Models;
+using dual_farma.DAL.Repositories;
+>>>>>>> Project-DAL
 
 namespace dual_farma.BLL
 {

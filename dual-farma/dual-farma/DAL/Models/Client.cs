@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FarmaticaCore.DAL.Models
+namespace dual_farma.DAL.Models
 {
     /// <summary>
     /// Client POCO 
@@ -8,6 +8,7 @@ namespace FarmaticaCore.DAL.Models
     public class Client
     {
         public string Id { get; set; }
+        public string Password { get; set; }
         public string Name { get; set; }
         public string LastName1 { get; set; }
         public string LastName2 { get; set; }
