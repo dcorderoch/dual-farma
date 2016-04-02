@@ -112,7 +112,7 @@ namespace dual_farma.BLL
                 var medicineRepo = new MedicineRepository(context);
                 try
                 {
-                    medicineList = (List<Medicine>) medicineRepo.GetAll(house);
+                    //medicineList = (List<Medicine>) medicineRepo.GetAll(house);
                 }
                 catch (Exception)
                 {
@@ -135,7 +135,7 @@ namespace dual_farma.BLL
                 var medicineRepo = new MedicineRepository(context);
                 try
                 {
-                    medicineList = (List<Medicine>)medicineRepo.getMostSold(company);
+                    //medicineList = (List<Medicine>)medicineRepo.getMostSold(company);
                 }
                 catch (Exception)
                 {
@@ -159,7 +159,7 @@ namespace dual_farma.BLL
                 var medicineRepo = new MedicineRepository(context);
                 try
                 {
-                    medicineList = (List<Medicine>)medicineRepo.GetSoldByNewSoftware(company);
+                    //medicineList = (List<Medicine>)medicineRepo.GetSoldByNewSoftware(company);
                 }
                 catch (Exception)
                 {
@@ -182,7 +182,7 @@ namespace dual_farma.BLL
                 var medicineRepo = new MedicineRepository(context);
                 try
                 {
-                    medicineList = (List<Medicine>)medicineRepo.GetTotalSales(company);
+                    //medicineList = (List<Medicine>)medicineRepo.GetTotalSales(company);
                 }
                 catch (Exception)
                 {
@@ -204,7 +204,7 @@ namespace dual_farma.BLL
                 var medicineRepo = new MedicineRepository(context);
                 try
                 {
-                    medicineList = (List<Medicine>)medicineRepo.GetGlobalMostSold();
+                 //   medicineList = (List<Medicine>)medicineRepo.GetGlobalMostSold();
                 }
                 catch (Exception)
                 {
