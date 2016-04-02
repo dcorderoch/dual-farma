@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.Common;
 
-namespace FarmaticaCore.DAL
+namespace dual_farma.DAL
 {
     /// <summary>
     /// Implementation of unit of work 
@@ -28,7 +28,7 @@ namespace FarmaticaCore.DAL
             mRolledBack = rolledBack;
             mCommited = commited;
 
-        }  
+        }
         /// <summary>
         /// Method to release resources
         /// </summary>
@@ -47,7 +47,7 @@ namespace FarmaticaCore.DAL
         /// </summary>
         public void SaveChanges()
         {
-            if (mTransaction==null)
+            if (mTransaction == null)
             {
                 throw new InvalidOperationException("The transaction has been already commited!");
             }

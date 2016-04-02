@@ -1,4 +1,4 @@
-﻿namespace FarmaticaCore.DAL.Models
+﻿namespace dual_farma.DAL.Models
 {
     /// <summary>
     /// POCO class to represent a user in the database
@@ -12,5 +12,6 @@
         public string LastName2 { get; set; }
         public string Email { get; set; }
         public int RoleId { get; set; }
+        public string Company { get; set; }
     }
 }
