@@ -44,11 +44,11 @@ namespace dual_farma.BLL
                     newMedicine.MedicineId = Guid.NewGuid();
                     newMedicine.Name = name;
                     newMedicine.RequiresPrescription = Convert.ToBoolean(requiresPrescription);
-                    newMedicine.Price = Convert.ToInt32(price);
+                    newMedicine.Price = Convert.ToInt32(price);/*
                     newMedicine.OriginOffice = Convert.ToInt32(originOffice);
                     newMedicine.House = house;
                     newMedicine.Stock = Convert.ToInt32(stock);
-                    newMedicine.NumberSold = Convert.ToInt32(numberSold);
+                    newMedicine.NumberSold = Convert.ToInt32(numberSold);*/
                     medicineRepo.Create(newMedicine);
                     uow.SaveChanges();
                     response = Constants.MEDICINE_CREATED;
@@ -79,11 +79,11 @@ namespace dual_farma.BLL
                     result[0] = medicineId;
                     result[1] = medicine.Name;
                     result[2] = medicine.RequiresPrescription.ToString();
-                    result[3] = medicine.Price.ToString();
+                    result[3] = medicine.Price.ToString();/*
                     result[4] = medicine.OriginOffice.ToString();
                     result[5] = medicine.House;
                     result[6] = medicine.Stock.ToString();
-                    result[7] = medicine.NumberSold.ToString();
+                    result[7] = medicine.NumberSold.ToString();*/
                 }
                 catch (Exception)
                 {
@@ -142,12 +142,12 @@ namespace dual_farma.BLL
                     newMedicine.MedicineId = new Guid(medicineId);
                     newMedicine.Name = name;
                     newMedicine.RequiresPrescription = Convert.ToBoolean(requiresPrescription);
-                    newMedicine.Price = Convert.ToInt32(price);
+                    newMedicine.Price = Convert.ToInt32(price);/*
                     newMedicine.OriginOffice = Convert.ToInt32(originOffice);
                     newMedicine.House = house;
                     newMedicine.Stock = Convert.ToInt32(stock);
                     newMedicine.NumberSold= Convert.ToInt32(numberSold);
-                    medicineRepo.Update(newMedicine);
+                    medicineRepo.Update(newMedicine);*/
                     uow.SaveChanges();
                     response = Constants.MEDICINE_UPDATED;
                 }
