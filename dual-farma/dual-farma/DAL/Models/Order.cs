@@ -9,7 +9,7 @@ namespace dual_farma.DAL.Models
         public Guid OrderId { get; set; }
         public string ClientId { get; set; }
         public Guid? PrescriptionId { get; set; }
-        public int PickUpOffice { get; set; }
+        public Guid PickUpOffice { get; set; }
         public Image InvoiceImage { get; set; }
         public bool HasPrescription { get; set; }
         public int State { get; set; }
