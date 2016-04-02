@@ -40,7 +40,7 @@ namespace dual_farma.DAL.Repositories
         {
             using (var command = Context.CreateDbCommand())
             {
-                command.CommandText = @"SELECT * FROM Pedido WHERE Sucursal_Recojo=@branchOfficeId ORDER BY FechaRecojo";
+                command.CommandText = @"SELECT * FROM Pedido WHERE Sucursal_Recojo=@branchOfficeId ORDER BY FechaRecojo DESC";
                 var newParameter = command.CreateParameter();
                 newParameter.ParameterName = "@branchOfficeId";
                 newParameter.Value = branchOfficeId.ToString();
