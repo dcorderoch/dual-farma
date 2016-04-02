@@ -7,6 +7,8 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using dual_farma.BLL;
+using dual_farma.UnitTesting;
+using dual_farma.UnitTesting.BLLTesting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -17,6 +19,9 @@ namespace dual_farma.Controllers
         // GET api/test
         public string Get()
         {
+
+            MainTest testMain = new MainTest();
+            testMain.Test();
             return "ok, this is interesting";
         }
         // POST api/test/post
