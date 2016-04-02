@@ -11,9 +11,7 @@ namespace dual_farma.DAL.Models
         public string Name { get; set; }
         public bool RequiresPrescription { get; set; }
         public decimal Price { get; set; }
-        public int OriginOffice { get; set; }
-        public string House { get; set; }
         public int Stock { get; set; }
-        public int NumberSold { get; set; }
+        public int AmmountSold { get; set; }
     }
 }
