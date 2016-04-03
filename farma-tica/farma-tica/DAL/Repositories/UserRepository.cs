@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Runtime.InteropServices;
 using farma_tica.DAL.Models;
@@ -27,9 +28,9 @@ namespace farma_tica.DAL.Repositories
             using (var command = Context.CreateDbCommand())
             {
                 var userProps = new object[]
-                {user.IdUsuario, user.Password, user.Name, user.LastName1, user.LastName2, user.Email, user.RoleId, user.Company};
-                command.CommandText = @"INSERT INTO Usuario VALUES(@userId, @pass, @name, @lastName1, @lastName2, @email, @company, @role)";
-                var parameterNames = new string[] { "@userId", "@pass", "@name", "@lastName1", "@lastName2", "@email", "@role", "@company" };
+                {user.IdUsuario, user.Password, user.Name, user.LastName1, user.LastName2, user.Email, user.RoleId, user.Company, user.OfficeBranchId};
+                command.CommandText = @"INSERT INTO Usuario VALUES(@userId, @pass, @name, @lastName1, @lastName2, @email, @company, @role, @officeBranchId)";
+                var parameterNames = new string[] { "@userId", "@pass", "@name", "@lastName1", "@lastName2", "@email", "@role", "@company", "@officeBranchId" };
                 for (var i = 0; i < userProps.Length; i++)
                 {
                     var newParameter = command.CreateParameter();
@@ -101,9 +102,9 @@ namespace farma_tica.DAL.Repositories
             using (var command = Context.CreateDbCommand())
             {
                 var userProps = new object[]
-                { user.Password, user.Name, user.LastName1, user.LastName2, user.Email, user.RoleId, user.Company};
-                command.CommandText = @"UPDATE Usuario SET Pass= @pass, Nombre= @name, PrimerApellido= @lastName1, SegundoApellido= @lastName2, Email= @email, Rol_Usuario= @role, Compañia=@company WHERE ID_Usuario=@userId";
-                var parameterNames = new string[] { "@pass", "@name", "@lastName1", "@lastName2", "@email", "@role", "@company" };
+                { user.Password, user.Name, user.LastName1, user.LastName2, user.Email, user.RoleId, user.Company,user.OfficeBranchId};
+                command.CommandText = @"UPDATE Usuario SET Pass= @pass, Nombre= @name, PrimerApellido= @lastName1, SegundoApellido= @lastName2, Email= @email, Rol_Usuario= @role, Compañia=@company, ID_Sucursal=@officeBranchId WHERE ID_Usuario=@userId";
+                var parameterNames = new string[] { "@pass", "@name", "@lastName1", "@lastName2", "@email", "@role", "@company", "@officeBranchId" };
                 for (var i = 0; i < userProps.Length; i++)
                 {
                     var newParameter = command.CreateParameter();
@@ -146,6 +147,7 @@ namespace farma_tica.DAL.Repositories
             entity.Email = (string)record["Email"];
             entity.RoleId = (int)record["Rol_Usuario"];
             entity.Company = (string)record["Compañia"];
+            entity.OfficeBranchId = (Guid) record["ID_Sucursal"];
         }
     }
 }

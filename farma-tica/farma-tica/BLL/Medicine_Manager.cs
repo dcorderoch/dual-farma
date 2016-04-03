@@ -1,11 +1,16 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using farma_tica.DAL;
 using farma_tica.DAL.Models;
 using farma_tica.DAL.Repositories;
 
+
 namespace farma_tica.BLL
 {
+
+    /// <summary>
+    /// Medicine_Manager is intended to validate most of the business rules related to the medicines. 
+    /// </summary>
     public class Medicine_Manager
     {
         /// <summary>
@@ -44,11 +49,6 @@ namespace farma_tica.BLL
                     newMedicine.MedicineId = Guid.NewGuid();
                     newMedicine.Name = name;
                     newMedicine.RequiresPrescription = Convert.ToBoolean(requiresPrescription);
-                    newMedicine.Price = Convert.ToInt32(price);
-                    newMedicine.OriginOffice = Convert.ToInt32(originOffice);
-                    newMedicine.House = house;
-                    newMedicine.Stock = Convert.ToInt32(stock);
-                    newMedicine.NumberSold = Convert.ToInt32(numberSold);
                     medicineRepo.Create(newMedicine);
                     uow.SaveChanges();
                     response = Constants.MEDICINE_CREATED;
@@ -80,10 +80,6 @@ namespace farma_tica.BLL
                     result[1] = medicine.Name;
                     result[2] = medicine.RequiresPrescription.ToString();
                     result[3] = medicine.Price.ToString();
-                    result[4] = medicine.OriginOffice.ToString();
-                    result[5] = medicine.House;
-                    result[6] = medicine.Stock.ToString();
-                    result[7] = medicine.NumberSold.ToString();
                 }
                 catch (Exception)
                 {
@@ -99,7 +95,7 @@ namespace farma_tica.BLL
         /// </summary>
         /// <param></param>
         /// <returns>List<Medicine> that contains all the medicines of the specified company</returns>
-        public List<Medicine> GetAllMedicines()
+        public List<Medicine> GetAllMedicines(string house)
         {
             List<Medicine> medicineList = new List<Medicine>();
             using (var uow = context.CreateUnitOfWork())
@@ -107,7 +103,7 @@ namespace farma_tica.BLL
                 var medicineRepo = new MedicineRepository(context);
                 try
                 {
-                    medicineList = (List<Medicine>) medicineRepo.GetAll();
+                    medicineList = (List<Medicine>) medicineRepo.GetAllByBranchOffice(new Guid(house));
                 }
                 catch (Exception)
                 {
@@ -116,6 +112,99 @@ namespace farma_tica.BLL
             }
             return medicineList;
         }
+
+        /// <summary>
+        /// Gets most sold medicines by the company given.
+        /// </summary>
+        /// <param name="company"></param>
+        /// <returns>List of medicines ordered descendently by most sales.</returns>
+        public List<Medicine> GetMostSoldMedicinesByCompany(string company)
+        {
+            List<Medicine> medicineList = new List<Medicine>();
+            using (var uow = context.CreateUnitOfWork())
+            {
+                var medicineRepo = new MedicineRepository(context);
+                try
+                {
+                    medicineList = (List<Medicine>)medicineRepo.GetTotalMostSoldByCompany(company);
+                }
+                catch (Exception)
+                {
+                    medicineList = null;
+                }
+            }
+            return medicineList;
+
+        }
+
+        /// <summary>
+        /// Gets table with medicines most sold by using the new software.
+        /// </summary>
+        /// <param name="company"></param>
+        /// <returns>List of most sold medicines by using new software.</returns>
+        public List<Medicine> GetMostSoldByNewSoftware(string company)
+        {
+            List<Medicine> medicineList = new List<Medicine>();
+            using (var uow = context.CreateUnitOfWork())
+            {
+                var medicineRepo = new MedicineRepository(context);
+                try
+                {
+                    medicineList = (List<Medicine>)medicineRepo.GetOnlineMostSoldByCompany(company);
+                }
+                catch (Exception)
+                {
+                    medicineList = null;
+                }
+            }
+            return medicineList;
+        }
+
+        /// <summary>
+        /// Gives the total amount of sales accomplished by given company.
+        /// </summary>
+        /// <param name="company"></param>
+        /// <returns>Integer value that indicates the total sales accomplished by the company.</returns>
+        public int TotalSalesByCompany(string company)
+        {
+            var sales = 0;
+            using (var uow = context.CreateUnitOfWork())
+            {
+                var medicineRepo = new MedicineRepository(context);
+                try
+                {
+                    sales = medicineRepo.GetAmmountSoldByCompany(company);
+                }
+                catch (Exception)
+                {
+                    sales = 0;
+                }
+            }
+            return sales;
+        }
+
+        /// <summary>
+        /// Gets the most sold medicines globally.
+        /// </summary>
+        /// <returns>List of medicines most sold by both companies.</returns>
+        public List<Medicine> GlobalMostSoldMedicines()
+        {
+            List<Medicine> medicineList = new List<Medicine>();
+            using (var uow = context.CreateUnitOfWork())
+            {
+                var medicineRepo = new MedicineRepository(context);
+                try
+                {
+                    medicineList = (List<Medicine>)medicineRepo.GetTotalMostSold();
+                }
+                catch (Exception)
+                {
+                    medicineList = null;
+                }
+            }
+            return medicineList;
+        }
+
 
         /// <summary>
         /// Updates given medicine if possible. 
@@ -142,11 +231,6 @@ namespace farma_tica.BLL
                     newMedicine.MedicineId = new Guid(medicineId);
                     newMedicine.Name = name;
                     newMedicine.RequiresPrescription = Convert.ToBoolean(requiresPrescription);
-                    newMedicine.Price = Convert.ToInt32(price);
-                    newMedicine.OriginOffice = Convert.ToInt32(originOffice);
-                    newMedicine.House = house;
-                    newMedicine.Stock = Convert.ToInt32(stock);
-                    newMedicine.NumberSold= Convert.ToInt32(numberSold);
                     medicineRepo.Update(newMedicine);
                     uow.SaveChanges();
                     response = Constants.MEDICINE_UPDATED;

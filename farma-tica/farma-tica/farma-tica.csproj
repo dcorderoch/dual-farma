@@ -128,8 +128,12 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BLL\Account_Manager.cs" />
+    <Compile Include="BLL\BranchOfficeManager.cs" />
+    <Compile Include="BLL\Client_Manager.cs" />
     <Compile Include="BLL\Constants.cs" />
+    <Compile Include="BLL\Doctor_Manager.cs" />
     <Compile Include="BLL\Medicine_Manager.cs" />
+    <Compile Include="BLL\OrderManager.cs" />
     <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -143,12 +147,14 @@
     <Compile Include="DAL\IConnectionFactory.cs" />
     <Compile Include="DAL\IDbContext.cs" />
     <Compile Include="DAL\IUnitOfWork.cs" />
+    <Compile Include="DAL\Models\BranchOffice.cs" />
     <Compile Include="DAL\Models\Client.cs" />
     <Compile Include="DAL\Models\Doctor.cs" />
     <Compile Include="DAL\Models\Medicine.cs" />
     <Compile Include="DAL\Models\Order.cs" />
     <Compile Include="DAL\Models\Prescription.cs" />
     <Compile Include="DAL\Models\User.cs" />
+    <Compile Include="DAL\Repositories\BranchOfficeRepository.cs" />
     <Compile Include="DAL\Repositories\ClientRepository.cs" />
     <Compile Include="DAL\Repositories\DoctorRepository.cs" />
     <Compile Include="DAL\Repositories\MedicineRepository.cs" />

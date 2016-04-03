@@ -133,6 +133,19 @@ namespace farma_tica.DAL.Repositories
             }
         }
 
+        public void DeleteMedicinesFromPrescription(object id)
+        {
+            using (var command = Context.CreateDbCommand())
+            {
+                command.CommandText = @"DELETE FROM Medicamentos_Por_Receta WHERE NumeroReceta= @prescriptionId";
+                var newParameter = command.CreateParameter();
+                newParameter.ParameterName = "@prescriptionId";
+                newParameter.Value = id.ToString();
+                command.Parameters.Add(newParameter);
+                command.ExecuteNonQuery();
+            }
+        }
+
 
         /// <summary>
         /// Gets a list of medicines for the given prescription
@@ -170,12 +183,7 @@ namespace farma_tica.DAL.Repositories
                     {
                         MedicineId = (Guid)reader["ID_Medicamento"],
                         Name = (string)reader["Nombre"],
-                        RequiresPrescription = (bool)reader["Prescripcion"],
-                        Price = (int)reader["Precio"],
-                        OriginOffice = (int)reader["Sucursal_Origen"],
-                        House = (string)reader["CasaFarmaceutica"],
-                        Stock = (int)reader["CantidadDisponible"],
-                        NumberSold = (int)reader["CantidadVentas"]
+                        RequiresPrescription = (bool)reader["Prescripcion"]
                     };
                     itemList.Add(item);
                 }

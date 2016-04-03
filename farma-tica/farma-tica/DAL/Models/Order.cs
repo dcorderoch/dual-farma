@@ -9,12 +9,13 @@ namespace farma_tica.DAL.Models
         public Guid OrderId { get; set; }
         public string ClientId { get; set; }
         public Guid? PrescriptionId { get; set; }
-        public int PickUpOffice { get; set; }
+        public Guid PickUpOffice { get; set; }
         public Image InvoiceImage { get; set; }
         public bool HasPrescription { get; set; }
         public int State { get; set; }
         public string Priority { get; set; }
         public string PrefPhoneNum { get; set; }
         public DateTime PickUpdDate { get; set; }
+        public Boolean Type { get; set; }
     }
 }

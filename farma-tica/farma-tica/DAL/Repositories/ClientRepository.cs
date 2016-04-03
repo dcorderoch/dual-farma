@@ -37,9 +37,9 @@ namespace farma_tica.DAL.Repositories
             using (var command = Context.CreateDbCommand())
             {
                 var clientProps = new object[]
-                {newClient.Id, newClient.Name, newClient.LastName1, newClient.LastName2,newClient.PenaltiesNumber,newClient.PlaceResidence,newClient.MedicalHistory,newClient.BornDate,newClient.PhoneMum};
-                command.CommandText = @"INSERT INTO Cliente VALUES(@id, @name, @lastName1, @lastName2, @penaltiesNumber, @placeResidence, @medicalHistory, @bornDate, @phoneNum)";
-                var parameterNames = new string[] { "@id", "@name", "@lastName1", "@lastName2", "@penaltiesNumber", "@placeResidence", "@medicalHistory", "@bornDate", "@phoneNum" };
+                {newClient.Id, newClient.Password, newClient.Name, newClient.LastName1, newClient.LastName2,newClient.PenaltiesNumber,newClient.PlaceResidence,newClient.MedicalHistory,newClient.BornDate,newClient.PhoneMum};
+                command.CommandText = @"INSERT INTO Cliente VALUES(@id, @pass, @name, @lastName1, @lastName2, @penaltiesNumber, @placeResidence, @medicalHistory, @bornDate, @phoneNum)";
+                var parameterNames = new string[] { "@id", "@pass", "@name", "@lastName1", "@lastName2", "@penaltiesNumber", "@placeResidence", "@medicalHistory", "@bornDate", "@phoneNum" };
                 for (var i = 0; i < clientProps.Length; i++)
                 {
                     var newParameter = command.CreateParameter();
@@ -79,10 +79,10 @@ namespace farma_tica.DAL.Repositories
             using (var command = Context.CreateDbCommand())
             {
                 var clientProps = new object[]
-                { newClient.Name, newClient.LastName1, newClient.LastName2,newClient.PenaltiesNumber,newClient.PlaceResidence,newClient.MedicalHistory,newClient.BornDate,newClient.PhoneMum};
-                command.CommandText = @"UPDATE Cliente SET Nombre = @name, PrimerApellido=@lastName1, SegundoApellido=@lastName2, CantidadMultas=@penaltiesNum, LugarResidencia=@placeResidence, 
+                {newClient.Password, newClient.Name, newClient.LastName1, newClient.LastName2,newClient.PenaltiesNumber,newClient.PlaceResidence,newClient.MedicalHistory,newClient.BornDate,newClient.PhoneMum};
+                command.CommandText = @"UPDATE Cliente SET Pass= @pass, Nombre = @name, PrimerApellido=@lastName1, SegundoApellido=@lastName2, CantidadMultas=@penaltiesNum, LugarResidencia=@placeResidence, 
                                                            Historial= @medicalHistory, FechaNacimiento= @bornDate, NumeroTelefono=@phoneNum WHERE NumeroCedula =@clientId";
-                var parameterNames = new string[] { "@name", "@lastName1", "@lastName2", "@penaltiesNum", "@placeResidence", "@medicalHistory", "@bornDate", "@phoneNum" };
+                var parameterNames = new string[] {"@pass", "@name", "@lastName1", "@lastName2", "@penaltiesNum", "@placeResidence", "@medicalHistory", "@bornDate", "@phoneNum" };
                 for (var i = 0; i < clientProps.Length; i++)
                 {
                     var newParameter = command.CreateParameter();
@@ -116,6 +116,33 @@ namespace farma_tica.DAL.Repositories
         }
 
         /// <summary>
+        /// Gets client's number of penalties for the given id
+        /// </summary>
+        /// <param name="clientId"></param>
+        /// <returns></returns>
+        public int GetNumberOfPenalties(string clientId)
+        {
+            int numberOfPenalties=0;
+            using (var command = Context.CreateDbCommand())
+            {
+                command.CommandText = @"SELECT CantidadMultas FROM Cliente WHERE NumeroCedula= @clientId";
+                var newParameter = command.CreateParameter();
+                newParameter.ParameterName = "@clientId";
+                newParameter.Value = clientId;
+                command.Parameters.Add(newParameter);
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        numberOfPenalties = (int) reader["CantidadMultas"];
+                    }
+                }
+            }
+            return numberOfPenalties;
+        }
+
+
+        /// <summary>
         /// Map result into entity
         /// </summary>
         /// <param name="record">query result</param>
@@ -123,6 +150,7 @@ namespace farma_tica.DAL.Repositories
         protected override void Map(IDataRecord record, Client client)
         {
             client.Id = (string)record["NumeroCedula"];
+            client.Id = (string) record["Pass"];
             client.Name = (string)record["Nombre"];
             client.LastName1 = (string)record["PrimerApellido"];
             client.LastName2 = (string)record["SegundoApellido"];
