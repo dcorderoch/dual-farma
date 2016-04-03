@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -21,15 +22,16 @@ namespace farma_tica.Controllers
         [HttpPost]
         public JsonResult Create(Medicine newMed)
         {
+            //MUST CHANGE
             var medm = new Medicine_Manager();
             return
                 Json(new ReturnStatus()
                 {
                     StatusCode =
-                        medm.CreateMedicine(newMed.Name, newMed.RequiresPrescription.ToString(), newMed.Price.ToString(), newMed.OriginOffice.ToString(),
-                            newMed.House, newMed.Stock.ToString(), newMed.NumberSold.ToString())
-                });
+                        medm.CreateMedicine(newMed.Name, newMed.RequiresPrescription.ToString(), newMed.Price.ToString(), "CHANGE", "HOUSE",newMed.Stock.ToString(),newMed.AmmountSold.ToString())
+                },JsonRequestBehavior.AllowGet);
         }
+
         // URI from Angular: /home/Medicine/Medicine
         // returns null if it doesn't exist
         [HttpPost]
@@ -39,13 +41,15 @@ namespace farma_tica.Controllers
             return Json(medm.GetMedicineById(mId), JsonRequestBehavior.AllowGet);
         }
 
+        // URI from Angular: /home/Medicine/AllMeds
         [HttpPost]
-        public JsonResult AllMeds()
+        public JsonResult AllMeds(string House)
         {
             var medm = new Medicine_Manager();
-            return Json(medm.GetAllMedicines(), JsonRequestBehavior.AllowGet);
+            return Json(medm.GetAllMedicines(House), JsonRequestBehavior.AllowGet);
         }
 
+        // URI from Angular: /home/Medicine/Update
         [HttpPost]
         public JsonResult Update(Medicine newMed)
         {
@@ -53,53 +57,11 @@ namespace farma_tica.Controllers
             return Json(new ReturnStatus() {StatusCode = 500}, JsonRequestBehavior.AllowGet);
         }
 
-        //// POST api/medicine/create
-            //public string Create([FromBody]string name, [FromBody]string requiresPrescription, [FromBody]string price, [FromBody]string originOffice, [FromBody]string house, [FromBody]string stock,
-            //    [FromBody]string numberSold)
-            //{
-            //    var MM = new Medicine_Manager();
-            //    if (MM.CreateMedicine(name,requiresPrescription,price,originOffice,house,stock,numberSold) == Constants.MEDICINE_CREATED)
-            //    {
-            //        return "{medicine:created}";
-            //    }
-            //    return "{medicine:still-not-created}";
-            //}
-
-            //// GET api/medicine/medicine
-            //public string[] Medicine([FromBody]string mID)
-            //{
-            //    var MM = new Medicine_Manager();
-            //    return MM.GetMedicineById(mID);
-            //}
-
-            //// GET api/medicine/allmeds
-            //public List<Medicine> AllMeds()
-            //{
-            //    var MM = new Medicine_Manager();
-            //    return MM.GetAllMedicines();
-            //}
-
-            //// PUT api/medicine/update
-            //public string Update([FromBody] string name, [FromBody] string requiresPrescription, [FromBody] string price,
-            //    [FromBody] string originOffice, [FromBody] string house, [FromBody] string stock,
-            //    [FromBody] string numberSold)
-            //{
-            //    var MM = new Medicine_Manager();
-            //    if (MM.CreateMedicine(name, requiresPrescription, price, originOffice, house, stock, numberSold) == Constants.MEDICINE_UPDATED)
-            //    {
-            //        return "{medicine:updated}";
-            //    }
-            //    return "{medicine:still-not-updated}";
-            //}
-            //// PUT api/medicine/delete
-            //public string Delete([FromBody] string mID)
-            //{
-            //    var MM = new Medicine_Manager();
-            //    if (MM.DeleteMedicine(mID) == Constants.MEDICINE_DELETED)
-            //    {
-            //        return "{medicine:deleted}";
-            //    }
-            //    return "{medicine:still-not-deleted}";
-            //}
+        // URI from Angular: /home/Medicine/Delete
+        public JsonResult Delete(string medId)
+        {
+            var medm = new Medicine_Manager();
+            return Json(medm.DeleteMedicine(medId), JsonRequestBehavior.AllowGet);
         }
+    }
 }

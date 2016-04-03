@@ -14,11 +14,45 @@ namespace farma_tica.Controllers
 {
     public class ClientController : Controller
     {
-        [HttpGet]
-        public JsonResult Test()
+        // URI from Angular: /home/Client/New
+        [HttpPost]
+        public JsonResult New(Client newClient)
         {
-            return Json(new ReturnStatus() {StatusCode = 200});
+            var clm = new Client_Manager();
+            return Json(
+                new ReturnStatus()
+                {
+                    StatusCode = clm.CreateClient(newClient.Id,newClient.Name,newClient.LastName1,newClient.LastName2,newClient.PenaltiesNumber.ToString(),newClient.PlaceResidence,newClient.MedicalHistory,newClient.BornDate.ToString(),newClient.PhoneMum,newClient.Password)
+                }, JsonRequestBehavior.AllowGet);
         }
-        
+
+        // URI from Angular: /home/Client/GetAll
+        [HttpGet]
+        public JsonResult GetAllClients()
+        {
+            var clm = new Client_Manager();
+            return Json(clm.GetAllClients(), JsonRequestBehavior.AllowGet);
+        }
+
+        // URI from Angular: /home/Client/Update
+        [HttpPost]
+        public JsonResult Update(Client theClient)
+        {
+            var clm = new Client_Manager();
+            return Json(
+                new ReturnStatus()
+                {
+                    StatusCode = clm.UpdateClient(theClient.Id, theClient.Name, theClient.LastName1, theClient.LastName2, theClient.PenaltiesNumber.ToString(), theClient.PlaceResidence, theClient.MedicalHistory, theClient.BornDate.ToString(), theClient.PhoneMum, theClient.Password)
+                }, JsonRequestBehavior.AllowGet);
+        }
+
+        // URI from Angular: /home/Client/Delete
+        [HttpPost]
+        public JsonResult Delete(string cId)
+        {
+            var clm = new Client_Manager();
+            return Json(new ReturnStatus() {StatusCode = clm.DeleteClient(cId)},JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

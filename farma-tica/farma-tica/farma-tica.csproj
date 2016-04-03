@@ -135,12 +135,14 @@
     <Compile Include="BLL\Medicine_Manager.cs" />
     <Compile Include="BLL\OrderManager.cs" />
     <Compile Include="Controllers\ClientController.cs" />
+    <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\LoginData.cs" />
     <Compile Include="Controllers\MedicineController.cs" />
     <Compile Include="Controllers\PedidoController.cs" />
     <Compile Include="Controllers\ReturnStatus.cs" />
+    <Compile Include="Controllers\StatsController.cs" />
     <Compile Include="Controllers\UserMgmtController.cs" />
     <Compile Include="DAL\DbConnectionFactory.cs" />
     <Compile Include="DAL\DbContext.cs" />
@@ -184,6 +186,8 @@
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="UnitTesting\" />
+    <Folder Include="Views\Doctor\" />
+    <Folder Include="Views\Stats\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -32,10 +32,10 @@ namespace farma_tica.Controllers
         }
 
         // URI from Angular: /home/UserMgmt/Delete
-        public JsonResult Delete(int uID)
+        public JsonResult Delete(string uID)
         {
             var acm = new Account_Manager();
-            return Json(new ReturnStatus() {StatusCode = acm.DeleteUser(uID.ToString())});
+            return Json(new ReturnStatus() {StatusCode = acm.DeleteUser(uID)});
 
         }
     }
