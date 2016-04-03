@@ -133,8 +133,10 @@
     <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\LoginData.cs" />
     <Compile Include="Controllers\MedicineController.cs" />
     <Compile Include="Controllers\PedidoController.cs" />
+    <Compile Include="Controllers\ReturnStatus.cs" />
     <Compile Include="Controllers\UserMgmController.cs" />
     <Compile Include="DAL\DbConnectionFactory.cs" />
     <Compile Include="DAL\DbContext.cs" />

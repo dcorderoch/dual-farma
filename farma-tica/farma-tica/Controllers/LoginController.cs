@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using System.Net;
 using System.Net.Http;
 using System.Security.AccessControl;
-using System.Web.Http;
+
 using farma_tica.BLL;
 using farma_tica.DAL.Models;
 
@@ -15,46 +15,35 @@ namespace farma_tica.Controllers
 {
     public class LoginController : Controller
     {
-        // GET api/login/login
-        public string[] Login([FromBody]string userID,[FromBody]string uPass)
+        [HttpGet]
+        public JsonResult GetAll()
         {
-            var ACM = new Account_Manager();
-            var retval = ACM.AuthorizeLogin(userID, uPass);
+            var acm = new Account_Manager();
+            //MUST CHANGE?
+            var retval = acm.GetAllUsers("");
 
-            if (retval[0] == Constants.SUCCESSFUL_LOGIN.ToString())
-            {
-                return retval;
-            }
-            if (retval[0] == Constants.INVALID_USER.ToString())
-                return new string[] {"invalid:user", "user:invalid"};
-            if (retval[0] == Constants.INVALID_PASSWORD.ToString())
-            {
-                return new string[] {"invalid:password", "password:invald"};
-            }
-
-            return retval;
+            return Json(retval, JsonRequestBehavior.AllowGet);
         }
-
-        // POST api/login/new
-        public string New([FromBody]string userId, [FromBody]string password, [FromBody]string name, [FromBody]string lastName1, [FromBody]string lastName2, [FromBody]string email, [FromBody]string company, [FromBody]string roleId)
+        // URI from Angular: /home/Login/Login
+        [HttpPost]
+        public JsonResult Login(LoginData login)
         {
-            var ACM = new Account_Manager();
-            if (ACM.CreateUser(userId, password, name, lastName1, lastName2, email, company, roleId) ==
-                Constants.ALREADY_REGISTERED)
-            {
-                return "{User:alreadyInUse}";
-            }
-            return "{User:registered}";
-            
+            var acm = new Account_Manager();
+            var retVal = acm.AuthorizeLogin(login.ID, login.Pass);
+            return Json(retVal, JsonRequestBehavior.AllowGet);
         }
-
-        // GET api/login/allusers
-        public List<User> AllUsers([FromBody]string company)
+        // URI from Angular: /home/Login/New
+        [HttpPost]
+        public JsonResult New(User newUser)
         {
-            var ACM = new Account_Manager();
-            return ACM.GetAllUsers(company);
+            var acm = new Account_Manager();
+            return
+                Json(new ReturnStatus()
+                {
+                    StatusCode =
+                        acm.CreateUser(newUser.IdUsuario, newUser.Password, newUser.Name, newUser.LastName1,
+                            newUser.LastName2, newUser.Email, newUser.Company, newUser.RoleId.ToString())
+                });
         }
-
-        
     }
 }
