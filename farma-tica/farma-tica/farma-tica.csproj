@@ -137,7 +137,7 @@
     <Compile Include="Controllers\MedicineController.cs" />
     <Compile Include="Controllers\PedidoController.cs" />
     <Compile Include="Controllers\ReturnStatus.cs" />
-    <Compile Include="Controllers\UserMgmController.cs" />
+    <Compile Include="Controllers\UserMgmtController.cs" />
     <Compile Include="DAL\DbConnectionFactory.cs" />
     <Compile Include="DAL\DbContext.cs" />
     <Compile Include="DAL\IConnectionFactory.cs" />

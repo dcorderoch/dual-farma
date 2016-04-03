@@ -17,7 +17,7 @@ namespace farma_tica.Controllers
         [HttpGet]
         public JsonResult GetAlgo()
         {
-            return Json(new List<string>() {"hola", "hola de nuevo"});
+            return Json(new List<string>() {"hola", "hola de nuevo"},JsonRequestBehavior.AllowGet);
         }
         //[HttpPost]
         //public JsonResult GetAlgo(Model argumento)
