@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Web.UI.WebControls;
 using dual_farma.DAL;
 using dual_farma.DAL.Models;
 using dual_farma.DAL.Repositories;
+
 
 namespace dual_farma.BLL
 {
@@ -49,11 +49,6 @@ namespace dual_farma.BLL
                     newMedicine.MedicineId = Guid.NewGuid();
                     newMedicine.Name = name;
                     newMedicine.RequiresPrescription = Convert.ToBoolean(requiresPrescription);
-                    newMedicine.Price = Convert.ToInt32(price);
-                    newMedicine.OriginOffice = Convert.ToInt32(originOffice);
-                    newMedicine.House = house;
-                    newMedicine.Stock = Convert.ToInt32(stock);
-                    newMedicine.NumberSold = Convert.ToInt32(numberSold);
                     medicineRepo.Create(newMedicine);
                     uow.SaveChanges();
                     response = Constants.MEDICINE_CREATED;
@@ -85,10 +80,6 @@ namespace dual_farma.BLL
                     result[1] = medicine.Name;
                     result[2] = medicine.RequiresPrescription.ToString();
                     result[3] = medicine.Price.ToString();
-                    result[4] = medicine.OriginOffice.ToString();
-                    result[5] = medicine.House;
-                    result[6] = medicine.Stock.ToString();
-                    result[7] = medicine.NumberSold.ToString();
                 }
                 catch (Exception)
                 {
@@ -112,7 +103,7 @@ namespace dual_farma.BLL
                 var medicineRepo = new MedicineRepository(context);
                 try
                 {
-                    //medicineList = (List<Medicine>) medicineRepo.GetAll(house);
+                    medicineList = (List<Medicine>) medicineRepo.GetAllByBranchOffice(new Guid(house));
                 }
                 catch (Exception)
                 {
@@ -135,7 +126,7 @@ namespace dual_farma.BLL
                 var medicineRepo = new MedicineRepository(context);
                 try
                 {
-                    //medicineList = (List<Medicine>)medicineRepo.getMostSold(company);
+                    medicineList = (List<Medicine>)medicineRepo.GetTotalMostSoldByCompany(company);
                 }
                 catch (Exception)
                 {
@@ -159,7 +150,7 @@ namespace dual_farma.BLL
                 var medicineRepo = new MedicineRepository(context);
                 try
                 {
-                    //medicineList = (List<Medicine>)medicineRepo.GetSoldByNewSoftware(company);
+                    medicineList = (List<Medicine>)medicineRepo.GetOnlineMostSoldByCompany(company);
                 }
                 catch (Exception)
                 {
@@ -174,22 +165,22 @@ namespace dual_farma.BLL
         /// </summary>
         /// <param name="company"></param>
         /// <returns>Integer value that indicates the total sales accomplished by the company.</returns>
-        public List<Medicine> TotalSalesByCompany(string company)
+        public int TotalSalesByCompany(string company)
         {
-            List<Medicine> medicineList = new List<Medicine>();
+            var sales = 0;
             using (var uow = context.CreateUnitOfWork())
             {
                 var medicineRepo = new MedicineRepository(context);
                 try
                 {
-                    //medicineList = (List<Medicine>)medicineRepo.GetTotalSales(company);
+                    sales = medicineRepo.GetAmmountSoldByCompany(company);
                 }
                 catch (Exception)
                 {
-                    medicineList = null;
+                    sales = 0;
                 }
             }
-            return medicineList;
+            return sales;
         }
 
         /// <summary>
@@ -204,7 +195,7 @@ namespace dual_farma.BLL
                 var medicineRepo = new MedicineRepository(context);
                 try
                 {
-                 //   medicineList = (List<Medicine>)medicineRepo.GetGlobalMostSold();
+                    medicineList = (List<Medicine>)medicineRepo.GetTotalMostSold();
                 }
                 catch (Exception)
                 {
@@ -240,11 +231,6 @@ namespace dual_farma.BLL
                     newMedicine.MedicineId = new Guid(medicineId);
                     newMedicine.Name = name;
                     newMedicine.RequiresPrescription = Convert.ToBoolean(requiresPrescription);
-                    newMedicine.Price = Convert.ToInt32(price);
-                    newMedicine.OriginOffice = Convert.ToInt32(originOffice);
-                    newMedicine.House = house;
-                    newMedicine.Stock = Convert.ToInt32(stock);
-                    newMedicine.NumberSold= Convert.ToInt32(numberSold);
                     medicineRepo.Update(newMedicine);
                     uow.SaveChanges();
                     response = Constants.MEDICINE_UPDATED;
