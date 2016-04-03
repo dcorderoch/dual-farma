@@ -130,10 +130,12 @@ namespace dual_farma.DAL.Repositories
                 newParameter.ParameterName = "@clientId";
                 newParameter.Value = clientId;
                 command.Parameters.Add(newParameter);
-                var reader = command.ExecuteReader();
-                while (reader.Read())
+                using (var reader = command.ExecuteReader())
                 {
-                    numberOfPenalties = (int) reader["CantidadMultas"];
+                    while (reader.Read())
+                    {
+                        numberOfPenalties = (int) reader["CantidadMultas"];
+                    }
                 }
             }
             return numberOfPenalties;

@@ -7,7 +7,7 @@ namespace dual_farma.BLL
     {
         //Authorize login constants.
         public const int INVALID_USER = 0;
-        public const int INVALID_PASSWORD= 1;
+        public const int INVALID_PASSWORD = 1;
         public const int SUCCESSFUL_LOGIN = 2;
 
         //Create user constants.
@@ -16,7 +16,7 @@ namespace dual_farma.BLL
 
         //Update user constants.
         public const int USER_NOT_UPDATED = 0;
-        public const int USER_UPDATED=1;
+        public const int USER_UPDATED = 1;
         //Delete user constants.
         public const int USER_NOT_DELETED = 0;
         public const int USER_DELETED = 1;
@@ -33,9 +33,14 @@ namespace dual_farma.BLL
         public const int MEDICINE_NOT_DELETED = 0;
         public const int MEDICINE_DELETED = 1;
 
-        //Generic constants
-        public const int FAIL = 0;
+        //Standardized constants
         public const int SUCCESS = 1;
         public const int ERROR = 0;
+        public const string LOW_PRIORITY = "Baja";
+        public const string NORMAL_PRIORITY = "Normal";
+        public const int CREATED_ORDER_STATUS = 0;
+        public const int PREPARED_ORDER_STATUS = 1;
+        public const int INVOICED_ORDER_STATUS = 2;
+        public const int RETIRED_ORDER_STATUS = 3;
     }
 }

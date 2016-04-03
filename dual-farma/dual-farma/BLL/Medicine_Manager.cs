@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using dual_farma.DAL;
 using dual_farma.DAL.Models;

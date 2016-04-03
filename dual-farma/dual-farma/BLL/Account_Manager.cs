@@ -114,7 +114,7 @@ namespace dual_farma.BLL
                 var userRepo = new UserRepository(context);
                 try
                 {
-                    userList = (List<User>) userRepo.GetAll();
+                    userList = (List<User>)userRepo.GetAll();
                 }
                 catch (Exception)
                 {

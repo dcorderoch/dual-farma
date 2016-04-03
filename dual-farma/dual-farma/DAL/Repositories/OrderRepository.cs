@@ -36,14 +36,14 @@ namespace dual_farma.DAL.Repositories
         /// </summary>
         /// <param name="branchOfficeId"></param>
         /// <returns></returns>
-        public IEnumerable<Order> GetAllOrdersByBranchOffice(int branchOfficeId)
+        public IEnumerable<Order> GetAllOrdersByBranchOffice(Guid branchOfficeId)
         {
             using (var command = Context.CreateDbCommand())
             {
-                command.CommandText = @"SELECT * FROM Pedido WHERE Sucursal_Recojo=@branchOfficeId ORDER BY FechaRecojo";
+                command.CommandText = @"SELECT * FROM Pedido WHERE Sucursal_Recojo=@branchOfficeId ORDER BY FechaRecojo DESC";
                 var newParameter = command.CreateParameter();
                 newParameter.ParameterName = "@branchOfficeId";
-                newParameter.Value = branchOfficeId;
+                newParameter.Value = branchOfficeId.ToString();
                 command.Parameters.Add(newParameter);
                 var result = ToList(command);
                 return result;
@@ -182,6 +182,19 @@ namespace dual_farma.DAL.Repositories
             }
         }
 
+        public void DeleteOrderMedicinesByOrderId(object id)
+        {
+            using (var command = Context.CreateDbCommand())
+            {
+                command.CommandText = @"DELETE FROM Medicamentos_Por_Pedido WHERE NumeroPedido= @orderId";
+                var newParameter = command.CreateParameter();
+                newParameter.ParameterName = "@orderId";
+                newParameter.Value = id.ToString();
+                command.Parameters.Add(newParameter);
+                command.ExecuteNonQuery();
+            }
+        }
+
         /// <summary>
         /// Maps a result into an object
         /// </summary>
@@ -193,7 +206,7 @@ namespace dual_farma.DAL.Repositories
             order.ClientId = (string)record["ID_Cliente"];
             var myGuid = record["ID_Receta"];
             order.PrescriptionId = myGuid == DBNull.Value ? (Guid?)null : Guid.Parse((string)myGuid);
-            order.PickUpOffice = (int)record["Sucursal_Recojo"];
+            order.PickUpOffice = (Guid)record["Sucursal_Recojo"];
             order.HasPrescription = (bool)record["Prescripcion"];
             order.State = (int)record["Estado"];
             order.Priority = (string)record["Prioridad"];
