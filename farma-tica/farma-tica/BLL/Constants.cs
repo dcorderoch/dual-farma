@@ -1,4 +1,4 @@
-namespace dual_farma.BLL
+﻿namespace farma_tica.BLL
 {
     /// <summary>
     /// Constants which determine the message displayed by the GUI after trying to log in to the application.
@@ -33,14 +33,6 @@ namespace dual_farma.BLL
         public const int MEDICINE_NOT_DELETED = 0;
         public const int MEDICINE_DELETED = 1;
 
-        //Standardized constants
-        public const int SUCCESS = 1;
-        public const int ERROR = 0;
-        public const string LOW_PRIORITY = "Baja";
-        public const string NORMAL_PRIORITY = "Normal";
-        public const int CREATED_ORDER_STATUS = 0;
-        public const int PREPARED_ORDER_STATUS = 1;
-        public const int INVOICED_ORDER_STATUS = 2;
-        public const int RETIRED_ORDER_STATUS = 3;
+
     }
 }

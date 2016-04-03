@@ -1,16 +1,11 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Web.UI.WebControls;
-using dual_farma.DAL;
-using dual_farma.DAL.Models;
-using dual_farma.DAL.Repositories;
+using farma_tica.DAL;
+using farma_tica.DAL.Models;
+using farma_tica.DAL.Repositories;
 
-namespace dual_farma.BLL
+namespace farma_tica.BLL
 {
-
-    /// <summary>
-    /// Medicine_Manager is intended to validate most of the business rules related to the medicines. 
-    /// </summary>
     public class Medicine_Manager
     {
         /// <summary>
@@ -104,7 +99,7 @@ namespace dual_farma.BLL
         /// </summary>
         /// <param></param>
         /// <returns>List<Medicine> that contains all the medicines of the specified company</returns>
-        public List<Medicine> GetAllMedicines(string house)
+        public List<Medicine> GetAllMedicines()
         {
             List<Medicine> medicineList = new List<Medicine>();
             using (var uow = context.CreateUnitOfWork())
@@ -112,7 +107,7 @@ namespace dual_farma.BLL
                 var medicineRepo = new MedicineRepository(context);
                 try
                 {
-                    //medicineList = (List<Medicine>) medicineRepo.GetAll(house);
+                    medicineList = (List<Medicine>) medicineRepo.GetAll();
                 }
                 catch (Exception)
                 {
@@ -121,99 +116,6 @@ namespace dual_farma.BLL
             }
             return medicineList;
         }
-
-        /// <summary>
-        /// Gets most sold medicines by the company given.
-        /// </summary>
-        /// <param name="company"></param>
-        /// <returns>List of medicines ordered descendently by most sales.</returns>
-        public List<Medicine> GetMostSoldMedicinesByCompany(string company)
-        {
-            List<Medicine> medicineList = new List<Medicine>();
-            using (var uow = context.CreateUnitOfWork())
-            {
-                var medicineRepo = new MedicineRepository(context);
-                try
-                {
-                    //medicineList = (List<Medicine>)medicineRepo.getMostSold(company);
-                }
-                catch (Exception)
-                {
-                    medicineList = null;
-                }
-            }
-            return medicineList;
-
-        }
-
-        /// <summary>
-        /// Gets table with medicines most sold by using the new software.
-        /// </summary>
-        /// <param name="company"></param>
-        /// <returns>List of most sold medicines by using new software.</returns>
-        public List<Medicine> GetMostSoldByNewSoftware(string company)
-        {
-            List<Medicine> medicineList = new List<Medicine>();
-            using (var uow = context.CreateUnitOfWork())
-            {
-                var medicineRepo = new MedicineRepository(context);
-                try
-                {
-                    //medicineList = (List<Medicine>)medicineRepo.GetSoldByNewSoftware(company);
-                }
-                catch (Exception)
-                {
-                    medicineList = null;
-                }
-            }
-            return medicineList;
-        }
-
-        /// <summary>
-        /// Gives the total amount of sales accomplished by given company.
-        /// </summary>
-        /// <param name="company"></param>
-        /// <returns>Integer value that indicates the total sales accomplished by the company.</returns>
-        public List<Medicine> TotalSalesByCompany(string company)
-        {
-            List<Medicine> medicineList = new List<Medicine>();
-            using (var uow = context.CreateUnitOfWork())
-            {
-                var medicineRepo = new MedicineRepository(context);
-                try
-                {
-                    //medicineList = (List<Medicine>)medicineRepo.GetTotalSales(company);
-                }
-                catch (Exception)
-                {
-                    medicineList = null;
-                }
-            }
-            return medicineList;
-        }
-
-        /// <summary>
-        /// Gets the most sold medicines globally.
-        /// </summary>
-        /// <returns>List of medicines most sold by both companies.</returns>
-        public List<Medicine> GlobalMostSoldMedicines()
-        {
-            List<Medicine> medicineList = new List<Medicine>();
-            using (var uow = context.CreateUnitOfWork())
-            {
-                var medicineRepo = new MedicineRepository(context);
-                try
-                {
-                 //   medicineList = (List<Medicine>)medicineRepo.GetGlobalMostSold();
-                }
-                catch (Exception)
-                {
-                    medicineList = null;
-                }
-            }
-            return medicineList;
-        }
-
 
         /// <summary>
         /// Updates given medicine if possible. 
