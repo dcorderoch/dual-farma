@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FarmaticaCore.DAL.Models
+namespace dual_farma.DAL.Models
 {
     /// <summary>
     /// Client POCO 

@@ -2,7 +2,7 @@
 using System.Data;
 using System.Dynamic;
 
-namespace FarmaticaCore.DAL.Repositories
+namespace dual_farma.DAL.Repositories
 {
     /// <summary>
     /// Abstract Repository class to be implemented in specific repository type
@@ -22,7 +22,7 @@ namespace FarmaticaCore.DAL.Repositories
             Context = context;
         }
 
-        protected DbContext Context { get;}
+        protected DbContext Context { get; }
 
         /// <summary>
         /// Method to retrieve all elements from table
@@ -68,7 +68,7 @@ namespace FarmaticaCore.DAL.Repositories
                     itemList.Add(item);
                 }
                 return itemList;
-            } 
+            }
         }
 
         protected abstract void Map(IDataRecord record, TEntity entity);

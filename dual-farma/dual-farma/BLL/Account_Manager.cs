@@ -1,8 +1,8 @@
 ﻿using System;
-using FarmaticaCore.DAL;
-using FarmaticaCore.DAL.Repositories;
+using dual_farma.DAL;
+using dual_farma.DAL.Repositories;
 using System.Collections.Generic;
-using FarmaticaCore.DAL.Models;
+using dual_farma.DAL.Models;
 
 namespace dual_farma.BLL
 {
@@ -32,11 +32,11 @@ namespace dual_farma.BLL
         /// <returns></returns>
         public string[] AuthorizeLogin(string userID, string password)
         {
-            string[] response = {};
+            string[] response = { };
             using (var uow = context.CreateUnitOfWork())
             {
                 var userRepo = new UserRepository(context);
-                var userList = (List<User>) userRepo.GetById(userID);
+                var userList = (List<User>)userRepo.GetById(userID);
                 var user = userList[0];
                 var opCode = VerifyUser(userID, password);
                 switch (opCode)
@@ -56,7 +56,7 @@ namespace dual_farma.BLL
                         response[3] = user.LastName1;
                         response[4] = user.LastName2;
                         response[5] = user.Email;
-                      //response[6] = user.Company;
+                        //response[6] = user.Company;
                         response[7] = user.RoleId.ToString();
                         return response;
                     default:
@@ -80,24 +80,24 @@ namespace dual_farma.BLL
                 User newUser = new User();
                 try
                 {
-                        newUser.IdUsuario =userId;
-                        newUser.Password = password;
-                        newUser.Name = name;
-                        newUser.LastName1 = lastName1;
-                        newUser.LastName2 = lastName2;
-                        newUser.Email = email;
-                        //newUser.Company = company;
-                        newUser.RoleId = Convert.ToInt32(roleId);
-                        userRepo.Create(newUser);
-                        uow.SaveChanges();
-                        response = Constants.USER_CREATED;
-                    
-                       }
+                    newUser.IdUsuario = userId;
+                    newUser.Password = password;
+                    newUser.Name = name;
+                    newUser.LastName1 = lastName1;
+                    newUser.LastName2 = lastName2;
+                    newUser.Email = email;
+                    //newUser.Company = company;
+                    newUser.RoleId = Convert.ToInt32(roleId);
+                    userRepo.Create(newUser);
+                    uow.SaveChanges();
+                    response = Constants.USER_CREATED;
+
+                }
                 catch (Exception)
                 {
                     response = Constants.ALREADY_REGISTERED;
                 }
-                }
+            }
             return response;
         }
 
@@ -108,7 +108,7 @@ namespace dual_farma.BLL
         /// <returns>List<User> that contains all the users of the specified column</returns>
         public List<User> GetAllUsers(string company)
         {
-            List<User> userList =new List<User>();
+            List<User> userList = new List<User>();
             using (var uow = context.CreateUnitOfWork())
             {
                 var userRepo = new UserRepository(context);
@@ -168,17 +168,17 @@ namespace dual_farma.BLL
             using (var uow = context.CreateUnitOfWork())
             {
                 var userRepo = new UserRepository(context);
-                    try
-                    {
-                        userRepo.DeleteById(userId);
-                        uow.SaveChanges();
-                        response = Constants.USER_DELETED;
-                    }
-                    catch (Exception)
-                    {
-                        response = Constants.USER_NOT_DELETED;
-                    }
-                
+                try
+                {
+                    userRepo.DeleteById(userId);
+                    uow.SaveChanges();
+                    response = Constants.USER_DELETED;
+                }
+                catch (Exception)
+                {
+                    response = Constants.USER_NOT_DELETED;
+                }
+
             }
             return response;
         }
@@ -212,19 +212,19 @@ namespace dual_farma.BLL
             using (var uow = context.CreateUnitOfWork())
             {
 
-            var doesExist = DoesUserExist(userID);
+                var doesExist = DoesUserExist(userID);
                 if (!doesExist)
                 {
                     result = Constants.INVALID_USER;
                 }
                 else
                 {
-                    var userRepo =new UserRepository(context);
+                    var userRepo = new UserRepository(context);
                     var userList = (List<User>)userRepo.GetById(userID);
                     result = userList[0].Password != password ? Constants.INVALID_PASSWORD : Constants.SUCCESSFUL_LOGIN;
                 }
             }
             return result;
         }
-      }
+    }
 }
