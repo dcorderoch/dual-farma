@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using farma_tica.DAL;
 using farma_tica.DAL.Models;
 using farma_tica.DAL.Repositories;
@@ -7,7 +8,6 @@ using farma_tica.DAL.Repositories;
 
 namespace farma_tica.BLL
 {
-
     /// <summary>
     /// Medicine_Manager is intended to validate most of the business rules related to the medicines. 
     /// </summary>
@@ -32,24 +32,40 @@ namespace farma_tica.BLL
         /// <param name="requiresPrescription"></param>
         /// <param name="price"></param>
         /// <param name="originOffice"></param>
-        /// <param name="house"></param>
         /// <param name="stock"></param>
-        /// <param name="numberSold"></param>
         /// <returns>Integer indicating whether the creation was successful.</returns>
-        public int CreateMedicine(string name, string requiresPrescription, string price, string originOffice,string house, string stock,
-            string numberSold)
+        public int CreateMedicine(string name, string requiresPrescription, string price, string originOffice, string stock)
         {
+            List<Medicine> medicineList = new List<Medicine>();
             int response = 0;
             using (var uow = context.CreateUnitOfWork())
             {
                 var medicineRepo = new MedicineRepository(context);
-                Medicine newMedicine = new Medicine();
-                try
+                 try
                 {
-                    newMedicine.MedicineId = Guid.NewGuid();
-                    newMedicine.Name = name;
-                    newMedicine.RequiresPrescription = Convert.ToBoolean(requiresPrescription);
-                    medicineRepo.Create(newMedicine);
+                    medicineList = (List<Medicine>)medicineRepo.GetByName(name);
+                    if (!medicineList.Any())
+                    {
+                        Medicine newMedicine = new Medicine();
+                        newMedicine.MedicineId = Guid.NewGuid();
+                        newMedicine.Name = name;
+                        newMedicine.RequiresPrescription = Convert.ToBoolean(requiresPrescription);
+
+                        newMedicine.Price = Convert.ToDecimal(price);
+                        newMedicine.Stock = Convert.ToInt32(stock);
+                        newMedicine.AmmountSold = 0;
+                        medicineRepo.Create(newMedicine);
+                        medicineRepo.CreateMedicineInBranchOffice(newMedicine, new Guid(originOffice));
+
+                    }
+                    else
+                    {
+                        var medicine = medicineList.First();
+                        medicine.Price = Convert.ToDecimal(price);
+                        medicine.Stock = Convert.ToInt32(stock);
+                        medicine.AmmountSold = 0;
+                        medicineRepo.CreateMedicineInBranchOffice(medicine, Guid.Parse(originOffice));
+                    }
                     uow.SaveChanges();
                     response = Constants.MEDICINE_CREATED;
                 }
@@ -60,34 +76,6 @@ namespace farma_tica.BLL
             }
             return response;
         }
-        /// <summary>
-        /// Obtains a specific medicine given by the parameter.
-        /// </summary>
-        /// <param name="medicineId"></param>
-        /// <returns>String array containing the medicine's attributes. Null value if medicine does not exist in the database.</returns>
-        public string[] GetMedicineById(string medicineId)
-        {
-            List<Medicine> medicineList = new List<Medicine>();
-            string[] result = {};
-            using (var uow = context.CreateUnitOfWork())
-            {
-                var medicineRepo = new MedicineRepository(context);
-                try
-                {
-                    medicineList = (List<Medicine>)medicineRepo.GetById(medicineId);
-                    Medicine medicine = medicineList[0];
-                    result[0] = medicineId;
-                    result[1] = medicine.Name;
-                    result[2] = medicine.RequiresPrescription.ToString();
-                    result[3] = medicine.Price.ToString();
-                }
-                catch (Exception)
-                {
-                    result = null;       
-                }
-            }
-            return result;
-        }
 
 
         /// <summary>
@@ -95,7 +83,7 @@ namespace farma_tica.BLL
         /// </summary>
         /// <param></param>
         /// <returns>List<Medicine> that contains all the medicines of the specified company</returns>
-        public List<Medicine> GetAllMedicines(string house)
+        public List<Medicine> GetAllMedicines(string branchOffice)
         {
             List<Medicine> medicineList = new List<Medicine>();
             using (var uow = context.CreateUnitOfWork())
@@ -103,7 +91,7 @@ namespace farma_tica.BLL
                 var medicineRepo = new MedicineRepository(context);
                 try
                 {
-                    medicineList = (List<Medicine>) medicineRepo.GetAllByBranchOffice(new Guid(house));
+                    medicineList = (List<Medicine>) medicineRepo.GetAllByBranchOffice(new Guid(branchOffice));
                 }
                 catch (Exception)
                 {
@@ -205,33 +193,29 @@ namespace farma_tica.BLL
             return medicineList;
         }
 
-
         /// <summary>
         /// Updates given medicine if possible. 
         /// </summary>
         /// <param name="medicineId"></param>
-        /// <param name="name"></param>
-        /// <param name="requiresPrescription"></param>
         /// <param name="price"></param>
-        /// <param name="originOffice"></param>
-        /// <param name="house"></param>
+        /// <param name="branchOffice"></param>
         /// <param name="stock"></param>
         /// <param name="numberSold"></param>
         /// <returns>Integer with the result of the update.</returns>
-        public int UpdateMedicine(string medicineId, string name, string requiresPrescription, string price, string originOffice,
-            string house, string stock, string numberSold)
+        public int UpdateMedicine(string medicineId, string price, string branchOffice, string stock, string numberSold)
         {
             var response = 0;
             using (var uow = context.CreateUnitOfWork())
             {
                 var medicineRepo = new MedicineRepository(context);
-                Medicine newMedicine = new Medicine();
+                Medicine modifiedMedicine = new Medicine();
                 try
                 {
-                    newMedicine.MedicineId = new Guid(medicineId);
-                    newMedicine.Name = name;
-                    newMedicine.RequiresPrescription = Convert.ToBoolean(requiresPrescription);
-                    medicineRepo.Update(newMedicine);
+                    modifiedMedicine.MedicineId = Guid.Parse(medicineId);
+                    modifiedMedicine.Price = Convert.ToDecimal(price);
+                    modifiedMedicine.Stock = Convert.ToInt32(stock);
+                    modifiedMedicine.AmmountSold = Convert.ToInt32(numberSold);
+                    medicineRepo.UpdateMedicineInBranchOffice(modifiedMedicine,Guid.Parse(branchOffice));
                     uow.SaveChanges();
                     response = Constants.MEDICINE_UPDATED;
                 }
@@ -247,8 +231,9 @@ namespace farma_tica.BLL
         /// Deletes the given medicine.
         /// </summary>
         /// <param name="medicineId"></param>
+        /// <param name="branchOffice"></param>
         /// <returns>Integer indicating whether the deletion completed successfully.</returns>
-        public int DeleteMedicine(string medicineId)
+        public int DeleteMedicine(string medicineId, string branchOffice)
         {
             int response = 0;
             using (var uow = context.CreateUnitOfWork())
@@ -256,7 +241,7 @@ namespace farma_tica.BLL
                 var medicineRepo = new MedicineRepository(context);
                 try
                 {
-                    medicineRepo.DeleteById(medicineId);
+                    medicineRepo.DeleteMedicineFromBranchOffice(Guid.Parse(medicineId), Guid.Parse(branchOffice));
                     uow.SaveChanges();
                     response = Constants.MEDICINE_DELETED;
                 }
