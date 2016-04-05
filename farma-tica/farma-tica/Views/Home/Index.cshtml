@@ -1,0 +1,13 @@
+﻿<h3>Products</h3>
+<div ng-controller="mainController">
+    <table class="table table-striped">
+        <tr ng-repeat="product in products">
+            <td>{{product.ProductName}}</td>
+            <td class="text-right">
+                <button class="btn btn-danger" ng-click="deleteProduct(product)">X</button>
+            </td>
+        </tr>
+    </table>
+    <input type="text" required ng-model="newProduct" />
+    <a ref="#" class="btn btn-primary" ng-click="addProduct()">Add Product</a>
+</div>
