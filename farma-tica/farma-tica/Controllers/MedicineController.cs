@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web;
+﻿using System.Web.Mvc;
 using farma_tica.BLL;
 using farma_tica.DAL.Models;
 
@@ -25,11 +13,12 @@ namespace farma_tica.Controllers
             //MUST CHANGE
             var medm = new Medicine_Manager();
             return
-                Json(new ReturnStatus()
+                Json(new ReturnStatus
                 {
                     StatusCode =
-                        medm.CreateMedicine(newMed.Name, newMed.RequiresPrescription.ToString(), newMed.Price.ToString(), "CHANGE", "HOUSE",newMed.Stock.ToString(),newMed.AmmountSold.ToString())
-                },JsonRequestBehavior.AllowGet);
+                        medm.CreateMedicine(newMed.Name, newMed.RequiresPrescription.ToString(), newMed.Price.ToString(),
+                            "CHANGE", "HOUSE", newMed.Stock.ToString(), newMed.AmmountSold.ToString())
+                }, JsonRequestBehavior.AllowGet);
         }
 
         // URI from Angular: /home/Medicine/Medicine
@@ -54,7 +43,7 @@ namespace farma_tica.Controllers
         public JsonResult Update(Medicine newMed)
         {
             //MUST CHANGE
-            return Json(new ReturnStatus() {StatusCode = 500}, JsonRequestBehavior.AllowGet);
+            return Json(new ReturnStatus {StatusCode = 500}, JsonRequestBehavior.AllowGet);
         }
 
         // URI from Angular: /home/Medicine/Delete

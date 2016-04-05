@@ -3,7 +3,7 @@
 namespace farma_tica.DAL.Models
 {
     /// <summary>
-    /// POCO class to represent a user in the database
+    ///     POCO class to represent a user in the database
     /// </summary>
     public class User
     {
@@ -16,6 +16,5 @@ namespace farma_tica.DAL.Models
         public int RoleId { get; set; }
         public Guid OfficeBranchId { get; set; }
         public string Company { get; set; }
-        
     }
 }

@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace farma_tica.DAL.Models
 {
     /// <summary>
-    /// Represents a branch office with all its atributes
+    ///     Represents a branch office with all its atributes
     /// </summary>
     public class BranchOffice
     {

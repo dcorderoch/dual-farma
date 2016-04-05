@@ -6,18 +6,17 @@ using farma_tica.DAL.Repositories;
 
 namespace farma_tica.BLL
 {
-
-
     /// <summary>
-    /// Doctor_Manager is intended to validate most of the business rules related to the Doctors. 
+    ///     Doctor_Manager is intended to validate most of the business rules related to the Doctors.
     /// </summary>
     public class Doctor_Manager
     {
+        private readonly DbContext context;
+
         /// <summary>
-        /// Class members which allow connecting to the Database.
+        ///     Class members which allow connecting to the Database.
         /// </summary>
-        private DbConnectionFactory factory;
-        private DbContext context;
+        private readonly DbConnectionFactory factory;
 
         public Doctor_Manager()
         {
@@ -26,7 +25,7 @@ namespace farma_tica.BLL
         }
 
         /// <summary>
-        /// Creates doctor with given values.
+        ///     Creates doctor with given values.
         /// </summary>
         /// <param name="doctorId"></param>
         /// <param name="numeroCedula"></param>
@@ -35,13 +34,14 @@ namespace farma_tica.BLL
         /// <param name="lastName2"></param>
         /// <param name="home"></param>
         /// <returns>1 or 0 depending whether the operation completed or not.</returns>
-        public int CreateDoctor(string doctorId, string numeroCedula, string name, string lastName1, string lastName2, string home)
+        public int CreateDoctor(string doctorId, string numeroCedula, string name, string lastName1, string lastName2,
+            string home)
         {
-            int response = 0;
+            var response = 0;
             using (var uow = context.CreateUnitOfWork())
             {
                 var doctorRepo = new DoctorRepository(context);
-                Doctor newDoctor = new Doctor();
+                var newDoctor = new Doctor();
                 try
                 {
                     newDoctor.DoctorId = doctorId;
@@ -63,18 +63,18 @@ namespace farma_tica.BLL
         }
 
         /// <summary>
-        /// Returns the list of doctors in the DB.
+        ///     Returns the list of doctors in the DB.
         /// </summary>
         /// <returns>1 or 0 depending whether the operation completed or not.</returns>
         public List<Doctor> GetAllDoctors()
         {
-            List<Doctor> doctorList = new List<Doctor>();
+            var doctorList = new List<Doctor>();
             using (var uow = context.CreateUnitOfWork())
             {
                 var doctorRepo = new DoctorRepository(context);
                 try
                 {
-                    doctorList = (List<Doctor>)doctorRepo.GetAll();
+                    doctorList = (List<Doctor>) doctorRepo.GetAll();
                 }
                 catch (Exception)
                 {
@@ -85,7 +85,7 @@ namespace farma_tica.BLL
         }
 
         /// <summary>
-        /// Updates doctor with given values.
+        ///     Updates doctor with given values.
         /// </summary>
         /// <param name="doctorId"></param>
         /// <param name="numeroCedula"></param>
@@ -94,13 +94,14 @@ namespace farma_tica.BLL
         /// <param name="lastName2"></param>
         /// <param name="home"></param>
         /// <returns>1 or 0 depending whether the operation completed or not.</returns>
-        public int UpdateDoctor(string doctorId, string numeroCedula, string name, string lastName1, string lastName2, string home)
+        public int UpdateDoctor(string doctorId, string numeroCedula, string name, string lastName1, string lastName2,
+            string home)
         {
             var response = 0;
             using (var uow = context.CreateUnitOfWork())
             {
                 var doctorRepo = new DoctorRepository(context);
-                Doctor newDoctor = new Doctor();
+                var newDoctor = new Doctor();
                 try
                 {
                     newDoctor.DoctorId = doctorId;
@@ -122,13 +123,13 @@ namespace farma_tica.BLL
         }
 
         /// <summary>
-        /// Deletes the given doctor.
+        ///     Deletes the given doctor.
         /// </summary>
         /// <param name="doctorId"></param>
         /// <returns>1 or 0 depending whether the operation completed or not.</returns>
         public int DeleteDoctor(string doctorId)
         {
-            int response = 0;
+            var response = 0;
             using (var uow = context.CreateUnitOfWork())
             {
                 var doctorRepo = new DoctorRepository(context);
@@ -142,7 +143,6 @@ namespace farma_tica.BLL
                 {
                     response = Constants.FAIL;
                 }
-
             }
             return response;
         }

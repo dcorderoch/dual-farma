@@ -6,25 +6,26 @@ using farma_tica.DAL.Repositories;
 
 namespace farma_tica.BLL
 {
-
     /// <summary>
-    /// Client_Manager is intended to validate most of the business rules related to the Clients. 
+    ///     Client_Manager is intended to validate most of the business rules related to the Clients.
     /// </summary>
     public class Client_Manager
     {
+        private readonly DbContext context;
+
         /// <summary>
-        /// Class members which allow connecting to the Database.
+        ///     Class members which allow connecting to the Database.
         /// </summary>
-        private DbConnectionFactory factory;
-        private DbContext context;
+        private readonly DbConnectionFactory factory;
 
         public Client_Manager()
         {
             factory = new DbConnectionFactory("Azure");
             context = new DbContext(factory);
         }
+
         /// <summary>
-        /// Method called from REST API in order to create a new Client.
+        ///     Method called from REST API in order to create a new Client.
         /// </summary>
         /// <param name="cedula"></param>
         /// <param name="name"></param>
@@ -37,14 +38,15 @@ namespace farma_tica.BLL
         /// <param name="phoneNumber"></param>
         /// <param name="password"></param>
         /// <returns>1, if successful operation, 0, otherwise.</returns>
-        public int CreateClient(string cedula, string name, string lastName1, string lastName2, string fines, string home, string history,
+        public int CreateClient(string cedula, string name, string lastName1, string lastName2, string fines,
+            string home, string history,
             string birthDate, string phoneNumber, string password)
         {
-            int response = 0;
+            var response = 0;
             using (var uow = context.CreateUnitOfWork())
             {
                 var clientRepo = new ClientRepository(context);
-                Client newClient = new Client();
+                var newClient = new Client();
                 try
                 {
                     newClient.Id = cedula;
@@ -70,18 +72,18 @@ namespace farma_tica.BLL
         }
 
         /// <summary>
-        /// Method that returns the list of existing clients.
+        ///     Method that returns the list of existing clients.
         /// </summary>
         /// <returns>A list containing all the clients in the database.</returns>
         public List<Client> GetAllClients()
         {
-            List<Client> clientList = new List<Client>();
+            var clientList = new List<Client>();
             using (var uow = context.CreateUnitOfWork())
             {
                 var clientRepo = new ClientRepository(context);
                 try
                 {
-                    clientList = (List<Client>)clientRepo.GetAll();
+                    clientList = (List<Client>) clientRepo.GetAll();
                 }
                 catch (Exception)
                 {
@@ -92,7 +94,7 @@ namespace farma_tica.BLL
         }
 
         /// <summary>
-        /// Method that updates a client given the attributes to modify.
+        ///     Method that updates a client given the attributes to modify.
         /// </summary>
         /// <param name="cedula"></param>
         /// <param name="name"></param>
@@ -105,13 +107,15 @@ namespace farma_tica.BLL
         /// <param name="phoneNumber"></param>
         /// <param name="password"></param>
         /// <returns>1 or 0 depending whether the operation completed or not.</returns>
-        public int UpdateClient(string cedula, string name, string lastName1, string lastName2, string fines, string home, string history,
-            string birthDate, string phoneNumber, string password){
+        public int UpdateClient(string cedula, string name, string lastName1, string lastName2, string fines,
+            string home, string history,
+            string birthDate, string phoneNumber, string password)
+        {
             var response = 0;
             using (var uow = context.CreateUnitOfWork())
             {
                 var clientRepo = new ClientRepository(context);
-                Client newClient = new Client();
+                var newClient = new Client();
                 try
                 {
                     newClient.Id = cedula;
@@ -137,13 +141,13 @@ namespace farma_tica.BLL
         }
 
         /// <summary>
-        /// Method that eliminates the given client.
+        ///     Method that eliminates the given client.
         /// </summary>
         /// <param name="clientId"></param>
         /// <returns>1 or 0 depending whether the operation completed or not.</returns>
         public int DeleteClient(string clientId)
         {
-            int response = 0;
+            var response = 0;
             using (var uow = context.CreateUnitOfWork())
             {
                 var clientRepo = new ClientRepository(context);

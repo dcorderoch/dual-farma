@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Web;
-using System.Xml.XPath;
 using farma_tica.DAL;
 using farma_tica.DAL.Models;
 using farma_tica.DAL.Repositories;
@@ -11,22 +9,22 @@ using farma_tica.DAL.Repositories;
 namespace farma_tica.BLL
 {
     /// <summary>
-    /// This class manages all the logic related to orders
+    ///     This class manages all the logic related to orders
     /// </summary>
     public class OrderManager
     {
-        private DbConnectionFactory factory;
-        private DbContext dbContext;
+        private readonly DbContext dbContext;
+        private readonly DbConnectionFactory factory;
 
 
         public OrderManager()
         {
-            this.factory = new DbConnectionFactory("local");
-            this.dbContext = new DbContext(factory);
+            factory = new DbConnectionFactory("local");
+            dbContext = new DbContext(factory);
         }
 
         /// <summary>
-        /// Creates a new order and assigns the given medicines to the created order
+        ///     Creates a new order and assigns the given medicines to the created order
         /// </summary>
         /// <param name="clientId">Client id</param>
         /// <param name="medicinesId">An array with the order's medicines</param>
@@ -51,7 +49,7 @@ namespace farma_tica.BLL
                     {
                         orderPriority = Constants.LOW_PRIORITY;
                     }
-                    Order myNewOrder = new Order()
+                    var myNewOrder = new Order
                     {
                         OrderId = Guid.NewGuid(),
                         ClientId = clientId,
@@ -81,8 +79,9 @@ namespace farma_tica.BLL
         }
 
         /// <summary>
-        ///  Creates a new Order and a prescription, assigns the given prescripted medicines to the prescription, assigns the given medicines to the order and
-        /// then assgins the created prescription to the created order.
+        ///     Creates a new Order and a prescription, assigns the given prescripted medicines to the prescription, assigns the
+        ///     given medicines to the order and
+        ///     then assgins the created prescription to the created order.
         /// </summary>
         /// <param name="clientId"></param>
         /// <param name="medicinesId"></param>
@@ -113,13 +112,13 @@ namespace farma_tica.BLL
                         orderPriority = Constants.LOW_PRIORITY;
                     }
                     //Creating prescription and order objects to insert into database
-                    var myNewPrescription = new Prescription()
+                    var myNewPrescription = new Prescription
                     {
                         Doctor = doctorId,
                         Image = prescriptionImage,
                         PrescriptionID = Guid.NewGuid()
                     };
-                    var myNewOrder = new Order()
+                    var myNewOrder = new Order
                     {
                         OrderId = Guid.NewGuid(),
                         ClientId = clientId,
@@ -159,7 +158,7 @@ namespace farma_tica.BLL
         }
 
         /// <summary>
-        /// Returns an Order List for the given branch office id
+        ///     Returns an Order List for the given branch office id
         /// </summary>
         /// <param name="branchOfficeId"></param>
         /// <returns></returns>
@@ -179,7 +178,7 @@ namespace farma_tica.BLL
         }
 
         /// <summary>
-        /// Deletes existing order medicines and then deletes the order
+        ///     Deletes existing order medicines and then deletes the order
         /// </summary>
         /// <param name="orderId"></param>
         /// <returns></returns>
@@ -197,7 +196,6 @@ namespace farma_tica.BLL
                             orderRepo.DeleteOrderMedicinesByOrderId(order.OrderId);
                             orderRepo.DeleteById(order.OrderId);
                         }
-
                 }
                 catch (Exception)
                 {
@@ -209,7 +207,7 @@ namespace farma_tica.BLL
         }
 
         /// <summary>
-        /// Updates an order status
+        ///     Updates an order status
         /// </summary>
         /// <param name="orderId"></param>
         /// <param name="status"></param>
@@ -229,7 +227,6 @@ namespace farma_tica.BLL
                         orderRepo.Update(orderToModify);
                         uow.SaveChanges();
                     }
-                    
                 }
             }
             catch (Exception e)
@@ -238,8 +235,5 @@ namespace farma_tica.BLL
             }
             return Constants.SUCCESS;
         }
-
-
-
     }
 }

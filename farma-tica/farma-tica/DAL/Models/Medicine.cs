@@ -3,7 +3,6 @@
 namespace farma_tica.DAL.Models
 {
     /// <summary>
-    /// 
     /// </summary>
     public class Medicine
     {

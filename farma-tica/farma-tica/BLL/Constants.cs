@@ -1,7 +1,7 @@
 namespace farma_tica.BLL
 {
     /// <summary>
-    /// Constants which determine the message displayed by the GUI after trying to log in to the application.
+    ///     Constants which determine the message displayed by the GUI after trying to log in to the application.
     /// </summary>
     public static class Constants
     {

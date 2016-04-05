@@ -4,20 +4,19 @@ using farma_tica.DAL;
 using farma_tica.DAL.Models;
 using farma_tica.DAL.Repositories;
 
-
 namespace farma_tica.BLL
 {
-
     /// <summary>
-    /// Medicine_Manager is intended to validate most of the business rules related to the medicines. 
+    ///     Medicine_Manager is intended to validate most of the business rules related to the medicines.
     /// </summary>
     public class Medicine_Manager
     {
+        private readonly DbContext context;
+
         /// <summary>
-        /// Class members which allow connecting to the Database.
+        ///     Class members which allow connecting to the Database.
         /// </summary>
-        private DbConnectionFactory factory;
-        private DbContext context;
+        private readonly DbConnectionFactory factory;
 
         public Medicine_Manager()
         {
@@ -26,7 +25,7 @@ namespace farma_tica.BLL
         }
 
         /// <summary>
-        /// Creates new medicine.
+        ///     Creates new medicine.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="requiresPrescription"></param>
@@ -36,14 +35,13 @@ namespace farma_tica.BLL
         /// <param name="stock"></param>
         /// <param name="numberSold"></param>
         /// <returns>Integer indicating whether the creation was successful.</returns>
-        public int CreateMedicine(string name, string requiresPrescription, string price, string originOffice,string house, string stock,
-            string numberSold)
+        public int CreateMedicine(string name, string requiresPrescription, string price, string originOffice, string stock)
         {
-            int response = 0;
+            var response = 0;
             using (var uow = context.CreateUnitOfWork())
             {
                 var medicineRepo = new MedicineRepository(context);
-                Medicine newMedicine = new Medicine();
+                var newMedicine = new Medicine();
                 try
                 {
                     newMedicine.MedicineId = Guid.NewGuid();
@@ -60,22 +58,23 @@ namespace farma_tica.BLL
             }
             return response;
         }
+
         /// <summary>
-        /// Obtains a specific medicine given by the parameter.
+        ///     Obtains a specific medicine given by the parameter.
         /// </summary>
         /// <param name="medicineId"></param>
         /// <returns>String array containing the medicine's attributes. Null value if medicine does not exist in the database.</returns>
         public string[] GetMedicineById(string medicineId)
         {
-            List<Medicine> medicineList = new List<Medicine>();
+            var medicineList = new List<Medicine>();
             string[] result = {};
             using (var uow = context.CreateUnitOfWork())
             {
                 var medicineRepo = new MedicineRepository(context);
                 try
                 {
-                    medicineList = (List<Medicine>)medicineRepo.GetById(medicineId);
-                    Medicine medicine = medicineList[0];
+                    medicineList = (List<Medicine>) medicineRepo.GetById(medicineId);
+                    var medicine = medicineList[0];
                     result[0] = medicineId;
                     result[1] = medicine.Name;
                     result[2] = medicine.RequiresPrescription.ToString();
@@ -83,7 +82,7 @@ namespace farma_tica.BLL
                 }
                 catch (Exception)
                 {
-                    result = null;       
+                    result = null;
                 }
             }
             return result;
@@ -91,13 +90,13 @@ namespace farma_tica.BLL
 
 
         /// <summary>
-        /// Obtains all medicines from a specific company.
+        ///     Obtains all medicines from a specific company.
         /// </summary>
         /// <param></param>
         /// <returns>List<Medicine> that contains all the medicines of the specified company</returns>
         public List<Medicine> GetAllMedicines(string house)
         {
-            List<Medicine> medicineList = new List<Medicine>();
+            var medicineList = new List<Medicine>();
             using (var uow = context.CreateUnitOfWork())
             {
                 var medicineRepo = new MedicineRepository(context);
@@ -114,19 +113,19 @@ namespace farma_tica.BLL
         }
 
         /// <summary>
-        /// Gets most sold medicines by the company given.
+        ///     Gets most sold medicines by the company given.
         /// </summary>
         /// <param name="company"></param>
         /// <returns>List of medicines ordered descendently by most sales.</returns>
         public List<Medicine> GetMostSoldMedicinesByCompany(string company)
         {
-            List<Medicine> medicineList = new List<Medicine>();
+            var medicineList = new List<Medicine>();
             using (var uow = context.CreateUnitOfWork())
             {
                 var medicineRepo = new MedicineRepository(context);
                 try
                 {
-                    medicineList = (List<Medicine>)medicineRepo.GetTotalMostSoldByCompany(company);
+                    medicineList = (List<Medicine>) medicineRepo.GetTotalMostSoldByCompany(company);
                 }
                 catch (Exception)
                 {
@@ -134,23 +133,22 @@ namespace farma_tica.BLL
                 }
             }
             return medicineList;
-
         }
 
         /// <summary>
-        /// Gets table with medicines most sold by using the new software.
+        ///     Gets table with medicines most sold by using the new software.
         /// </summary>
         /// <param name="company"></param>
         /// <returns>List of most sold medicines by using new software.</returns>
         public List<Medicine> GetMostSoldByNewSoftware(string company)
         {
-            List<Medicine> medicineList = new List<Medicine>();
+            var medicineList = new List<Medicine>();
             using (var uow = context.CreateUnitOfWork())
             {
                 var medicineRepo = new MedicineRepository(context);
                 try
                 {
-                    medicineList = (List<Medicine>)medicineRepo.GetOnlineMostSoldByCompany(company);
+                    medicineList = (List<Medicine>) medicineRepo.GetOnlineMostSoldByCompany(company);
                 }
                 catch (Exception)
                 {
@@ -161,7 +159,7 @@ namespace farma_tica.BLL
         }
 
         /// <summary>
-        /// Gives the total amount of sales accomplished by given company.
+        ///     Gives the total amount of sales accomplished by given company.
         /// </summary>
         /// <param name="company"></param>
         /// <returns>Integer value that indicates the total sales accomplished by the company.</returns>
@@ -184,18 +182,18 @@ namespace farma_tica.BLL
         }
 
         /// <summary>
-        /// Gets the most sold medicines globally.
+        ///     Gets the most sold medicines globally.
         /// </summary>
         /// <returns>List of medicines most sold by both companies.</returns>
         public List<Medicine> GlobalMostSoldMedicines()
         {
-            List<Medicine> medicineList = new List<Medicine>();
+            var medicineList = new List<Medicine>();
             using (var uow = context.CreateUnitOfWork())
             {
                 var medicineRepo = new MedicineRepository(context);
                 try
                 {
-                    medicineList = (List<Medicine>)medicineRepo.GetTotalMostSold();
+                    medicineList = (List<Medicine>) medicineRepo.GetTotalMostSold();
                 }
                 catch (Exception)
                 {
@@ -207,7 +205,7 @@ namespace farma_tica.BLL
 
 
         /// <summary>
-        /// Updates given medicine if possible. 
+        ///     Updates given medicine if possible.
         /// </summary>
         /// <param name="medicineId"></param>
         /// <param name="name"></param>
@@ -218,14 +216,15 @@ namespace farma_tica.BLL
         /// <param name="stock"></param>
         /// <param name="numberSold"></param>
         /// <returns>Integer with the result of the update.</returns>
-        public int UpdateMedicine(string medicineId, string name, string requiresPrescription, string price, string originOffice,
+        public int UpdateMedicine(string medicineId, string name, string requiresPrescription, string price,
+            string originOffice,
             string house, string stock, string numberSold)
         {
             var response = 0;
             using (var uow = context.CreateUnitOfWork())
             {
                 var medicineRepo = new MedicineRepository(context);
-                Medicine newMedicine = new Medicine();
+                var newMedicine = new Medicine();
                 try
                 {
                     newMedicine.MedicineId = new Guid(medicineId);
@@ -244,13 +243,13 @@ namespace farma_tica.BLL
         }
 
         /// <summary>
-        /// Deletes the given medicine.
+        ///     Deletes the given medicine.
         /// </summary>
         /// <param name="medicineId"></param>
         /// <returns>Integer indicating whether the deletion completed successfully.</returns>
         public int DeleteMedicine(string medicineId)
         {
-            int response = 0;
+            var response = 0;
             using (var uow = context.CreateUnitOfWork())
             {
                 var medicineRepo = new MedicineRepository(context);

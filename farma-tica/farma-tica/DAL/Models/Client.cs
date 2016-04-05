@@ -3,7 +3,7 @@
 namespace farma_tica.DAL.Models
 {
     /// <summary>
-    /// Client POCO 
+    ///     Client POCO
     /// </summary>
     public class Client
     {

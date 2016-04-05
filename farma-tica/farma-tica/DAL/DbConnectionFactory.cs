@@ -1,25 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Common;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace farma_tica.DAL
 {
     /// <summary>
-    /// This class creates and manages the database connection
+    ///     This class creates and manages the database connection
     /// </summary>
-    class DbConnectionFactory : IConnectionFactory
+    internal class DbConnectionFactory : IConnectionFactory
     {
-        private DbProviderFactory providerFactory;
-        private string connectionString;
+        private readonly string connectionString;
         private string name;
+        private readonly DbProviderFactory providerFactory;
 
         /// <summary>
-        /// Class Constructor, it retrieves connection string from the configuration file and initializes the other class properties.
+        ///     Class Constructor, it retrieves connection string from the configuration file and initializes the other class
+        ///     properties.
         /// </summary>
         /// <param name="conName"> Connection String in app.config file</param>
         public DbConnectionFactory(string conName)
@@ -33,13 +30,13 @@ namespace farma_tica.DAL
             {
                 throw new ConfigurationErrorsException("Failed to find connection string name in app.config.");
             }
-            this.name = conStr.ProviderName;
-            this.providerFactory = DbProviderFactories.GetFactory(conStr.ProviderName);
-            this.connectionString = conStr.ConnectionString;
+            name = conStr.ProviderName;
+            providerFactory = DbProviderFactories.GetFactory(conStr.ProviderName);
+            connectionString = conStr.ConnectionString;
         }
 
         /// <summary>
-        /// Creates a connection to the database detailed in the configuration file
+        ///     Creates a connection to the database detailed in the configuration file
         /// </summary>
         /// <returns>Opened conection to the database</returns>
         public IDbConnection CreateConnection()
@@ -52,7 +49,6 @@ namespace farma_tica.DAL
             connection.ConnectionString = connectionString;
             connection.Open();
             return connection;
-
         }
     }
 }

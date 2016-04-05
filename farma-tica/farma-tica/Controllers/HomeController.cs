@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace farma_tica.Controllers
@@ -17,10 +14,11 @@ namespace farma_tica.Controllers
         [HttpGet]
         public JsonResult GetAlgo()
         {
-            return Json(new List<string>() {"hola", "hola de nuevo"},JsonRequestBehavior.AllowGet);
+            return Json(new List<string> {"hola", "hola de nuevo"}, JsonRequestBehavior.AllowGet);
         }
-        //[HttpPost]
+
         //public JsonResult GetAlgo(Model argumento)
+        //[HttpPost]
         //{
         //    return Json(new List<string>() { "hola", "hola de nuevo" });
         //}

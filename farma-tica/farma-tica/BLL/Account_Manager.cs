@@ -1,21 +1,22 @@
 ﻿using System;
-using farma_tica.DAL;
-using farma_tica.DAL.Repositories;
 using System.Collections.Generic;
+using farma_tica.DAL;
 using farma_tica.DAL.Models;
+using farma_tica.DAL.Repositories;
 
 namespace farma_tica.BLL
 {
     /// <summary>
-    /// Account_Manager is intended to validate most of the business rules related to the Users' login. 
+    ///     Account_Manager is intended to validate most of the business rules related to the Users' login.
     /// </summary>
     public class Account_Manager
     {
+        private readonly DbContext context;
+
         /// <summary>
-        /// Class members which allow connecting to the Database.
+        ///     Class members which allow connecting to the Database.
         /// </summary>
-        private DbConnectionFactory factory;
-        private DbContext context;
+        private readonly DbConnectionFactory factory;
 
         public Account_Manager()
         {
@@ -24,19 +25,20 @@ namespace farma_tica.BLL
         }
 
         /// <summary>
-        /// Method that communicates directly to the REST API, providing it with the User's details in case the login results succesful. Otherwise an error code
-        /// is returned within an Array List of strings.
+        ///     Method that communicates directly to the REST API, providing it with the User's details in case the login results
+        ///     succesful. Otherwise an error code
+        ///     is returned within an Array List of strings.
         /// </summary>
         /// <param name="userID"></param>
         /// <param name="password"></param>
         /// <returns></returns>
         public string[] AuthorizeLogin(string userID, string password)
         {
-            string[] response = { };
+            string[] response = {};
             using (var uow = context.CreateUnitOfWork())
             {
                 var userRepo = new UserRepository(context);
-                var userList = (List<User>)userRepo.GetById(userID);
+                var userList = (List<User>) userRepo.GetById(userID);
                 var user = userList[0];
                 var opCode = VerifyUser(userID, password);
                 switch (opCode)
@@ -67,17 +69,18 @@ namespace farma_tica.BLL
         }
 
         /// <summary>
-        /// Function that creates a new user.
+        ///     Function that creates a new user.
         /// </summary>
         /// <param name="user"></param>
         /// <returns> Integer indicating whether the creation was successful.</returns>
-        public int CreateUser(string userId, string password, string name, string lastName1, string lastName2, string email, string company, string roleId)
+        public int CreateUser(string userId, string password, string name, string lastName1, string lastName2,
+            string email, string company, string roleId)
         {
-            int response = 0;
+            var response = 0;
             using (var uow = context.CreateUnitOfWork())
             {
                 var userRepo = new UserRepository(context);
-                User newUser = new User();
+                var newUser = new User();
                 try
                 {
                     newUser.IdUsuario = userId;
@@ -91,7 +94,6 @@ namespace farma_tica.BLL
                     userRepo.Create(newUser);
                     uow.SaveChanges();
                     response = Constants.USER_CREATED;
-
                 }
                 catch (Exception)
                 {
@@ -102,19 +104,19 @@ namespace farma_tica.BLL
         }
 
         /// <summary>
-        /// Obtains all users from a specific company.
+        ///     Obtains all users from a specific company.
         /// </summary>
         /// <param name="company"></param>
         /// <returns>List<User> that contains all the users of the specified column</returns>
         public List<User> GetAllUsers(string company)
         {
-            List<User> userList = new List<User>();
+            var userList = new List<User>();
             using (var uow = context.CreateUnitOfWork())
             {
                 var userRepo = new UserRepository(context);
                 try
                 {
-                    userList = (List<User>)userRepo.GetAll();
+                    userList = (List<User>) userRepo.GetAll();
                 }
                 catch (Exception)
                 {
@@ -125,17 +127,18 @@ namespace farma_tica.BLL
         }
 
         /// <summary>
-        /// Updates given user if possible.
+        ///     Updates given user if possible.
         /// </summary>
         /// <param name="user"></param>
         /// <returns>Integer with the result of the update.</returns>
-        public int UpdateUser(string userId, string password, string name, string lastName1, string lastName2, string email, string company, string roleId)
+        public int UpdateUser(string userId, string password, string name, string lastName1, string lastName2,
+            string email, string company, string roleId)
         {
             var response = 0;
             using (var uow = context.CreateUnitOfWork())
             {
                 var userRepo = new UserRepository(context);
-                User newUser = new User();
+                var newUser = new User();
                 try
                 {
                     newUser.IdUsuario = userId;
@@ -157,14 +160,15 @@ namespace farma_tica.BLL
             }
             return response;
         }
+
         /// <summary>
-        /// Deletes the given user.
+        ///     Deletes the given user.
         /// </summary>
         /// <param name="userId"></param>
         /// <returns>Integer indicating whether the deletion completed successfully.</returns>
         public int DeleteUser(string userId)
         {
-            int response = 0;
+            var response = 0;
             using (var uow = context.CreateUnitOfWork())
             {
                 var userRepo = new UserRepository(context);
@@ -178,13 +182,12 @@ namespace farma_tica.BLL
                 {
                     response = Constants.USER_NOT_DELETED;
                 }
-
             }
             return response;
         }
 
         /// <summary>
-        /// Auxiliary function that finds out the existence of a User.
+        ///     Auxiliary function that finds out the existence of a User.
         /// </summary>
         /// <param name="userId"></param>
         /// <returns>Boolean indicating the existence of the given user.</returns>
@@ -194,14 +197,14 @@ namespace farma_tica.BLL
             using (var uow = context.CreateUnitOfWork())
             {
                 var userRepo = new UserRepository(context);
-                var userList = (List<User>)userRepo.GetById(userId);
+                var userList = (List<User>) userRepo.GetById(userId);
                 exists = userList.Count != 0;
             }
             return exists;
         }
 
         /// <summary>
-        /// Verifies the existence of a User given its ID and Password
+        ///     Verifies the existence of a User given its ID and Password
         /// </summary>
         /// <param name="userID"></param>
         /// <param name="password"></param>
@@ -211,7 +214,6 @@ namespace farma_tica.BLL
             var result = 0;
             using (var uow = context.CreateUnitOfWork())
             {
-
                 var doesExist = DoesUserExist(userID);
                 if (!doesExist)
                 {
@@ -220,7 +222,7 @@ namespace farma_tica.BLL
                 else
                 {
                     var userRepo = new UserRepository(context);
-                    var userList = (List<User>)userRepo.GetById(userID);
+                    var userList = (List<User>) userRepo.GetById(userID);
                     result = userList[0].Password != password ? Constants.INVALID_PASSWORD : Constants.SUCCESSFUL_LOGIN;
                 }
             }

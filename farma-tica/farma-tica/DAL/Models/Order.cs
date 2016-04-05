@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.SqlTypes;
 using System.Drawing;
 
 namespace farma_tica.DAL.Models
@@ -16,6 +15,6 @@ namespace farma_tica.DAL.Models
         public string Priority { get; set; }
         public string PrefPhoneNum { get; set; }
         public DateTime PickUpdDate { get; set; }
-        public Boolean Type { get; set; }
+        public bool Type { get; set; }
     }
 }

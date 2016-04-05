@@ -1,23 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Threading;
-using farma_tica.DAL;
 
 namespace farma_tica.DAL
 {
     /// <summary>
-    /// Data base context
+    ///     Data base context
     /// </summary>
     public class DbContext : IDbContext
     {
-        private IDbConnection mConnection;
-        private IConnectionFactory mConnectionFactory;
-        private ReaderWriterLockSlim mRwLockSlim = new ReaderWriterLockSlim();
-        private LinkedList<UnitOfWork> mUowList = new LinkedList<UnitOfWork>();
+        private readonly IDbConnection mConnection;
+        private readonly IConnectionFactory mConnectionFactory;
+        private readonly ReaderWriterLockSlim mRwLockSlim = new ReaderWriterLockSlim();
+        private readonly LinkedList<UnitOfWork> mUowList = new LinkedList<UnitOfWork>();
 
         /// <summary>
-        /// Initialize a new database Context
+        ///     Initialize a new database Context
         /// </summary>
         /// <param name="connectionFactory"></param>
         public DbContext(IConnectionFactory connectionFactory)
@@ -27,7 +25,7 @@ namespace farma_tica.DAL
         }
 
         /// <summary>
-        /// Creates a unit of work
+        ///     Creates a unit of work
         /// </summary>
         /// <returns>created unit of work</returns>
         public IUnitOfWork CreateUnitOfWork()
@@ -42,7 +40,7 @@ namespace farma_tica.DAL
         }
 
         /// <summary>
-        /// Creates new command 
+        ///     Creates new command
         /// </summary>
         /// <returns>created command</returns>
         public IDbCommand CreateDbCommand()
@@ -65,7 +63,7 @@ namespace farma_tica.DAL
         }
 
         /// <summary>
-        /// Releases resources
+        ///     Releases resources
         /// </summary>
         public void Dispose()
         {

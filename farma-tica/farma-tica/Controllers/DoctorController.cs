@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using farma_tica.BLL;
 using farma_tica.DAL.Models;
 
@@ -16,13 +12,14 @@ namespace farma_tica.Controllers
         {
             var docm = new Doctor_Manager();
             return
-                Json(new ReturnStatus()
+                Json(new ReturnStatus
                 {
                     StatusCode =
                         docm.CreateDoctor(newDoc.DoctorId, newDoc.IdNumber, newDoc.Name, newDoc.LastName1,
                             newDoc.LastName2, newDoc.PlaceResidence)
-                },JsonRequestBehavior.AllowGet);
+                }, JsonRequestBehavior.AllowGet);
         }
+
         // URI from Angular: /home/Doctor/GetAll
         [HttpGet]
         public JsonResult GetAll()
@@ -30,6 +27,5 @@ namespace farma_tica.Controllers
             var docm = new Doctor_Manager();
             return Json(docm.GetAllDoctors(), JsonRequestBehavior.AllowGet);
         }
-
     }
 }

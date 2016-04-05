@@ -6,7 +6,7 @@ using farma_tica.DAL.Models;
 namespace farma_tica.DAL.Repositories
 {
     /// <summary>
-    /// Client repository
+    ///     Client repository
     /// </summary>
     public class ClientRepository : Repository<Client>
     {
@@ -15,7 +15,7 @@ namespace farma_tica.DAL.Repositories
         }
 
         /// <summary>
-        /// Get all the exiting clients
+        ///     Get all the exiting clients
         /// </summary>
         /// <returns>A list of clients</returns>
         public override IEnumerable<Client> GetAll()
@@ -29,7 +29,7 @@ namespace farma_tica.DAL.Repositories
         }
 
         /// <summary>
-        /// Insert new client into repository
+        ///     Insert new client into repository
         /// </summary>
         /// <param name="newClient"></param>
         public override void Create(Client newClient)
@@ -37,9 +37,18 @@ namespace farma_tica.DAL.Repositories
             using (var command = Context.CreateDbCommand())
             {
                 var clientProps = new object[]
-                {newClient.Id, newClient.Password, newClient.Name, newClient.LastName1, newClient.LastName2,newClient.PenaltiesNumber,newClient.PlaceResidence,newClient.MedicalHistory,newClient.BornDate,newClient.PhoneMum};
-                command.CommandText = @"INSERT INTO Cliente VALUES(@id, @pass, @name, @lastName1, @lastName2, @penaltiesNumber, @placeResidence, @medicalHistory, @bornDate, @phoneNum)";
-                var parameterNames = new string[] { "@id", "@pass", "@name", "@lastName1", "@lastName2", "@penaltiesNumber", "@placeResidence", "@medicalHistory", "@bornDate", "@phoneNum" };
+                {
+                    newClient.Id, newClient.Password, newClient.Name, newClient.LastName1, newClient.LastName2,
+                    newClient.PenaltiesNumber, newClient.PlaceResidence, newClient.MedicalHistory, newClient.BornDate,
+                    newClient.PhoneMum
+                };
+                command.CommandText =
+                    @"INSERT INTO Cliente VALUES(@id, @pass, @name, @lastName1, @lastName2, @penaltiesNumber, @placeResidence, @medicalHistory, @bornDate, @phoneNum)";
+                var parameterNames = new[]
+                {
+                    "@id", "@pass", "@name", "@lastName1", "@lastName2", "@penaltiesNumber", "@placeResidence",
+                    "@medicalHistory", "@bornDate", "@phoneNum"
+                };
                 for (var i = 0; i < clientProps.Length; i++)
                 {
                     var newParameter = command.CreateParameter();
@@ -52,7 +61,7 @@ namespace farma_tica.DAL.Repositories
         }
 
         /// <summary>
-        /// Gets client by its id
+        ///     Gets client by its id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -71,7 +80,7 @@ namespace farma_tica.DAL.Repositories
         }
 
         /// <summary>
-        /// Updates an existing client
+        ///     Updates an existing client
         /// </summary>
         /// <param name="newClient"></param>
         public override void Update(Client newClient)
@@ -79,10 +88,18 @@ namespace farma_tica.DAL.Repositories
             using (var command = Context.CreateDbCommand())
             {
                 var clientProps = new object[]
-                {newClient.Password, newClient.Name, newClient.LastName1, newClient.LastName2,newClient.PenaltiesNumber,newClient.PlaceResidence,newClient.MedicalHistory,newClient.BornDate,newClient.PhoneMum};
-                command.CommandText = @"UPDATE Cliente SET Pass= @pass, Nombre = @name, PrimerApellido=@lastName1, SegundoApellido=@lastName2, CantidadMultas=@penaltiesNum, LugarResidencia=@placeResidence, 
+                {
+                    newClient.Password, newClient.Name, newClient.LastName1, newClient.LastName2, newClient.PenaltiesNumber,
+                    newClient.PlaceResidence, newClient.MedicalHistory, newClient.BornDate, newClient.PhoneMum
+                };
+                command.CommandText =
+                    @"UPDATE Cliente SET Pass= @pass, Nombre = @name, PrimerApellido=@lastName1, SegundoApellido=@lastName2, CantidadMultas=@penaltiesNum, LugarResidencia=@placeResidence, 
                                                            Historial= @medicalHistory, FechaNacimiento= @bornDate, NumeroTelefono=@phoneNum WHERE NumeroCedula =@clientId";
-                var parameterNames = new string[] {"@pass", "@name", "@lastName1", "@lastName2", "@penaltiesNum", "@placeResidence", "@medicalHistory", "@bornDate", "@phoneNum" };
+                var parameterNames = new[]
+                {
+                    "@pass", "@name", "@lastName1", "@lastName2", "@penaltiesNum", "@placeResidence", "@medicalHistory",
+                    "@bornDate", "@phoneNum"
+                };
                 for (var i = 0; i < clientProps.Length; i++)
                 {
                     var newParameter = command.CreateParameter();
@@ -99,7 +116,7 @@ namespace farma_tica.DAL.Repositories
         }
 
         /// <summary>
-        /// Deletes object by its id
+        ///     Deletes object by its id
         /// </summary>
         /// <param name="id"></param>
         public override void DeleteById(object id)
@@ -116,13 +133,13 @@ namespace farma_tica.DAL.Repositories
         }
 
         /// <summary>
-        /// Gets client's number of penalties for the given id
+        ///     Gets client's number of penalties for the given id
         /// </summary>
         /// <param name="clientId"></param>
         /// <returns></returns>
         public int GetNumberOfPenalties(string clientId)
         {
-            int numberOfPenalties=0;
+            var numberOfPenalties = 0;
             using (var command = Context.CreateDbCommand())
             {
                 command.CommandText = @"SELECT CantidadMultas FROM Cliente WHERE NumeroCedula= @clientId";
@@ -143,22 +160,22 @@ namespace farma_tica.DAL.Repositories
 
 
         /// <summary>
-        /// Map result into entity
+        ///     Map result into entity
         /// </summary>
         /// <param name="record">query result</param>
         /// <param name="client">entity to map values into</param>
         protected override void Map(IDataRecord record, Client client)
         {
-            client.Id = (string)record["NumeroCedula"];
+            client.Id = (string) record["NumeroCedula"];
             client.Id = (string) record["Pass"];
-            client.Name = (string)record["Nombre"];
-            client.LastName1 = (string)record["PrimerApellido"];
-            client.LastName2 = (string)record["SegundoApellido"];
-            client.PenaltiesNumber = (int)record["CantidadMultas"];
-            client.PlaceResidence = (string)record["LugarResidencia"];
-            client.MedicalHistory = (string)record["Historial"];
-            client.BornDate = (DateTime)record["FechaNacimiento"];
-            client.PhoneMum = (string)record["NumeroTelefono"];
+            client.Name = (string) record["Nombre"];
+            client.LastName1 = (string) record["PrimerApellido"];
+            client.LastName2 = (string) record["SegundoApellido"];
+            client.PenaltiesNumber = (int) record["CantidadMultas"];
+            client.PlaceResidence = (string) record["LugarResidencia"];
+            client.MedicalHistory = (string) record["Historial"];
+            client.BornDate = (DateTime) record["FechaNacimiento"];
+            client.PhoneMum = (string) record["NumeroTelefono"];
         }
     }
 }

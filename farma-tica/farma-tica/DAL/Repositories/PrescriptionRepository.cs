@@ -14,7 +14,7 @@ namespace farma_tica.DAL.Repositories
         }
 
         /// <summary>
-        /// Returns all existing prescriptions
+        ///     Returns all existing prescriptions
         /// </summary>
         /// <returns></returns>
         public override IEnumerable<Prescription> GetAll()
@@ -28,7 +28,7 @@ namespace farma_tica.DAL.Repositories
         }
 
         /// <summary>
-        /// creates a new prescription
+        ///     creates a new prescription
         /// </summary>
         /// <param name="prescription"></param>
         public override void Create(Prescription prescription)
@@ -36,9 +36,12 @@ namespace farma_tica.DAL.Repositories
             using (var command = Context.CreateDbCommand())
             {
                 var prescriotionProps = new object[]
-                {prescription.PrescriptionID.ToString(), prescription.Doctor,ConvertImageToByteArray(prescription.Image)};
+                {
+                    prescription.PrescriptionID.ToString(), prescription.Doctor,
+                    ConvertImageToByteArray(prescription.Image)
+                };
                 command.CommandText = @"INSERT INTO Receta VALUES(@prescriptionId, @doctor, @image)";
-                var parameterNames = new string[] { "@prescriptionId", "@doctor", "@image" };
+                var parameterNames = new[] {"@prescriptionId", "@doctor", "@image"};
                 for (var i = 0; i < prescriotionProps.Length; i++)
                 {
                     var newParameter = command.CreateParameter();
@@ -51,7 +54,7 @@ namespace farma_tica.DAL.Repositories
         }
 
         /// <summary>
-        /// Adds a medicine into prescription
+        ///     Adds a medicine into prescription
         /// </summary>
         /// <param name="prescriptionId"></param>
         /// <param name="medicineId"></param>
@@ -60,9 +63,9 @@ namespace farma_tica.DAL.Repositories
             using (var command = Context.CreateDbCommand())
             {
                 var medPresProps = new object[]
-                {prescriptionId,medicineId};
+                {prescriptionId, medicineId};
                 command.CommandText = @"INSERT INTO Medicamentos_Por_Receta VALUES(@prescriptionId, @medicineId)";
-                var parameterNames = new string[] { "@prescriptionId", "@medicineId" };
+                var parameterNames = new[] {"@prescriptionId", "@medicineId"};
                 for (var i = 0; i < medPresProps.Length; i++)
                 {
                     var newParameter = command.CreateParameter();
@@ -75,7 +78,7 @@ namespace farma_tica.DAL.Repositories
         }
 
         /// <summary>
-        /// Retrieve an existing prescription for the given id
+        ///     Retrieve an existing prescription for the given id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -94,7 +97,7 @@ namespace farma_tica.DAL.Repositories
         }
 
         /// <summary>
-        /// Updates an existing prescription
+        ///     Updates an existing prescription
         /// </summary>
         /// <param name="prescription"></param>
         public override void Update(Prescription prescription)
@@ -102,9 +105,9 @@ namespace farma_tica.DAL.Repositories
             using (var command = Context.CreateDbCommand())
             {
                 var prescriptionProps = new object[]
-               {prescription.Doctor, ConvertImageToByteArray(prescription.Image)};
+                {prescription.Doctor, ConvertImageToByteArray(prescription.Image)};
                 command.CommandText = @"UPDATE  Receta SET  Doctor=@doctor, Imagen=@image";
-                var parameterNames = new string[] { "@doctor", "@image" };
+                var parameterNames = new[] {"@doctor", "@image"};
                 for (var i = 0; i < prescriptionProps.Length; i++)
                 {
                     var newParameter = command.CreateParameter();
@@ -148,7 +151,7 @@ namespace farma_tica.DAL.Repositories
 
 
         /// <summary>
-        /// Gets a list of medicines for the given prescription
+        ///     Gets a list of medicines for the given prescription
         /// </summary>
         /// <param name="pres"></param>
         /// <returns></returns>
@@ -157,7 +160,8 @@ namespace farma_tica.DAL.Repositories
             using (var command = Context.CreateDbCommand())
             {
                 var prescriptId = pres.PrescriptionID;
-                command.CommandText = @"SELECT *  FROM Receta JOIN Medicamentos_Por_Receta WHERE NumeroReceta = @prescriptionId";
+                command.CommandText =
+                    @"SELECT *  FROM Receta JOIN Medicamentos_Por_Receta WHERE NumeroReceta = @prescriptionId";
                 var newParameter = command.CreateParameter();
                 newParameter.ParameterName = "@prescriptionId";
                 newParameter.Value = prescriptId.ToString();
@@ -168,7 +172,7 @@ namespace farma_tica.DAL.Repositories
         }
 
         /// <summary>
-        /// Method to create a list o medicines from the result of the query
+        ///     Method to create a list o medicines from the result of the query
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
@@ -181,9 +185,9 @@ namespace farma_tica.DAL.Repositories
                 {
                     var item = new Medicine
                     {
-                        MedicineId = (Guid)reader["ID_Medicamento"],
-                        Name = (string)reader["Nombre"],
-                        RequiresPrescription = (bool)reader["Prescripcion"]
+                        MedicineId = (Guid) reader["ID_Medicamento"],
+                        Name = (string) reader["Nombre"],
+                        RequiresPrescription = (bool) reader["Prescripcion"]
                     };
                     itemList.Add(item);
                 }
@@ -193,13 +197,13 @@ namespace farma_tica.DAL.Repositories
 
         protected override void Map(IDataRecord record, Prescription entity)
         {
-            entity.PrescriptionID = (Guid)record["NumeroReceta"];
-            entity.Doctor = (string)record["Doctor"];
-            entity.Image = ConvertByteArrayToImage((byte[])record["Imagen"]);
+            entity.PrescriptionID = (Guid) record["NumeroReceta"];
+            entity.Doctor = (string) record["Doctor"];
+            entity.Image = ConvertByteArrayToImage((byte[]) record["Imagen"]);
         }
 
         /// <summary>
-        /// Converts a byte array into an Image type
+        ///     Converts a byte array into an Image type
         /// </summary>
         /// <param name="array"></param>
         /// <returns></returns>
@@ -210,14 +214,14 @@ namespace farma_tica.DAL.Repositories
         }
 
         /// <summary>
-        /// Converts an image to byte array
+        ///     Converts an image to byte array
         /// </summary>
         /// <param name="img"></param>
         /// <returns></returns>
         protected byte[] ConvertImageToByteArray(Image img)
         {
             ImageConverter imgconv = new ImageConverter();
-            byte[] xByte = (byte[])imgconv.ConvertTo(img, typeof(byte[]));
+            var xByte = (byte[]) imgconv.ConvertTo(img, typeof (byte[]));
             return xByte;
         }
     }

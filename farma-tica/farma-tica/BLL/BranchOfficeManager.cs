@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using farma_tica.DAL;
 using farma_tica.DAL.Models;
 using farma_tica.DAL.Repositories;
@@ -10,11 +8,12 @@ namespace farma_tica.BLL
 {
     public class BranchOfficeManager
     {
+        private readonly DbContext context;
+
         /// <summary>
-        /// Class members which allow connecting to the Database.
+        ///     Class members which allow connecting to the Database.
         /// </summary>
-        private DbConnectionFactory factory;
-        private DbContext context;
+        private readonly DbConnectionFactory factory;
 
         public BranchOfficeManager()
         {

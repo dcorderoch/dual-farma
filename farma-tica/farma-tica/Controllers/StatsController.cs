@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using farma_tica.BLL;
 
 namespace farma_tica.Controllers
@@ -14,7 +10,7 @@ namespace farma_tica.Controllers
         public JsonResult SalesPerComp(string Company)
         {
             var medm = new Medicine_Manager();
-            return Json(medm.GetMostSoldMedicinesByCompany(Company),JsonRequestBehavior.AllowGet);
+            return Json(medm.GetMostSoldMedicinesByCompany(Company), JsonRequestBehavior.AllowGet);
         }
 
         // URI from Angular: /home/Stats/NewSales
@@ -30,7 +26,7 @@ namespace farma_tica.Controllers
         public JsonResult TotSalesPerComp(string Company)
         {
             var medm = new Medicine_Manager();
-            return Json(new ReturnStatus() {StatusCode = medm.TotalSalesByCompany(Company)},
+            return Json(new ReturnStatus {StatusCode = medm.TotalSalesByCompany(Company)},
                 JsonRequestBehavior.AllowGet);
         }
 
@@ -41,7 +37,5 @@ namespace farma_tica.Controllers
             return Json(medm.GlobalMostSoldMedicines(),
                 JsonRequestBehavior.AllowGet);
         }
-
-
     }
 }

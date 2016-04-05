@@ -1,22 +1,19 @@
 ﻿using System;
 using System.Data;
-using System.Data.Common;
 
 namespace farma_tica.DAL
 {
     /// <summary>
-    /// Implementation of unit of work 
+    ///     Implementation of unit of work
     /// </summary>
     public class UnitOfWork : IUnitOfWork
     {
+        private readonly Action<UnitOfWork> mCommited;
+        private readonly Action<UnitOfWork> mRolledBack;
         private IDbTransaction mTransaction;
-        private Action<UnitOfWork> mRolledBack;
-        private Action<UnitOfWork> mCommited;
-
-        public IDbTransaction Transaction { get; private set; }
 
         /// <summary>
-        /// Creates a new unit of work
+        ///     Creates a new unit of work
         /// </summary>
         /// <param name="transaction">this is the transaction that is used as a UnitOfWork</param>
         /// <param name="rolledBack">this is used when the UoW is rolled back</param>
@@ -27,10 +24,12 @@ namespace farma_tica.DAL
             mTransaction = transaction;
             mRolledBack = rolledBack;
             mCommited = commited;
-
         }
+
+        public IDbTransaction Transaction { get; private set; }
+
         /// <summary>
-        /// Method to release resources
+        ///     Method to release resources
         /// </summary>
         public void Dispose()
         {
@@ -43,7 +42,7 @@ namespace farma_tica.DAL
         }
 
         /// <summary>
-        /// Save changes into the DataBase
+        ///     Save changes into the DataBase
         /// </summary>
         public void SaveChanges()
         {

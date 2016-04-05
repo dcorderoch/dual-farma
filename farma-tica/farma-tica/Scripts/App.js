@@ -1,30 +1,30 @@
 ﻿var myApp = angular.module("myApp", []);
 
-myApp.controller("mainController", function ($scope, $http) {
+myApp.controller("mainController", function($scope, $http) {
     $http.get("/home/GetProducts")
-        .success(function (result) {
+        .success(function(result) {
             $scope.products = result;
-        }).error(function (data) {
+        }).error(function(data) {
             console.log(data);
         });
     $scope.newProduct = "";
-    $scope.addProduct = function () {
+    $scope.addProduct = function() {
         $http.post("/home/AddProduct/", { newProduct: $scope.newProduct })
-            .success(function (result) {
+            .success(function(result) {
                 $scope.products = result;
                 $scope.newProduct = "";
             })
-            .error(function (data) {
+            .error(function(data) {
                 console.log(data);
             });
-    }
-    $scope.deleteProduct = function (product) {
+    };
+    $scope.deleteProduct = function(product) {
         $http.post("/home/DeleteProduct/", { delProduct: product })
-            .success(function (result) {
+            .success(function(result) {
                 $scope.products = result;
             })
-            .error(function (data) {
+            .error(function(data) {
                 console.log(data);
             });
-    }
+    };
 });
