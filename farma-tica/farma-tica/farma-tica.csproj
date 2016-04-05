@@ -140,6 +140,9 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\LoginData.cs" />
     <Compile Include="Controllers\MedicineController.cs" />
+    <Compile Include="Controllers\OrderStatus.cs" />
+    <Compile Include="Controllers\OrderWithoutPrescription.cs" />
+    <Compile Include="Controllers\OrderWithPrescription.cs" />
     <Compile Include="Controllers\PedidoController.cs" />
     <Compile Include="Controllers\ReturnStatus.cs" />
     <Compile Include="Controllers\StatsController.cs" />

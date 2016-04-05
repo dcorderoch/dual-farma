@@ -17,35 +17,54 @@ namespace farma_tica.Controllers
 {
     public class PedidoController : Controller
     {
-        //CRUD
-
         // URI from Angular: /home/Pedido/Create
         [HttpPost]
-        public JsonResult Create(Order theOrder)
+        public JsonResult Create(OrderWithoutPrescription theOrder)
         {
-            //MUST CHANGE
-            /*
-            public int CreateOrderWithoutPrescription(string clientId, string[] medicinesId, string pickupOfficeId,
-            string prefPhoneNume, DateTime pickUpdDate, bool type)
-            */
             var om = new OrderManager();
-            //return Json(new ReturnStatus() {StatusCode = om.CreateOrderWithoutPrescription(theOrder.ClientId,theOrder.)})
-            return Json(new ReturnStatus() {StatusCode = 200}, JsonRequestBehavior.AllowGet);
+            return
+                Json(new ReturnStatus()
+                {
+                    StatusCode =
+                        om.CreateOrderWithoutPrescription(theOrder.clientId, theOrder.medicineIds,
+                            theOrder.pickupOfficeId, theOrder.prefPhoneNumber, theOrder.pickupDate, theOrder.type)
+                },JsonRequestBehavior.AllowGet);
         }
 
         // URI from Angular: /home/Pedido/CreateWPrescription
-        public JsonResult CreateWPrescription(Order theOrder)
+        [HttpPost]
+        public JsonResult CreateWPrescription(OrderWithPrescription theOrder)
         {
-            //MUST CHANGE
-            /*
-            public int CreateOrderWithoutPrescription(string clientId, string[] medicinesId, string pickupOfficeId,
-            string prefPhoneNume, DateTime pickUpdDate, bool type)
-            */
             var om = new OrderManager();
-            //return Json(new ReturnStatus() {StatusCode = om.CreateOrderWithoutPrescription(theOrder.ClientId,theOrder.)})
-            return Json(new ReturnStatus() { StatusCode = 200 }, JsonRequestBehavior.AllowGet);
+            return Json(new ReturnStatus()
+            {
+                StatusCode = om.CreateOrderWithPrescription(
+                    theOrder.clientId,theOrder.medicinesId,theOrder.prescriptedMedicinesId,theOrder.prescriptionImage,theOrder.DoctorId,theOrder.pickupOfficeId,theOrder.prefPhoneNumber,theOrder.pickupDate,theOrder.type)
+            }, JsonRequestBehavior.AllowGet);
         }
-        // URI from Angular: /home/Pedido/Update
+
+        // URI from Angular: /home/Pedido/GetAllByBranchOffice
+        [HttpPost]
+        public JsonResult GetAllByBranchOffice(string branchOfficeId)
+        {
+            var om = new OrderManager();
+            return Json(om.GetAllOrdersByBranchOffice(branchOfficeId),JsonRequestBehavior.AllowGet);
+        }
+
         // URI from Angular: /home/Pedido/Delete
+        [HttpPost]
+        public JsonResult Delete(string orderId)
+        {
+            var om = new OrderManager();
+            return Json(new ReturnStatus() {StatusCode = om.DeleteOrder(orderId)}, JsonRequestBehavior.AllowGet);
+        }
+
+        // URI from Angular: /home/Pedido/Update
+        [HttpPost]
+        public JsonResult Update(OrderStatus newStatus)
+        {
+            var om = new OrderManager();
+            return Json(new ReturnStatus() { StatusCode = om.UpdateOrderStatus(newStatus.Id, newStatus.Status) }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
