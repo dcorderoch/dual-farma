@@ -143,6 +143,25 @@ namespace farma_tica.DAL.Repositories
         }
 
         /// <summary>
+        /// Get Medicine List for the given name (should be only 1 item)
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public IEnumerable<Medicine> GetByName(String name)
+        {
+            using (var command = Context.CreateDbCommand())
+            {
+                command.CommandText = @"SELECT * FROM Medicamento WHERE Nombre = @name";
+                var newParameter = command.CreateParameter();
+                newParameter.ParameterName = "@name";
+                newParameter.Value = name;
+                command.Parameters.Add(newParameter);
+                var result = ToList(command);
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Gets all medicines for the given branch office
         /// </summary>
         /// <param name="branchOfficeId"></param>
