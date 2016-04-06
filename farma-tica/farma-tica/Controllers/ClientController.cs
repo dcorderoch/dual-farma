@@ -19,7 +19,7 @@ namespace farma_tica.Controllers
 {
     public class ClientController : ApiController
     {
-        // URI from Angular: /Client/New
+        // URI from Angular: api/Client/New
         [HttpPost]
         public JsonResult<ReturnStatus> New(Client newClient)
         {
@@ -31,30 +31,19 @@ namespace farma_tica.Controllers
                         clm.CreateClient(newClient.Id, newClient.Name, newClient.LastName1, newClient.LastName2,
                             newClient.PenaltiesNumber.ToString(), newClient.PlaceResidence, newClient.MedicalHistory,
                             newClient.BornDate.ToString(), newClient.PhoneMum, newClient.Password)
-                }); //, JsonRequestBehavior.AllowGet);
+                });
         }
 
-        // URI from Angular /api/Client/Crap
-        [HttpPost]
-        public JsonResult<string> Crap(LoginData what)
-        {
-            if (what == null || what.ID == null || what.Pass == null)
-            {
-                return Json(new string(("shit").ToCharArray()));
-            }
-            return Json(new string(("value:" + what.ID + what.Pass).ToCharArray()));
-        }
-
-        // URI from Angular: /Client/GetAllClients
+        // URI from Angular: api/Client/GetAllClients
         [HttpGet]
         [Route()]
         public JsonResult<List<Client>> GetAllClients()
         {
             var clm = new Client_Manager();
-            return Json(clm.GetAllClients());//, JsonRequestBehavior.AllowGet);
+            return Json(clm.GetAllClients());
         }
 
-        // URI from Angular: /Client/Update
+        // URI from Angular: api/Client/Update
         [HttpPost]
         public JsonResult<ReturnStatus> Update(Client theClient)
         {
@@ -63,15 +52,15 @@ namespace farma_tica.Controllers
                 new ReturnStatus()
                 {
                     StatusCode = clm.UpdateClient(theClient.Id, theClient.Name, theClient.LastName1, theClient.LastName2, theClient.PenaltiesNumber.ToString(), theClient.PlaceResidence, theClient.MedicalHistory, theClient.BornDate.ToString(), theClient.PhoneMum, theClient.Password)
-                });//, JsonRequestBehavior.AllowGet);
+                });
         }
 
-        // URI from Angular: /Client/Delete
+        // URI from Angular: api/Client/Delete
         [HttpPost]
         public JsonResult<ReturnStatus> Delete(IdClient clientID)
         {
             var clm = new Client_Manager();
-            return Json(new ReturnStatus() {StatusCode = clm.DeleteClient(clientID.cID)});//,JsonRequestBehavior.AllowGet);
+            return Json(new ReturnStatus() {StatusCode = clm.DeleteClient(clientID.cID)});
         }
     }
 }

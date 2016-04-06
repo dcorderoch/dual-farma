@@ -165,7 +165,6 @@
     <Compile Include="BLL\Prescription_Manager.cs" />
     <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IdBranchOffice.cs" />
     <Compile Include="Controllers\IdClient.cs" />
     <Compile Include="Controllers\IdCompany.cs" />
@@ -185,6 +184,7 @@
     <Compile Include="Controllers\PrescriptionInfo.cs" />
     <Compile Include="Controllers\ReturnStatus.cs" />
     <Compile Include="Controllers\StatsController.cs" />
+    <Compile Include="Controllers\UpdateMed.cs" />
     <Compile Include="DAL\DbConnectionFactory.cs" />
     <Compile Include="DAL\DbContext.cs" />
     <Compile Include="DAL\IConnectionFactory.cs" />

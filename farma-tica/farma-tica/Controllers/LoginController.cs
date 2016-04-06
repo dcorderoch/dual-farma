@@ -6,13 +6,13 @@ namespace farma_tica.Controllers
 {
     public class LoginController : ApiController
     {
-        // URI from Angular: /Login/Login
+        // URI from Angular: api/Login/Login
         [HttpPost]
         public JsonResult<string[]> Login(LoginData login)
         {
             var acm = new Account_Manager();
             var retVal = acm.AuthorizeLogin(login.ID, login.Pass);
-            return Json(retVal);//, JsonRequestBehavior.AllowGet);
+            return Json(retVal);
         }
     }
 }

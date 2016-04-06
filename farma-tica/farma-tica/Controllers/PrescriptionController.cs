@@ -11,6 +11,7 @@ namespace farma_tica.Controllers
 {
     public class PrescriptionController : ApiController
     {
+        // URI from Angular: api/Prescription/New
         [HttpPost]
         public JsonResult<ReturnStatus> New(PrescriptionInfo nuevaReceta)
         {
@@ -22,6 +23,7 @@ namespace farma_tica.Controllers
                 });
         }
 
+        // URI from Angular: api/Prescription/GetAll
         [HttpGet]
         public JsonResult<List<Prescription>> GetAll()
         {
@@ -29,6 +31,7 @@ namespace farma_tica.Controllers
             return Json(pm.GetAllPrescriptions());
         }
 
+        // URI from Angular: api/Prescription/Delete
         public JsonResult<ReturnStatus> Delete(IdPrescription prescription)
         {
             var pm = new Prescription_Manager();

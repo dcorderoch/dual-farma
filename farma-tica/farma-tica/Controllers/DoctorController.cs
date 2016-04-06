@@ -14,7 +14,7 @@ namespace farma_tica.Controllers
 {
     public class DoctorController : ApiController
     {
-        // URI from Angular: /home/Doctor/Create
+        // URI from Angular: api/Doctor/Create
         [HttpPost]
         public JsonResult<ReturnStatus> Create(Doctor newDoc)
         {
@@ -25,14 +25,14 @@ namespace farma_tica.Controllers
                     StatusCode =
                         docm.CreateDoctor(newDoc.DoctorId, newDoc.IdNumber, newDoc.Name, newDoc.LastName1,
                             newDoc.LastName2, newDoc.PlaceResidence)
-                });//,JsonRequestBehavior.AllowGet);
+                });
         }
-        // URI from Angular: /home/Doctor/GetAll
+        // URI from Angular: api/Doctor/GetAll
         [HttpGet]
         public JsonResult<List<Doctor>> GetAll()
         {
             var docm = new Doctor_Manager();
-            return Json(docm.GetAllDoctors());//, JsonRequestBehavior.AllowGet);
+            return Json(docm.GetAllDoctors());
         }
 
     }

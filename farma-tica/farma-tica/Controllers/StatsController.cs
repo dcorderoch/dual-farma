@@ -14,35 +14,35 @@ namespace farma_tica.Controllers
 {
     public class StatsController : ApiController
     {
-        // URI from Angular: /Stats/SalesPerComp
+        // URI from Angular: api/Stats/SalesPerComp
         [HttpPost]
         public JsonResult<List<Medicine>> SalesPerComp(IdCompany Company)
         {
             var medm = new Medicine_Manager();
-            return Json(medm.GetMostSoldMedicinesByCompany(Company.compID));//,JsonRequestBehavior.AllowGet);
+            return Json(medm.GetMostSoldMedicinesByCompany(Company.compID));
         }
 
-        // URI from Angular: /Stats/NewSales
+        // URI from Angular: api/Stats/NewSales
         [HttpPost]
         public JsonResult<List<Medicine>> NewSales(IdCompany Company)
         {
             var medm = new Medicine_Manager();
-            return Json(medm.GetMostSoldByNewSoftware(Company.compID));// JsonRequestBehavior.AllowGet);
+            return Json(medm.GetMostSoldByNewSoftware(Company.compID));
         }
 
-        // URI from Angular: /Stats/TotSalesPerComp
+        // URI from Angular: api/Stats/TotSalesPerComp
         [HttpPost]
         public JsonResult<ReturnStatus> TotSalesPerComp(IdCompany Company)
         {
             var medm = new Medicine_Manager();
-            return Json(new ReturnStatus() {StatusCode = medm.TotalSalesByCompany(Company.compID)});//,JsonRequestBehavior.AllowGet);
+            return Json(new ReturnStatus() {StatusCode = medm.TotalSalesByCompany(Company.compID)});
         }
 
-        // URI from Angular: /Stats/GlobalSales
+        // URI from Angular: api/Stats/GlobalSales
         public JsonResult<List<Medicine>>  GlobalSales()
         {
             var medm = new Medicine_Manager();
-            return Json(medm.GlobalMostSoldMedicines());//,JsonRequestBehavior.AllowGet);
+            return Json(medm.GlobalMostSoldMedicines());
         }
 
 

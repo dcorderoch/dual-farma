@@ -10,7 +10,7 @@ namespace farma_tica.Controllers
 {
     public class MedicineController : ApiController
     {
-        // URI from Angular: /Medicine/Create
+        // URI from Angular: api/Medicine/Create
         [HttpPost]
         public JsonResult<ReturnStatus> Create(MedicineCreate newMed)
         {
@@ -20,30 +20,30 @@ namespace farma_tica.Controllers
                 {
                     StatusCode =
                         medm.CreateMedicine(newMed.name, newMed.requiresPrescription, newMed.price, newMed.originOffice, newMed.stock)
-                });//,JsonRequestBehavior.AllowGet);
+                });
         }
 
-        // URI from Angular: /Medicine/AllMeds
+        // URI from Angular: api/Medicine/AllMeds
         [HttpPost]
         public JsonResult<List<Medicine>> AllMeds(IdMed House)
         {
             var medm = new Medicine_Manager();
-            return Json(medm.GetAllMedicines(House.mID));//, JsonRequestBehavior.AllowGet);
+            return Json(medm.GetAllMedicines(House.mID));
         }
 
-        // URI from Angular: /Medicine/Update
+        // URI from Angular: api/Medicine/Update
         [HttpPost]
-        public JsonResult<ReturnStatus> Update(Medicine newMed)
+        public JsonResult<ReturnStatus> Update(UpdateMed newMed)
         {
-            //MUST CHANGE
-            return Json(new ReturnStatus() {StatusCode = 500});//, JsonRequestBehavior.AllowGet);
+            var medm = new Medicine_Manager();
+            return Json(new ReturnStatus() {StatusCode = medm.UpdateMedicine(newMed.medID,newMed.price,newMed.branchOffice,newMed.stock,newMed.NoSold)});
         }
 
-        // URI from Angular: /Medicine/Delete
+        // URI from Angular: api/Medicine/Delete
         public JsonResult<ReturnStatus> Delete(MedicineByOffice medToDel)
         {
             var medm = new Medicine_Manager();
-            return Json(new ReturnStatus() { StatusCode = medm.DeleteMedicine(medToDel.medicineId, medToDel.branchOffice)});//, JsonRequestBehavior.AllowGet);
+            return Json(new ReturnStatus() { StatusCode = medm.DeleteMedicine(medToDel.medicineId, medToDel.branchOffice)});
         }
     }
 }
