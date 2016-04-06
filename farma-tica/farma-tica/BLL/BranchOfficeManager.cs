@@ -18,7 +18,7 @@ namespace farma_tica.BLL
 
         public BranchOfficeManager()
         {
-            factory = new DbConnectionFactory("local");
+            factory = new DbConnectionFactory("Azure");
             context = new DbContext(factory);
         }
 

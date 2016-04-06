@@ -37,7 +37,7 @@ namespace farma_tica.DAL.Repositories
             using (var command = Context.CreateDbCommand())
             {
                 var clientProps = new object[]
-                {newClient.Id, newClient.Password, newClient.Name, newClient.LastName1, newClient.LastName2,newClient.PenaltiesNumber,newClient.PlaceResidence,newClient.MedicalHistory,newClient.BornDate,newClient.PhoneMum};
+                {newClient.NumCed, newClient.Password, newClient.Name, newClient.LastName1, newClient.LastName2,newClient.PenaltiesNumber,newClient.PlaceResidence,newClient.MedicalHistory,newClient.BornDate,newClient.PhoneMum};
                 command.CommandText = @"INSERT INTO Cliente VALUES(@id, @pass, @name, @lastName1, @lastName2, @penaltiesNumber, @placeResidence, @medicalHistory, @bornDate, @phoneNum)";
                 var parameterNames = new string[] { "@id", "@pass", "@name", "@lastName1", "@lastName2", "@penaltiesNumber", "@placeResidence", "@medicalHistory", "@bornDate", "@phoneNum" };
                 for (var i = 0; i < clientProps.Length; i++)
@@ -92,7 +92,7 @@ namespace farma_tica.DAL.Repositories
                 }
                 var idParameter = command.CreateParameter();
                 idParameter.ParameterName = "@clientId";
-                idParameter.Value = newClient.Id;
+                idParameter.Value = newClient.NumCed;
                 command.Parameters.Add(idParameter);
                 command.ExecuteNonQuery();
             }
@@ -149,8 +149,8 @@ namespace farma_tica.DAL.Repositories
         /// <param name="client">entity to map values into</param>
         protected override void Map(IDataRecord record, Client client)
         {
-            client.Id = (string)record["NumeroCedula"];
-            client.Id = (string) record["Pass"];
+            client.NumCed = (string)record["NumeroCedula"];
+            client.Password = (string) record["Pass"];
             client.Name = (string)record["Nombre"];
             client.LastName1 = (string)record["PrimerApellido"];
             client.LastName2 = (string)record["SegundoApellido"];

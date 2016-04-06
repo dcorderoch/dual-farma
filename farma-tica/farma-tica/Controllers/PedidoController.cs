@@ -42,7 +42,13 @@ namespace farma_tica.Controllers
         public JsonResult<List<Order>> GetAllByBranchOffice(IdBranchOffice branchOfficeId)
         {
             var om = new OrderManager();
-            return Json(om.GetAllOrdersByBranchOffice(branchOfficeId.boID));
+            var retVal = om.GetAllOrdersByBranchOffice(branchOfficeId.boID);
+            if (retVal == null)
+                return null;
+            else
+            {
+                return Json(retVal);
+            }
         }
 
         // URI from Angular: api/Pedido/Delete

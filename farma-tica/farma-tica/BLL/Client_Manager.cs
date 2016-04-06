@@ -47,7 +47,7 @@ namespace farma_tica.BLL
                 Client newClient = new Client();
                 try
                 {
-                    newClient.Id = cedula;
+                    newClient.NumCed = cedula;
                     newClient.Password = password;
                     newClient.Name = name;
                     newClient.LastName1 = lastName1;
@@ -114,7 +114,7 @@ namespace farma_tica.BLL
                 Client newClient = new Client();
                 try
                 {
-                    newClient.Id = cedula;
+                    newClient.NumCed = cedula;
                     newClient.Password = password;
                     newClient.Name = name;
                     newClient.LastName1 = lastName1;

@@ -21,7 +21,7 @@ namespace farma_tica.BLL
 
         public OrderManager()
         {
-            this.factory = new DbConnectionFactory("local");
+            this.factory = new DbConnectionFactory("Azure");
             this.dbContext = new DbContext(factory);
         }
 
@@ -169,7 +169,7 @@ namespace farma_tica.BLL
             var orderRepo = new OrderRepository(dbContext);
             try
             {
-                orders = orderRepo.GetAllOrdersByBranchOffice(Guid.Parse(branchOfficeId)) as List<Order>;
+                orders = orderRepo.GetAllOrdersByBranchOffice(Guid.Parse(branchOfficeId)).ToList();
             }
             catch (Exception)
             {
