@@ -26,7 +26,7 @@ namespace farma_tica.Controllers
                 }, JsonRequestBehavior.AllowGet);
         }
 
-        // URI from Angular: /home/Client/GetAll
+        // URI from Angular: /home/Client/GetAllClients
         [HttpGet]
         public JsonResult GetAllClients()
         {
