@@ -5,7 +5,7 @@ namespace farma_tica.Controllers
 {
     public class PedidoController : Controller
     {
-        // URI from Angular: /home/Pedido/Create
+        // URI from Angular: /Pedido/Create
         [HttpPost]
         public JsonResult Create(OrderWithoutPrescription theOrder)
         {
@@ -19,7 +19,7 @@ namespace farma_tica.Controllers
                 },JsonRequestBehavior.AllowGet);
         }
 
-        // URI from Angular: /home/Pedido/CreateWPrescription
+        // URI from Angular: /Pedido/CreateWPrescription
         [HttpPost]
         public JsonResult CreateWPrescription(OrderWithPrescription theOrder)
         {
@@ -31,7 +31,7 @@ namespace farma_tica.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        // URI from Angular: /home/Pedido/GetAllByBranchOffice
+        // URI from Angular: /Pedido/GetAllByBranchOffice
         [HttpPost]
         public JsonResult GetAllByBranchOffice(string branchOfficeId)
         {
@@ -39,7 +39,7 @@ namespace farma_tica.Controllers
             return Json(om.GetAllOrdersByBranchOffice(branchOfficeId),JsonRequestBehavior.AllowGet);
         }
 
-        // URI from Angular: /home/Pedido/Delete
+        // URI from Angular: /Pedido/Delete
         [HttpPost]
         public JsonResult Delete(string orderId)
         {
@@ -47,7 +47,7 @@ namespace farma_tica.Controllers
             return Json(new ReturnStatus() {StatusCode = om.DeleteOrder(orderId)}, JsonRequestBehavior.AllowGet);
         }
 
-        // URI from Angular: /home/Pedido/Update
+        // URI from Angular: /Pedido/Update
         [HttpPost]
         public JsonResult Update(OrderStatus newStatus)
         {

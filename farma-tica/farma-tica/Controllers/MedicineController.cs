@@ -6,7 +6,7 @@ namespace farma_tica.Controllers
 {
     public class MedicineController : Controller
     {
-        // URI from Angular: /home/Medicine/Create
+        // URI from Angular: /Medicine/Create
         [HttpPost]
         public JsonResult Create(MedicineCreate newMed)
         {
@@ -19,7 +19,7 @@ namespace farma_tica.Controllers
                 },JsonRequestBehavior.AllowGet);
         }
 
-        // URI from Angular: /home/Medicine/AllMeds
+        // URI from Angular: /Medicine/AllMeds
         [HttpPost]
         public JsonResult AllMeds(string House)
         {
@@ -27,7 +27,7 @@ namespace farma_tica.Controllers
             return Json(medm.GetAllMedicines(House), JsonRequestBehavior.AllowGet);
         }
 
-        // URI from Angular: /home/Medicine/Update
+        // URI from Angular: /Medicine/Update
         [HttpPost]
         public JsonResult Update(Medicine newMed)
         {
@@ -35,7 +35,7 @@ namespace farma_tica.Controllers
             return Json(new ReturnStatus() {StatusCode = 500}, JsonRequestBehavior.AllowGet);
         }
 
-        // URI from Angular: /home/Medicine/Delete
+        // URI from Angular: /Medicine/Delete
         public JsonResult Delete(MedicineByOffice medToDel)
         {
             var medm = new Medicine_Manager();

@@ -9,7 +9,7 @@ namespace farma_tica.Controllers
 {
     public class StatsController : Controller
     {
-        // URI from Angular: /home/Stats/SalesPerComp
+        // URI from Angular: /Stats/SalesPerComp
         [HttpPost]
         public JsonResult SalesPerComp(string Company)
         {
@@ -17,7 +17,7 @@ namespace farma_tica.Controllers
             return Json(medm.GetMostSoldMedicinesByCompany(Company),JsonRequestBehavior.AllowGet);
         }
 
-        // URI from Angular: /home/Stats/NewSales
+        // URI from Angular: /Stats/NewSales
         [HttpPost]
         public JsonResult NewSales(string Company)
         {
@@ -25,7 +25,7 @@ namespace farma_tica.Controllers
             return Json(medm.GetMostSoldByNewSoftware(Company), JsonRequestBehavior.AllowGet);
         }
 
-        // URI from Angular: /home/Stats/TotSalesPerComp
+        // URI from Angular: /Stats/TotSalesPerComp
         [HttpPost]
         public JsonResult TotSalesPerComp(string Company)
         {
@@ -34,7 +34,7 @@ namespace farma_tica.Controllers
                 JsonRequestBehavior.AllowGet);
         }
 
-        // URI from Angular: /home/Stats/GlobalSales
+        // URI from Angular: /Stats/GlobalSales
         public JsonResult GlobalSales()
         {
             var medm = new Medicine_Manager();

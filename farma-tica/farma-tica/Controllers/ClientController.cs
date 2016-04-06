@@ -14,7 +14,7 @@ namespace farma_tica.Controllers
 {
     public class ClientController : Controller
     {
-        // URI from Angular: /home/Client/New
+        // URI from Angular: /Client/New
         [HttpPost]
         public JsonResult New(Client newClient)
         {
@@ -26,7 +26,7 @@ namespace farma_tica.Controllers
                 }, JsonRequestBehavior.AllowGet);
         }
 
-        // URI from Angular: /home/Client/GetAllClients
+        // URI from Angular: /Client/GetAllClients
         [HttpGet]
         public JsonResult GetAllClients()
         {
@@ -34,7 +34,7 @@ namespace farma_tica.Controllers
             return Json(clm.GetAllClients(), JsonRequestBehavior.AllowGet);
         }
 
-        // URI from Angular: /home/Client/Update
+        // URI from Angular: /Client/Update
         [HttpPost]
         public JsonResult Update(Client theClient)
         {
@@ -46,7 +46,7 @@ namespace farma_tica.Controllers
                 }, JsonRequestBehavior.AllowGet);
         }
 
-        // URI from Angular: /home/Client/Delete
+        // URI from Angular: /Client/Delete
         [HttpPost]
         public JsonResult Delete(string cId)
         {

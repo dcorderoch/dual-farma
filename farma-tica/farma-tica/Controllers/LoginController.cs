@@ -15,7 +15,7 @@ namespace farma_tica.Controllers
 {
     public class LoginController : Controller
     {
-        // URI from Angular: /home/Login/Login
+        // URI from Angular: /Login/Login
         [HttpPost]
         public JsonResult Login(LoginData login)
         {

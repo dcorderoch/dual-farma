@@ -15,7 +15,6 @@ namespace farma_tica.Controllers
         }
 
         [HttpGet]
-        [Route("/Home/Test")]
         public JsonResult Test()
         {
             return Json(new ReturnStatus() {StatusCode = 200}, JsonRequestBehavior.AllowGet);
