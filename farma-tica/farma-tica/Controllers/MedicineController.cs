@@ -22,7 +22,6 @@ namespace farma_tica.Controllers
         [HttpPost]
         public JsonResult Create(MedicineCreate newMed)
         {
-            //MUST CHANGE
             var medm = new Medicine_Manager();
             return
                 Json(new ReturnStatus()
@@ -31,15 +30,6 @@ namespace farma_tica.Controllers
                         medm.CreateMedicine(newMed.name, newMed.requiresPrescription, newMed.price, newMed.originOffice, newMed.stock)
                 },JsonRequestBehavior.AllowGet);
         }
-
-        //// URI from Angular: /home/Medicine/Medicine
-        //// returns null if it doesn't exist
-        //[HttpPost]
-        //public JsonResult Medicine(string mId)
-        //{
-        //    var medm = new Medicine_Manager();
-        //    return Json(medm.GetMedicineById(mId), JsonRequestBehavior.AllowGet);
-        //}
 
         // URI from Angular: /home/Medicine/AllMeds
         [HttpPost]
