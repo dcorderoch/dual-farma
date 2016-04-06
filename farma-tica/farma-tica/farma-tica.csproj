@@ -133,12 +133,15 @@
     <Compile Include="BLL\Doctor_Manager.cs" />
     <Compile Include="BLL\Medicine_Manager.cs" />
     <Compile Include="BLL\OrderManager.cs" />
+    <Compile Include="BLL\Prescription_Manager.cs" />
     <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\LoginData.cs" />
+    <Compile Include="Controllers\MedicineByOffice.cs" />
     <Compile Include="Controllers\MedicineController.cs" />
+    <Compile Include="Controllers\MedicineCreate.cs" />
     <Compile Include="Controllers\OrderStatus.cs" />
     <Compile Include="Controllers\OrderWithoutPrescription.cs" />
     <Compile Include="Controllers\OrderWithPrescription.cs" />

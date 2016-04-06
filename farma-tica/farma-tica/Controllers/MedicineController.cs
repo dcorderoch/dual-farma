@@ -20,7 +20,7 @@ namespace farma_tica.Controllers
     {
         // URI from Angular: /home/Medicine/Create
         [HttpPost]
-        public JsonResult Create(Medicine newMed)
+        public JsonResult Create(MedicineCreate newMed)
         {
             //MUST CHANGE
             var medm = new Medicine_Manager();
@@ -28,18 +28,18 @@ namespace farma_tica.Controllers
                 Json(new ReturnStatus()
                 {
                     StatusCode =
-                        medm.CreateMedicine(newMed.Name, newMed.RequiresPrescription.ToString(), newMed.Price.ToString(), "CHANGE", "HOUSE",newMed.Stock.ToString(),newMed.AmmountSold.ToString())
+                        medm.CreateMedicine(newMed.name, newMed.requiresPrescription, newMed.price, newMed.originOffice, newMed.stock)
                 },JsonRequestBehavior.AllowGet);
         }
 
-        // URI from Angular: /home/Medicine/Medicine
-        // returns null if it doesn't exist
-        [HttpPost]
-        public JsonResult Medicine(string mId)
-        {
-            var medm = new Medicine_Manager();
-            return Json(medm.GetMedicineById(mId), JsonRequestBehavior.AllowGet);
-        }
+        //// URI from Angular: /home/Medicine/Medicine
+        //// returns null if it doesn't exist
+        //[HttpPost]
+        //public JsonResult Medicine(string mId)
+        //{
+        //    var medm = new Medicine_Manager();
+        //    return Json(medm.GetMedicineById(mId), JsonRequestBehavior.AllowGet);
+        //}
 
         // URI from Angular: /home/Medicine/AllMeds
         [HttpPost]
@@ -58,10 +58,10 @@ namespace farma_tica.Controllers
         }
 
         // URI from Angular: /home/Medicine/Delete
-        public JsonResult Delete(string medId)
+        public JsonResult Delete(MedicineByOffice medToDel)
         {
             var medm = new Medicine_Manager();
-            return Json(medm.DeleteMedicine(medId), JsonRequestBehavior.AllowGet);
+            return Json(medm.DeleteMedicine(medToDel.medicineId, medToDel.branchOffice), JsonRequestBehavior.AllowGet);
         }
     }
 }
