@@ -1,23 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Http;
+using System.Web.Http.Results;
 
 namespace farma_tica.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : ApiController
     {
-        // GET: Home
-        public ActionResult Index()
+        [HttpGet]
+        public JsonResult<ReturnStatus> Get()
         {
-            return View();
+            return Json(new ReturnStatus() { StatusCode = 200 });//, JsonRequestBehavior.AllowGet);
         }
+        // GET: Home
+        //public ActionResult Index()
+        //{
+        //return View();
+        //}
+        
 
         [HttpGet]
-        public JsonResult Test()
+        public JsonResult<ReturnStatus> Test()
         {
-            return Json(new ReturnStatus() {StatusCode = 200}, JsonRequestBehavior.AllowGet);
+            return Json(new ReturnStatus() {StatusCode = 200});//, JsonRequestBehavior.AllowGet);
         }
     }
 }

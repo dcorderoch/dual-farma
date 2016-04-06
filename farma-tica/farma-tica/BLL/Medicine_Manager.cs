@@ -82,16 +82,17 @@ namespace farma_tica.BLL
         /// Obtains all medicines from a specific company.
         /// </summary>
         /// <param></param>
+        /// <param name="branchOffice"></param>
         /// <returns>List<Medicine> that contains all the medicines of the specified company</returns>
         public List<Medicine> GetAllMedicines(string branchOffice)
         {
-            List<Medicine> medicineList = new List<Medicine>();
+            List<Medicine> medicineList;// = new List<Medicine>();
             using (var uow = context.CreateUnitOfWork())
             {
                 var medicineRepo = new MedicineRepository(context);
                 try
                 {
-                    medicineList = (List<Medicine>) medicineRepo.GetAllByBranchOffice(new Guid(branchOffice));
+                    medicineList = medicineRepo.GetAllByBranchOffice(new Guid(branchOffice)).ToList();
                 }
                 catch (Exception)
                 {
