@@ -143,6 +143,25 @@ namespace farma_tica.DAL.Repositories
         }
 
         /// <summary>
+        /// Get Medicine List for the given name (should be only 1 item)
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public IEnumerable<Medicine> GetByName(String name)
+        {
+            using (var command = Context.CreateDbCommand())
+            {
+                command.CommandText = @"SELECT * FROM Medicamento WHERE Nombre = @name";
+                var newParameter = command.CreateParameter();
+                newParameter.ParameterName = "@name";
+                newParameter.Value = name;
+                command.Parameters.Add(newParameter);
+                var result = ToList(command);
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Gets all medicines for the given branch office
         /// </summary>
         /// <param name="branchOfficeId"></param>
@@ -209,7 +228,7 @@ namespace farma_tica.DAL.Repositories
                 command.CommandText = @"SELECT M.ID_Medicamento,M.Nombre,SUM(MPS.CantidadVentas) AS CantidadVentas "+
                                        "FROM Medicamento M  JOIN Medicamentos_Por_Sucursal MPS ON M.ID_Medicamento= MPS.ID_Medicamento JOIN Sucursal S ON MPS.ID_Sucursal=S.ID_Sucursal "+
                                        "JOIN Medicamentos_Por_Pedido MPP ON M.ID_Medicamento=MPP.ID_Medicamento JOIN Pedido P ON P.NumeroPedido=MPP.NumeroPedido "+
-                                       "WHERE p.Tipo_Pedido=1 AND S.Compañia=@company" +
+                                       "WHERE P.Tipo_Pedido=1 AND S.Compañia=@company" +
                                        "GROUP BY M.ID_Medicamento,M.Nombre ORDER BY CantidadVentas DESC;";
                 var newParameter = command.CreateParameter();
                 newParameter.ParameterName = "@company";
