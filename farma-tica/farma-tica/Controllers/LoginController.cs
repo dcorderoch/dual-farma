@@ -23,27 +23,5 @@ namespace farma_tica.Controllers
             var retVal = acm.AuthorizeLogin(login.ID, login.Pass);
             return Json(retVal, JsonRequestBehavior.AllowGet);
         }
-
-        // URI from Angular: /home/Login/New
-        [HttpPost]
-        public JsonResult New(User newUser)
-        {
-            var acm = new Account_Manager();
-            return
-                Json(new ReturnStatus()
-                {
-                    StatusCode =
-                        acm.CreateUser(newUser.IdUsuario, newUser.Password, newUser.Name, newUser.LastName1,
-                            newUser.LastName2, newUser.Email, newUser.Company, newUser.RoleId.ToString())
-                });
-        }
-
-        // URI from Angular: /home/Login/GetAll
-        [HttpPost]
-        public JsonResult GetAll(string Company)
-        {
-            var acm = new Account_Manager();
-            return Json(acm.GetAllUsers(Company), JsonRequestBehavior.AllowGet);
-        }
     }
 }

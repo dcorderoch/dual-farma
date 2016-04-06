@@ -33,7 +33,7 @@ namespace farma_tica.BLL
                     branchOfficeList = branchOfficeRepo.GetAll() as List<BranchOffice>;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }

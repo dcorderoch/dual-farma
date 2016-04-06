@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web;
+﻿using System.Web.Mvc;
 using farma_tica.BLL;
-using farma_tica.DAL.Models;
 
 namespace farma_tica.Controllers
 {

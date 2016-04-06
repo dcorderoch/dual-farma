@@ -232,7 +232,7 @@ namespace farma_tica.BLL
                     
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return Constants.ERROR;
             }
