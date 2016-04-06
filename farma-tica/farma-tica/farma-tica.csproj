@@ -176,6 +176,7 @@
     <Compile Include="Controllers\MedicineByOffice.cs" />
     <Compile Include="Controllers\MedicineController.cs" />
     <Compile Include="Controllers\MedicineCreate.cs" />
+    <Compile Include="Controllers\NewClient.cs" />
     <Compile Include="Controllers\OrderStatus.cs" />
     <Compile Include="Controllers\OrderWithoutPrescription.cs" />
     <Compile Include="Controllers\OrderWithPrescription.cs" />
