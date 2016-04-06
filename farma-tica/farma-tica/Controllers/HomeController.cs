@@ -13,5 +13,12 @@ namespace farma_tica.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        [Route("/Home/Test")]
+        public JsonResult Test()
+        {
+            return Json(new ReturnStatus() {StatusCode = 200}, JsonRequestBehavior.AllowGet);
+        }
     }
 }

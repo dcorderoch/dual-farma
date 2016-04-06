@@ -1,13 +1,27 @@
-﻿<h3>Products</h3>
-<div ng-controller="mainController">
-    <table class="table table-striped">
-        <tr ng-repeat="product in products">
-            <td>{{product.ProductName}}</td>
-            <td class="text-right">
-                <button class="btn btn-danger" ng-click="deleteProduct(product)">X</button>
+﻿<html>
+<head>
+    <title>Sample "Hello, World" Application</title>
+</head>
+<body bgcolor=white>
+
+    <table border="0" cellpadding="10">
+        <tr>
+            <td>
+                <img src="images/springsource.png">
+            </td>
+            <td>
+                <h1>Sample "Hello, World" Application</h1>
             </td>
         </tr>
     </table>
-    <input type="text" required ng-model="newProduct" />
-    <a ref="#" class="btn btn-primary" ng-click="addProduct()">Add Product</a>
-</div>
+
+    <p>This is the home page for the HelloWorld Web application. </p>
+    <p>
+        To prove that they work, you can execute either of the following links:
+        <ul>
+            <li>To a <a href="Home/Test">Test</a>.
+            <li>To a <a href="Home/Client/GetAll">Test</a>.
+        </ul>
+
+</body>
+</html>
