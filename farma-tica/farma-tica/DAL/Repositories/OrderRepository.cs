@@ -58,8 +58,9 @@ namespace farma_tica.DAL.Repositories
         {
             using (var command = Context.CreateDbCommand())
             {
+                var prescriptionId = newOrder.HasPrescription ? newOrder.PrescriptionId.ToString() : null;
                 var orderProps = new object[]
-                {newOrder.OrderId.ToString(), newOrder.ClientId, newOrder.PrescriptionId, newOrder.PickUpOffice, ConvertImageToByteArray(newOrder.InvoiceImage),
+                {newOrder.OrderId.ToString(), newOrder.ClientId, prescriptionId, newOrder.PickUpOffice.ToString(), ConvertImageToByteArray(newOrder.InvoiceImage),
                  newOrder.HasPrescription, newOrder.State, newOrder.Priority, newOrder.PrefPhoneNum, newOrder.PickUpdDate, newOrder.Type};
                 command.CommandText = @"INSERT INTO Pedido VALUES(@orderId, @clientId, @prescriptionId, @pickUpOffice, @invoiceImage, " +
                                                                  "@hasPrescription, @state, @priority, @prefPhoneNum, @pickUpDate, @type)";
@@ -86,7 +87,7 @@ namespace farma_tica.DAL.Repositories
         {
             using (var command = Context.CreateDbCommand())
             {
-                var mediOrderProps = new object[] { orderId, medicineId };
+                var mediOrderProps = new object[] { orderId.ToString(), medicineId.ToString() };
                 command.CommandText = @"INSERT INTO Medicamentos_Por_Pedido VALUES(@orderId, @medicineId)";
                 var parameterNames = new string[] { "@orderId", "@medicineId" };
                 for (var i = 0; i < mediOrderProps.Length; i++)
@@ -202,16 +203,16 @@ namespace farma_tica.DAL.Repositories
         /// <param name="order"></param>
         protected override void Map(IDataRecord record, Order order)
         {
-            order.OrderId = (Guid)record["NumeroPedido"];
+            order.OrderId = (Guid) record["NumeroPedido"];
             order.ClientId = (string)record["ID_Cliente"];
             var myGuid = record["ID_Receta"];
-            order.PrescriptionId = myGuid == DBNull.Value ? (Guid?)null : Guid.Parse((string)myGuid);
+            order.PrescriptionId = myGuid == DBNull.Value ? (Guid?)null : (Guid?)myGuid;
             order.PickUpOffice = (Guid)record["Sucursal_Recojo"];
             order.HasPrescription = (bool)record["Prescripcion"];
             order.State = (int)record["Estado"];
             order.Priority = (string)record["Prioridad"];
             order.PrefPhoneNum = (string)record["TelefonoPreferido"];
-            order.PickUpdDate = (DateTime)record["FechaRecojo"];
+            order.PickUpdDate = $"{record["FechaRecojo"]:yyyy-MM-dd}";
             order.InvoiceImage = ConvertByteArrayToImage((byte[])record["ImagenFactura"]);
             order.Type = (bool) record["Tipo_Pedido"];
         }
