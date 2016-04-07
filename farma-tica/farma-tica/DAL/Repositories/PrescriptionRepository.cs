@@ -36,7 +36,7 @@ namespace farma_tica.DAL.Repositories
             using (var command = Context.CreateDbCommand())
             {
                 var prescriotionProps = new object[]
-                {prescription.PrescriptionID.ToString(), prescription.Doctor,ConvertImageToByteArray(prescription.Image)};
+                {prescription.PrescriptionID.ToString(), prescription.Doctor,prescription.Image};
                 command.CommandText = @"INSERT INTO Receta VALUES(@prescriptionId, @doctor, @image)";
                 var parameterNames = new string[] { "@prescriptionId", "@doctor", "@image" };
                 for (var i = 0; i < prescriotionProps.Length; i++)
@@ -102,7 +102,7 @@ namespace farma_tica.DAL.Repositories
             using (var command = Context.CreateDbCommand())
             {
                 var prescriptionProps = new object[]
-               {prescription.Doctor, ConvertImageToByteArray(prescription.Image)};
+               {prescription.Doctor,prescription.Image};
                 command.CommandText = @"UPDATE  Receta SET  Doctor=@doctor, Imagen=@image";
                 var parameterNames = new string[] { "@doctor", "@image" };
                 for (var i = 0; i < prescriptionProps.Length; i++)
@@ -195,7 +195,7 @@ namespace farma_tica.DAL.Repositories
         {
             entity.PrescriptionID = (Guid)record["NumeroReceta"];
             entity.Doctor = (string)record["Doctor"];
-            entity.Image = ConvertByteArrayToImage((byte[])record["Imagen"]);
+            entity.Image = (byte[])record["Imagen"];
         }
 
         /// <summary>
