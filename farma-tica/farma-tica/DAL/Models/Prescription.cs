@@ -7,6 +7,6 @@ namespace farma_tica.DAL.Models
     {
         public Guid PrescriptionID { get; set; }
         public string Doctor { get; set; }
-        public Image Image { get; set; } 
+        public byte[] Image { get; set; } 
     }
 }

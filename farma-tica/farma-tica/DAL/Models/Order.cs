@@ -15,7 +15,7 @@ namespace farma_tica.DAL.Models
         public int State { get; set; }
         public string Priority { get; set; }
         public string PrefPhoneNum { get; set; }
-        public DateTime PickUpdDate { get; set; }
+        public string PickUpdDate { get; set; }
         public Boolean Type { get; set; }
     }
 }
