@@ -106,7 +106,6 @@ namespace farma_tica.BLL
             using (var uow = context.CreateUnitOfWork())
             {
                 var clientRepo = new ClientRepository(context);
-                int opCode;
                 try
                 {
                     List<Client> clientList = (List<Client>)clientRepo.GetById(clientId);
@@ -116,7 +115,6 @@ namespace farma_tica.BLL
                         var client = clientList.First();
                         if (client.Password == clientPass)
                         {
-                            opCode = Constants.SUCCESSFUL_LOGIN;
                             response[0] = Constants.SUCCESSFUL_LOGIN.ToString();
                             response[1] = client.NumCed;
                             response[2] = client.Name;
@@ -125,23 +123,22 @@ namespace farma_tica.BLL
                             response[5] = client.PenaltiesNumber.ToString();
                             response[6] = client.PlaceResidence;
                             response[7] = client.MedicalHistory;
-                            response[7] = String.Format("{0:dd/MM/yyyy}", client.BornDate);
-                            response[7] = client.PhoneMum;
+                            response[8] = String.Format("{0:dd/MM/yyyy}", client.BornDate);
+                            response[9] = client.PhoneMum;
                         }
                         else
                         {
-                            opCode = Constants.INVALID_PASSWORD;
-                            response[0] = opCode.ToString();
+                            response[0] = Constants.INVALID_PASSWORD.ToString();
                         }
                     }
                     else
                     {
-                        opCode = Constants.INVALID_USER;
+                        response[0] = Constants.INVALID_USER.ToString();
                     }
                 }
                 catch (Exception)
                 {
-                    opCode = Constants.ERROR;
+                    response[0] = Constants.ERROR.ToString();
                 }
             }
             return response;

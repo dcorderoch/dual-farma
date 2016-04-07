@@ -165,9 +165,11 @@
     <Compile Include="BLL\Prescription_Manager.cs" />
     <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
+    <Compile Include="Controllers\Models\ClientLoginData.cs" />
     <Compile Include="Controllers\Models\IdBranchOffice.cs" />
     <Compile Include="Controllers\Models\IdClient.cs" />
     <Compile Include="Controllers\Models\IdCompany.cs" />
+    <Compile Include="Controllers\Models\IdDoc.cs" />
     <Compile Include="Controllers\Models\IdMed.cs" />
     <Compile Include="Controllers\Models\IdOrder.cs" />
     <Compile Include="Controllers\Models\IdPrescription.cs" />

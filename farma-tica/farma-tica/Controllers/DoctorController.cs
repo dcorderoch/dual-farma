@@ -22,6 +22,7 @@ namespace farma_tica.Controllers
                             newDoc.LastName2, newDoc.PlaceResidence)
                 });
         }
+        
         // URI from Angular: api/Doctor/GetAll
         [HttpGet]
         public JsonResult<List<Doctor>> GetAll()
@@ -30,5 +31,24 @@ namespace farma_tica.Controllers
             return Json(docm.GetAllDoctors());
         }
 
+        // URI from Angular: api/Doctor/Update
+        public JsonResult<ReturnStatus> Update(Doctor newInfoDoc)
+        {
+            var docm = new Doctor_Manager();
+            return
+                Json(new ReturnStatus()
+                {
+                    StatusCode =
+                        docm.UpdateDoctor(newInfoDoc.DoctorId, newInfoDoc.IdNumber, newInfoDoc.Name,
+                            newInfoDoc.LastName1, newInfoDoc.LastName2, newInfoDoc.PlaceResidence)
+                });
+        }
+
+        //URI from Angular: api/Doctor/Delete
+        public JsonResult<ReturnStatus> Delete(IdDoc docId)
+        {
+            var docm = new Doctor_Manager();
+            return Json(new ReturnStatus() {StatusCode = docm.DeleteDoctor(docId.docID)});
+        }
     }
 }
