@@ -39,7 +39,7 @@ namespace farma_tica.DAL.Repositories
                 var clientProps = new object[]
                 {newClient.NumCed, newClient.Password, newClient.Name, newClient.LastName1, newClient.LastName2,newClient.PenaltiesNumber,newClient.PlaceResidence,newClient.MedicalHistory,newClient.BornDate,newClient.PhoneMum};
                 command.CommandText = @"INSERT INTO Cliente VALUES(@id, @name, @lastName1, @lastName2, @penaltiesNumber, @placeResidence, @medicalHistory, @bornDate, @phoneNum, @pass)";
-                var parameterNames = new string[] { "@id", "@pass", "@name", "@lastName1", "@lastName2", "@penaltiesNumber", "@placeResidence", "@medicalHistory", "@bornDate", "@phoneNum" };
+                var parameterNames = new string[] { "@id", "@name", "@lastName1", "@lastName2", "@penaltiesNumber", "@placeResidence", "@medicalHistory", "@bornDate", "@phoneNum", "@pass" };
                 for (var i = 0; i < clientProps.Length; i++)
                 {
                     var newParameter = command.CreateParameter();

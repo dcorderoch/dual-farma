@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Web.Helpers;
 using System.Web.Http;
 using System.Web.Http.Results;
 using farma_tica.BLL;
 using farma_tica.DAL.Models;
+
+using farma_tica.Controllers.Models;
 
 namespace farma_tica.Controllers
 {
@@ -26,7 +27,6 @@ namespace farma_tica.Controllers
 
         // URI from Angular: api/Client/GetAllClients
         [HttpGet]
-        [Route()]
         public JsonResult<List<Client>> GetAllClients()
         {
             var clm = new Client_Manager();
@@ -41,7 +41,7 @@ namespace farma_tica.Controllers
             return Json(
                 new ReturnStatus()
                 {
-                    StatusCode = clm.UpdateClient(theClient.NumCed, theClient.Name, theClient.LastName1, theClient.LastName2, theClient.PenaltiesNumber.ToString(), theClient.PlaceResidence, theClient.MedicalHistory, theClient.BornDate.ToString(), theClient.PhoneMum, theClient.Password)
+                    StatusCode = clm.UpdateClient(theClient.NumCed, theClient.Name, theClient.LastName1, theClient.LastName2, theClient.PenaltiesNumber, theClient.PlaceResidence, theClient.MedicalHistory, theClient.BornDate, theClient.PhoneMum, theClient.Password)
                 });
         }
 

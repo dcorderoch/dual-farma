@@ -5,6 +5,7 @@ using System.Web.Http.Results;
 //using System.Web.Mvc;
 using farma_tica.BLL;
 using farma_tica.DAL.Models;
+using farma_tica.Controllers.Models;
 
 namespace farma_tica.Controllers
 {

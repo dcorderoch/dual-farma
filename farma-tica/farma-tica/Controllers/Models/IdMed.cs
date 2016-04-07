@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace farma_tica.Controllers
+namespace farma_tica.Controllers.Models
 {
-    public class IdClient
+    public class IdMed
     {
-        public string cID { get; set; }
+        public  string mID { get; set; }
     }
 }

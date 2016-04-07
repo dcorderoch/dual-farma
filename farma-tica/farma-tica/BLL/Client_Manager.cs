@@ -161,7 +161,7 @@ namespace farma_tica.BLL
         /// <param name="phoneNumber"></param>
         /// <param name="password"></param>
         /// <returns>1 or 0 depending whether the operation completed or not.</returns>
-        public int UpdateClient(string cedula, string name, string lastName1, string lastName2, string fines, string home, string history,
+        public int UpdateClient(string cedula, string name, string lastName1, string lastName2, int fines, string home, string history,
             string birthDate, string phoneNumber, string password){
             var response = 0;
             using (var uow = context.CreateUnitOfWork())
@@ -175,7 +175,7 @@ namespace farma_tica.BLL
                     newClient.Name = name;
                     newClient.LastName1 = lastName1;
                     newClient.LastName2 = lastName2;
-                    newClient.PenaltiesNumber = Convert.ToInt32(fines);
+                    newClient.PenaltiesNumber = fines;
                     newClient.PlaceResidence = home;
                     newClient.MedicalHistory = history;
                     newClient.BornDate = String.Format("{0:dd/MM/yyyy}", newClient.BornDate);

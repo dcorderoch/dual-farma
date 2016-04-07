@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Web;
 
-namespace farma_tica.Controllers
+namespace farma_tica.Controllers.Models
 {
     public class PrescriptionInfo
     {

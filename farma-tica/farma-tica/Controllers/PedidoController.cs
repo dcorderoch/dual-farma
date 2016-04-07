@@ -2,6 +2,7 @@
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Results;
+using farma_tica.Controllers.Models;
 
 //using System.Web.Mvc;
 using farma_tica.BLL;

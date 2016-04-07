@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace farma_tica.Controllers
+namespace farma_tica.Controllers.Models
 {
     public class UpdateMed
     {
-        //string medicineId, string price, string branchOffice, string stock, string numberSold)
         public string medID { get; set; }
         public string price { get; set; }
         public string branchOffice { get; set; }
