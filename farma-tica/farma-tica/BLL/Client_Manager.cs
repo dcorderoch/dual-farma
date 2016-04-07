@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection.Emit;
 using farma_tica.DAL;
 using farma_tica.DAL.Models;
 using farma_tica.DAL.Repositories;
+using Microsoft.SqlServer.Server;
 
 namespace farma_tica.BLL
 {
@@ -89,6 +92,59 @@ namespace farma_tica.BLL
                 }
             }
             return clientList;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="clientId"></param>
+        /// <param name="clientPass"></param>
+        /// <returns></returns>
+        public String[] AuthClientLogin(string clientId, string clientPass)
+        {
+            String[] response = {};
+            using (var uow = context.CreateUnitOfWork())
+            {
+                var clientRepo = new ClientRepository(context);
+                int opCode;
+                try
+                {
+                    List<Client> clientList = (List<Client>)clientRepo.GetById(clientId);
+                    
+                    if (clientList.Any())
+                    {
+                        var client = clientList.First();
+                        if (client.Password == clientPass)
+                        {
+                            opCode = Constants.SUCCESSFUL_LOGIN;
+                            response[0] = Constants.SUCCESSFUL_LOGIN.ToString();
+                            response[1] = client.NumCed;
+                            response[2] = client.Name;
+                            response[3] = client.LastName1;
+                            response[4] = client.LastName2;
+                            response[5] = client.PenaltiesNumber.ToString();
+                            response[6] = client.PlaceResidence;
+                            response[7] = client.MedicalHistory;
+                            response[7] = $"{client.BornDate:dd/MM/yyyy}";
+                            response[7] = client.PhoneMum;
+                        }
+                        else
+                        {
+                            opCode = Constants.INVALID_PASSWORD;
+                            response[0] = opCode.ToString();
+                        }
+                    }
+                    else
+                    {
+                        opCode = Constants.INVALID_USER;
+                    }
+                }
+                catch (Exception)
+                {
+                    opCode = Constants.ERROR;
+                }
+            }
+            return response;
         }
 
         /// <summary>
