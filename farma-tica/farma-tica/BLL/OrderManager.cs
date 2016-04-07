@@ -36,7 +36,7 @@ namespace farma_tica.BLL
         /// <param name="type">Type of the order</param>
         /// <returns>Success code</returns>
         public int CreateOrderWithoutPrescription(string clientId, string[] medicinesId, string pickupOfficeId,
-            string prefPhoneNume, DateTime pickUpdDate, bool type)
+            string prefPhoneNume, string pickUpdDate, bool type)
         {
             var orderPriority = Constants.NORMAL_PRIORITY;
             using (var uow = dbContext.CreateUnitOfWork())
@@ -95,8 +95,8 @@ namespace farma_tica.BLL
         /// <param name="type"></param>
         /// <returns></returns>
         public int CreateOrderWithPrescription(string clientId, string[] medicinesId, string[] prescriptedMedicinesId,
-            Image prescriptionImage, string doctorId, string pickupOfficeId,
-            string prefPhoneNume, DateTime pickUpdDate, bool type)
+            string prescriptionImage, string doctorId, string pickupOfficeId,
+            string prefPhoneNume, string pickUpdDate, bool type)
         {
             var orderPriority = Constants.NORMAL_PRIORITY;
             using (var uow = dbContext.CreateUnitOfWork())
@@ -116,7 +116,7 @@ namespace farma_tica.BLL
                     var myNewPrescription = new Prescription()
                     {
                         Doctor = doctorId,
-                        Image = prescriptionImage,
+                        Image = Convert.FromBase64String(prescriptionImage),
                         PrescriptionID = Guid.NewGuid()
                     };
                     var myNewOrder = new Order()
