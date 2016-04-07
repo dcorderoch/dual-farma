@@ -157,7 +157,7 @@ namespace farma_tica.DAL.Repositories
             client.PenaltiesNumber = (int)record["CantidadMultas"];
             client.PlaceResidence = (string)record["LugarResidencia"];
             client.MedicalHistory = (string)record["Historial"];
-            client.BornDate = (string)record["FechaNacimiento"];
+            client.BornDate = $"{record["FechaNacimiento"]:yyyy-MM-dd}";
             client.PhoneMum = (string)record["NumeroTelefono"];
         }
     }
