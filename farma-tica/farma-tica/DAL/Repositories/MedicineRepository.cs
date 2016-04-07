@@ -228,7 +228,7 @@ namespace farma_tica.DAL.Repositories
                 command.CommandText = @"SELECT M.ID_Medicamento,M.Nombre,SUM(MPS.CantidadVentas) AS CantidadVentas "+
                                        "FROM Medicamento M  JOIN Medicamentos_Por_Sucursal MPS ON M.ID_Medicamento= MPS.ID_Medicamento JOIN Sucursal S ON MPS.ID_Sucursal=S.ID_Sucursal "+
                                        "JOIN Medicamentos_Por_Pedido MPP ON M.ID_Medicamento=MPP.ID_Medicamento JOIN Pedido P ON P.NumeroPedido=MPP.NumeroPedido "+
-                                       "WHERE P.Tipo_Pedido=1 AND S.Compañia=@company" +
+                                       "WHERE P.Tipo_Pedido=1 AND S.Compañia=@company " +
                                        "GROUP BY M.ID_Medicamento,M.Nombre ORDER BY CantidadVentas DESC;";
                 var newParameter = command.CreateParameter();
                 newParameter.ParameterName = "@company";
