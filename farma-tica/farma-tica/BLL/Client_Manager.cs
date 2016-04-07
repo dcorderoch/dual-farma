@@ -37,7 +37,7 @@ namespace farma_tica.BLL
         /// <param name="phoneNumber"></param>
         /// <param name="password"></param>
         /// <returns>1, if successful operation, 0, otherwise.</returns>
-        public int CreateClient(string cedula, string name, string lastName1, string lastName2, string fines, string home, string history,
+        public int CreateClient(string cedula, string name, string lastName1, string lastName2, int fines, string home, string history,
             string birthDate, string phoneNumber, string password)
         {
             int response = 0;
@@ -52,7 +52,7 @@ namespace farma_tica.BLL
                     newClient.Name = name;
                     newClient.LastName1 = lastName1;
                     newClient.LastName2 = lastName2;
-                    newClient.PenaltiesNumber = Convert.ToInt32(fines);
+                    newClient.PenaltiesNumber = fines;
                     newClient.PlaceResidence = home;
                     newClient.MedicalHistory = history;
                     newClient.BornDate = Convert.ToDateTime(birthDate);

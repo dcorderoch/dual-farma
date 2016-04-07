@@ -18,7 +18,7 @@ namespace farma_tica.Controllers
                 {
                     StatusCode =
                         clm.CreateClient(newClient.Id, newClient.Name, newClient.LastName1, newClient.LastName2,
-                            newClient.PenaltiesNumber.ToString(), newClient.PlaceResidence, newClient.MedicalHistory,
+                            newClient.PenaltiesNumber, newClient.PlaceResidence, newClient.MedicalHistory,
                             newClient.BornDate, newClient.PhoneMum, newClient.Password)
                 });
         }
