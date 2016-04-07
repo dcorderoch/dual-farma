@@ -32,6 +32,7 @@ namespace farma_tica.Controllers
         }
 
         // URI from Angular: api/Doctor/Update
+        [HttpPost]
         public JsonResult<ReturnStatus> Update(Doctor newInfoDoc)
         {
             var docm = new Doctor_Manager();
@@ -45,6 +46,7 @@ namespace farma_tica.Controllers
         }
 
         //URI from Angular: api/Doctor/Delete
+        [HttpPost]
         public JsonResult<ReturnStatus> Delete(IdDoc docId)
         {
             var docm = new Doctor_Manager();
