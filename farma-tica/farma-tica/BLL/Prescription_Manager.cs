@@ -30,7 +30,7 @@ namespace farma_tica.BLL
         /// <param name="doctorId"></param>
         /// <param name="prescriptionImage"></param>
         /// <returns></returns>
-        public int CreatePrescription(string doctorId, Image prescriptionImage)
+        public int CreatePrescription(string doctorId, string prescriptionImage)
         {
             int response = 0;
             using (var uow = context.CreateUnitOfWork())
@@ -41,7 +41,7 @@ namespace farma_tica.BLL
                     Prescription newPrescription = new Prescription();
                     newPrescription.PrescriptionID = new Guid();
                     newPrescription.Doctor = doctorId;
-                    newPrescription.Image = prescriptionImage;
+                    newPrescription.Image = Convert.FromBase64String(prescriptionImage);
                     prescriptionRepo.Create(newPrescription);
                     uow.SaveChanges();
                     response = Constants.SUCCESS;
