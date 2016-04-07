@@ -9,6 +9,6 @@ namespace farma_tica.Controllers.Models
     public class PrescriptionInfo
     {
         public string doctorId { get; set; }
-        public Image prescriptionImage { get; set; }
+        public string prescriptionImage { get; set; }
     }
 }
