@@ -31,9 +31,9 @@ namespace farma_tica.BLL
         /// <param name="userID"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public string[] AuthorizeLogin(string userID, string password)
+        public List<string> AuthorizeLogin(string userID, string password)
         {
-            string[] response = { };
+            List<string> retVal = new List<string>();
             using (var uow = context.CreateUnitOfWork())
             {
                 var userRepo = new UserRepository(context);
@@ -47,36 +47,36 @@ namespace farma_tica.BLL
                         switch (opCode)
                         {
                             case Constants.INVALID_PASSWORD:
-                                response[0] = Constants.INVALID_PASSWORD.ToString();
+                                retVal.Add(Constants.INVALID_PASSWORD.ToString());
                                 break;
 
                             case Constants.SUCCESSFUL_LOGIN:
-                                response[0] = Constants.SUCCESSFUL_LOGIN.ToString();
-                                response[1] = user.IdUsuario;
-                                response[2] = user.Name;
-                                response[3] = user.LastName1;
-                                response[4] = user.LastName2;
-                                response[5] = user.Email;
-                                response[6] = user.Company;
-                                response[7] = user.RoleId.ToString();
+                                retVal.Add(Constants.SUCCESSFUL_LOGIN.ToString());
+                                retVal.Add(user.IdUsuario);
+                                retVal.Add(user.Name);
+                                retVal.Add(user.LastName1);
+                                retVal.Add(user.LastName2);
+                                retVal.Add(user.Email);
+                                retVal.Add(user.Company);
+                                retVal.Add(user.RoleId.ToString());
                                 break;
                             default:
-                                response[0] = Constants.INVALID_USER.ToString();
+                                retVal.Add(Constants.INVALID_USER.ToString());
                                 break;
                         }
                     }
                     else
                     {
-                        response[0] = Constants.INVALID_USER.ToString();
+                        retVal.Add(Constants.INVALID_USER.ToString());
                     }
                 }
                 catch (Exception)
                 {
-                    response[0] = Constants.INVALID_USER.ToString();
-                    return response;
+                    retVal.Add(Constants.INVALID_USER.ToString());
+                    return retVal;
                 }
             }
-            return response;
+            return retVal;
         }
     }
 }

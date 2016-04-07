@@ -12,7 +12,7 @@ namespace farma_tica.Controllers
     {
         // URI from Angular: api/Client/Login
         [HttpPost]
-        public JsonResult<string[]> Login(ClientLoginData cLoginData)
+        public JsonResult<List<string>> Login(ClientLoginData cLoginData)
         {
             var clm = new Client_Manager();
             return Json(clm.AuthClientLogin(cLoginData.cID, cLoginData.pPass));

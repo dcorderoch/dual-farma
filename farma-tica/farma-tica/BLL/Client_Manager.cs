@@ -100,9 +100,9 @@ namespace farma_tica.BLL
         /// <param name="clientId"></param>
         /// <param name="clientPass"></param>
         /// <returns></returns>
-        public String[] AuthClientLogin(string clientId, string clientPass)
+        public List<string> AuthClientLogin(string clientId, string clientPass)
         {
-            String[] response = {};
+            List<string> response = new List<string>();
             using (var uow = context.CreateUnitOfWork())
             {
                 var clientRepo = new ClientRepository(context);
@@ -115,30 +115,31 @@ namespace farma_tica.BLL
                         var client = clientList.First();
                         if (client.Password == clientPass)
                         {
-                            response[0] = Constants.SUCCESSFUL_LOGIN.ToString();
-                            response[1] = client.NumCed;
-                            response[2] = client.Name;
-                            response[3] = client.LastName1;
-                            response[4] = client.LastName2;
-                            response[5] = client.PenaltiesNumber.ToString();
-                            response[6] = client.PlaceResidence;
-                            response[7] = client.MedicalHistory;
-                            response[8] = String.Format("{0:dd/MM/yyyy}", client.BornDate);
-                            response[9] = client.PhoneMum;
+                            response.Add(Constants.SUCCESSFUL_LOGIN.ToString());
+                            //response[0] = Constants.SUCCESSFUL_LOGIN.ToString();
+                            response.Add(client.NumCed);
+                            response.Add(client.Name);
+                            response.Add(client.LastName1);
+                            response.Add(client.LastName2);
+                            response.Add(client.PenaltiesNumber.ToString());
+                            response.Add(client.PlaceResidence);
+                            response.Add(client.MedicalHistory);
+                            response.Add(String.Format("{0:dd/MM/yyyy}", client.BornDate));
+                            response.Add(client.PhoneMum);
                         }
                         else
                         {
-                            response[0] = Constants.INVALID_PASSWORD.ToString();
+                            response.Add(Constants.INVALID_PASSWORD.ToString());
                         }
                     }
                     else
                     {
-                        response[0] = Constants.INVALID_USER.ToString();
+                        response.Add(Constants.INVALID_USER.ToString());
                     }
                 }
                 catch (Exception)
                 {
-                    response[0] = Constants.ERROR.ToString();
+                    response.Add(Constants.ERROR.ToString());
                 }
             }
             return response;
