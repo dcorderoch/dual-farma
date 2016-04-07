@@ -14,7 +14,7 @@ namespace farma_tica.DAL.Models
         public int PenaltiesNumber { get; set; }
         public string PlaceResidence { get; set; }
         public string MedicalHistory { get; set; }
-        public DateTime BornDate { get; set; }
+        public string BornDate { get; set; }
         public string PhoneMum { get; set; }
         public string Password { get; set; }
     }

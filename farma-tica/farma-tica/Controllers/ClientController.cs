@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Web.Helpers;
 using System.Web.Http;
 using System.Web.Http.Results;
 using farma_tica.BLL;
@@ -17,7 +18,7 @@ namespace farma_tica.Controllers
                 new ReturnStatus()
                 {
                     StatusCode =
-                        clm.CreateClient(newClient.Id, newClient.Name, newClient.LastName1, newClient.LastName2,
+                        clm.CreateClient(newClient.NumCed, newClient.Name, newClient.LastName1, newClient.LastName2,
                             newClient.PenaltiesNumber, newClient.PlaceResidence, newClient.MedicalHistory,
                             newClient.BornDate, newClient.PhoneMum, newClient.Password)
                 });

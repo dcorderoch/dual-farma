@@ -7,7 +7,7 @@ namespace farma_tica.Controllers
 {
     public class NewClient
     {
-        public string Id { get; set; }
+        public string NumCed { get; set; }
         public string Password { get; set; }
         public string Name { get; set; }
         public string LastName1 { get; set; }

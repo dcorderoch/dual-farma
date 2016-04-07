@@ -38,7 +38,7 @@ namespace farma_tica.DAL.Repositories
             {
                 var clientProps = new object[]
                 {newClient.NumCed, newClient.Password, newClient.Name, newClient.LastName1, newClient.LastName2,newClient.PenaltiesNumber,newClient.PlaceResidence,newClient.MedicalHistory,newClient.BornDate,newClient.PhoneMum};
-                command.CommandText = @"INSERT INTO Cliente VALUES(@id, @pass, @name, @lastName1, @lastName2, @penaltiesNumber, @placeResidence, @medicalHistory, @bornDate, @phoneNum)";
+                command.CommandText = @"INSERT INTO Cliente VALUES(@id, @name, @lastName1, @lastName2, @penaltiesNumber, @placeResidence, @medicalHistory, @bornDate, @phoneNum, @pass)";
                 var parameterNames = new string[] { "@id", "@pass", "@name", "@lastName1", "@lastName2", "@penaltiesNumber", "@placeResidence", "@medicalHistory", "@bornDate", "@phoneNum" };
                 for (var i = 0; i < clientProps.Length; i++)
                 {
@@ -157,7 +157,7 @@ namespace farma_tica.DAL.Repositories
             client.PenaltiesNumber = (int)record["CantidadMultas"];
             client.PlaceResidence = (string)record["LugarResidencia"];
             client.MedicalHistory = (string)record["Historial"];
-            client.BornDate = (DateTime)record["FechaNacimiento"];
+            client.BornDate = (string)record["FechaNacimiento"];
             client.PhoneMum = (string)record["NumeroTelefono"];
         }
     }

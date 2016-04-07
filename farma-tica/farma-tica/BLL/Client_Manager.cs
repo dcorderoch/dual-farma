@@ -58,7 +58,7 @@ namespace farma_tica.BLL
                     newClient.PenaltiesNumber = fines;
                     newClient.PlaceResidence = home;
                     newClient.MedicalHistory = history;
-                    newClient.BornDate = Convert.ToDateTime(birthDate);
+                    newClient.BornDate = String.Format("{0:dd/MM/yyyy}", birthDate);
                     newClient.PhoneMum = phoneNumber;
                     clientRepo.Create(newClient);
                     uow.SaveChanges();
@@ -125,7 +125,7 @@ namespace farma_tica.BLL
                             response[5] = client.PenaltiesNumber.ToString();
                             response[6] = client.PlaceResidence;
                             response[7] = client.MedicalHistory;
-                            response[7] = $"{client.BornDate:dd/MM/yyyy}";
+                            response[7] = String.Format("{0:dd/MM/yyyy}", client.BornDate);
                             response[7] = client.PhoneMum;
                         }
                         else
@@ -178,7 +178,7 @@ namespace farma_tica.BLL
                     newClient.PenaltiesNumber = Convert.ToInt32(fines);
                     newClient.PlaceResidence = home;
                     newClient.MedicalHistory = history;
-                    newClient.BornDate = Convert.ToDateTime(birthDate);
+                    newClient.BornDate = String.Format("{0:dd/MM/yyyy}", newClient.BornDate);
                     newClient.PhoneMum = phoneNumber;
                     clientRepo.Update(newClient);
                     uow.SaveChanges();
