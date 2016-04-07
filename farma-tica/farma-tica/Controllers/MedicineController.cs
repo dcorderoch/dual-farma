@@ -41,6 +41,7 @@ namespace farma_tica.Controllers
         }
 
         // URI from Angular: api/Medicine/Delete
+        [HttpPost]
         public JsonResult<ReturnStatus> Delete(MedicineByOffice medToDel)
         {
             var medm = new Medicine_Manager();

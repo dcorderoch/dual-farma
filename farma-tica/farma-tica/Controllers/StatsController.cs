@@ -34,6 +34,7 @@ namespace farma_tica.Controllers
         }
 
         // URI from Angular: api/Stats/GlobalSales
+        [HttpGet]
         public JsonResult<List<Medicine>>  GlobalSales()
         {
             var medm = new Medicine_Manager();

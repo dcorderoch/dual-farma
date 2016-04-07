@@ -33,6 +33,7 @@ namespace farma_tica.Controllers
         }
 
         // URI from Angular: api/Prescription/Delete
+        [HttpPost]
         public JsonResult<ReturnStatus> Delete(IdPrescription prescription)
         {
             var pm = new Prescription_Manager();
