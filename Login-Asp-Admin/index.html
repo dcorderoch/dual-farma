@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head><!-- Vista principal, aqui se referencian los js del proyecto-->
+    <meta charset="utf-8" />
+    <title>FarmaTica Admin</title>
+    <link rel="stylesheet" href="Bootstrap/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> <!-- Y tambien bootstrap -->
+
+    <link href="app-content/app.css" rel="stylesheet" />
+</head>
+<body>
+ 
+    <div class="jumbotron">
+           <h2 > FarmaTica Administración</h2>
+           <!-- Este es un layout, por eso el titulo FarmaTica Admins se puede ver en todas las vistas-->
+       </br></br></br>
+        <div class="container">
+            <div class="col-sm-8 col-sm-offset-2">
+                <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
+                <div ng-view></div>
+            </div><!--Incluye el flashservice -->
+        </div><!--No es ninguna vista especifica-->
+    </div>
+    <!-- Bibliotecas y archivos que contiene el proyecto-->
+
+    <script src="Jquery/jquery-2.0.3.min.js"></script>
+    <script src="Angular/angular.js"></script>
+    <script src="Angular/angular-route.js"></script>
+    <script src="Angular/angular-cookies.js"></script>
+    <script src="app.js"></script>
+    <!--Servicios que tiene el proyecto -->
+
+    <script src="app-services/authentication.service.js"></script>
+    <script src="app-services/flash.service.js"></script>
+    <script type="text/javascript" src="app-services/stats.service.js"></script>
+    <script type="text/javascript" src="app-services/pedido.service.js"></script>
+    <script type="text/javascript" src="app-services/medicamento.service.js"></script>
+    <script type="text/javascript" src="pedidos/pedidos.controller.js"></script>
+
+     <script src="app-services/user.service.js"></script> 
+    <!-- Controladores de las vistas -->
+
+
+    <script src="home/home.controller.js"></script>
+    <script src="login/login.controller.js"></script>
+    <script type="text/javascript" src="stats/stats.controller.js"></script>
+</body>
+</html>
