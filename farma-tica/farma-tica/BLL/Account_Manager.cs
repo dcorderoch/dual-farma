@@ -59,6 +59,7 @@ namespace farma_tica.BLL
                                 retVal.Add(user.Email);
                                 retVal.Add(user.Company);
                                 retVal.Add(user.RoleId.ToString());
+                                retVal.Add(user.OfficeBranchId.ToString());
                                 break;
                             default:
                                 retVal.Add(Constants.INVALID_USER.ToString());
