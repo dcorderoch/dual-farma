@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app')
+        .module('app')//El modulo es app, el cual hace referencia 
         .factory('AuthenticationService', AuthenticationService);
 
     AuthenticationService.$inject = ['$http', '$cookieStore', '$rootScope', '$timeout', 'UserService'];
@@ -10,12 +10,12 @@
         var service = {};
 
         service.Login = Login;
-        service.SetCredentials = SetCredentials;
-        service.ClearCredentials = ClearCredentials;
-        
+        service.SetCredentials = SetCredentials; //funciones que este servicio presenta
+        service.ClearCredentials = ClearCredentials; //para el usuario global
+
         return service;
 
-        function Login(ID,Pass, callback) {
+        function Login(ID,Pass, callback) {/ Para hacer un logeo, pero no se usa aqui sino en el controlador directamente
 
             $http.post("http://farma-tica.azurewebsites.net/api/Login/Login", { ID: ID, Pass: Pass })
                 .success(function (response,status) {
@@ -23,7 +23,7 @@
                 });
         }
 
-        function SetCredentials(Id, Password) {
+        function SetCredentials(Id, Password) {   //Se  mantiene el usuario a pesar de refresh de pagina
             var authdata = Base64.encode(Id + ':' + Password);
 
             $rootScope.globals = {
@@ -37,13 +37,13 @@
             $cookieStore.put('globals', $rootScope.globals);
         }
 
-        function ClearCredentials() {
+        function ClearCredentials() {   // cuando se deslogea el usuario
             $rootScope.globals = {};
             $cookieStore.remove('globals');
             $http.defaults.headers.common.Authorization = 'Basic';
         }
     }
-
+   //Para no perder datos, no hay que cambiar nada aqui
     // Base64 encoding service used by AuthenticationService
     var Base64 = {
 

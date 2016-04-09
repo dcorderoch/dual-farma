@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html ng-app="app">
+<html ng-app="app">     <!-- Vista principal, aqui se referencian los js del proyecto-->
 <head>
-<meta charset="utf-8"/>
+<meta charset="utf-8"/>         <!-- Y tambien bootstrap -->
     <title>FarmaTica Clientes</title>
     <link rel="stylesheet" href="Bootstrap/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
@@ -9,8 +9,8 @@
 </head>
 <body>
  
-    <div class="jumbotron">
-           <h2 > FarmaTica Clientes</h2>
+    <div class="jumbotron">             <!-- Este es un layout, por eso el titulo FarmaTica Clientes se puede ver en todas las vistas-->
+           <h2 > FarmaTica Clientes</h2>    <!--No es ninguna vista especifica-->
        </br></br></br>
         <div class="container">
             <div class="col-sm-8 col-sm-offset-2">
@@ -20,24 +20,21 @@
         </div>
     </div>
 
-
-    <script src="Jquery/jquery-2.0.3.min.js"></script>
+    <!-- Bibliotecas y archivos que contiene el proyecto-->
+    <script src="Jquery/jquery-2.0.3.min.js"></script>      <
     <script src="Angular/angular.js"></script>
     <script src="Angular/angular-route.js"></script>
     <script src="Angular/angular-cookies.js"></script>
 
+    <!--Servicios que tiene el proyecto -->
     <script src="app.js"></script>
     <script src="app-services/authentication.service.js"></script>
     <script src="app-services/flash.service.js"></script>
     <script src="app-services/pedido.service.js"></script>
     <script src="app-services/medicamento.service.js"></script>
+    <script src="app-services/client.service.js"></script> 
 
-    <!-- Real user service that uses an api -->
-     <script src="app-services/client.service.js"></script> 
-
-    <!-- Fake user service for demo that uses local storage -->
-    <!-- <script src="app-services/user.service.local-storage.js"></script> -->
-
+    <!-- Controladores de las vistas -->
     <script src="home/home.controller.js"></script>
     <script src="login/login.controller.js"></script>
     <script src="register/register.controller.js"></script>

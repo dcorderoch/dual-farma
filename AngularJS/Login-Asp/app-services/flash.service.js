@@ -1,15 +1,15 @@
 ﻿(function () {
-    'use strict';
+    'use strict';       //no hay que hacer nada aqui
 
     angular
         .module('app')
-        .factory('FlashService', FlashService);
+        .factory('FlashService', FlashService);//Fabrica FlashService
 
     FlashService.$inject = ['$rootScope'];
     function FlashService($rootScope) {
         var service = {};
 
-        service.Success = Success;
+        service.Success = Success;  //mensajes error y success
         service.Error = Error;
 
         initService();
@@ -27,7 +27,7 @@
                     if (!flash.keepAfterLocationChange) {
                         delete $rootScope.flash;
                     } else {
-                        // only keep for a single location change
+                        // Solo mantener para una localizacion
                         flash.keepAfterLocationChange = false;
                     }
                 }
@@ -35,7 +35,7 @@
         }
 
         function Success(message, keepAfterLocationChange) {
-            $rootScope.flash = {
+            $rootScope.flash = {                //Cosas de gui
                 message: message,
                 type: 'success', 
                 keepAfterLocationChange: keepAfterLocationChange

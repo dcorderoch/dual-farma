@@ -2,38 +2,45 @@
     'use strict';
 
     angular
-        .module('app')
-        .factory('PedidoService', PedidoService);
+        .module('app')// pertenece a app y se llama PedidoService
+        .factory('PedidoService', PedidoService); //Una factory es un servicio que tiene valores de retorno
 
-    PedidoService.$inject = ['$http'];
+    PedidoService.$inject = ['$http']; //se inyecta http para rest.
     function PedidoService($http) {
-        var service = {};
+        
+        var service = {}; //variable de servicio es un objeto js y se retorna en las funciones 
 
-        service.GetAll = GetAll;
-        service.Create = Create;
+        service.GetAll = GetAll; //funcion de getall esto se usa para poder usarlo en los controladores.
+        service.Create = Create; //igual para estos
         service.CreateP = CreateP;
 
-        return service;
+        return service; //es una fabrica entonces se retorna el service.
 
-        function GetAll() {
+        function GetAll() {     //esto no se ocupa en el caso de clientes.
             return $http.get("http://farma-tica.azurewebsites.net/Pedido/GetAllByBranchOffice").then(handleSuccess, handleError('Error obteniendo los pedidos por cadena'));
         }
 
-        function Create(theOrder) {
-            var request =$http({
-            method: "post",
+        function Create(theOrder) {//MEJOR HACER LOS rest de esta forma
+            var request =$http({    //Se crea un pedido sin prescripcion
+            method: "post", //tipo metodo, se puede usar get o put
             url: "http://farma-tica.azurewebsites.net/api/Pedido/Create",
-            data: theOrder         
+            data: theOrder         //parametros que pide el rest api
         });
-            return request;
+            return request; //el response
         };
 
-        function CreateP(theOrder) {
-            return $http.post("http://farma-tica.azurewebsites.net/Pedido/CreateWPrescription", theOrder).then(handleSuccess, handleError('Error creating pedido'));
-        }
+        function CreateP(theOrder) {        //Falta esta parte hacerlo bien
+            var request = $http({
+                method:"post",
+                url:"http://farma-tica.azurewebsites.net/Pedido/CreateWPrescription",
+                dara: theOrder
+
+            });
+            return request;
+        };
         // private functions
 
-        function handleSuccess(res) {
+        function handleSuccess(res) {   //manejo de errores
             return res.data;
         }
 

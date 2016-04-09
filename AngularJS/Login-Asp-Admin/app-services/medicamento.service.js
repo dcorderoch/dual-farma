@@ -3,15 +3,15 @@
 
     angular
         .module('app')
-        .factory('MedicamentoService', MedicamentoService);
+        .factory('MedicamentoService', MedicamentoService);  //servicio de medicamentos
 
     MedicamentoService.$inject = ['$http'];
     function MedicamentoService($http) {
         var service = {};
 
-        service.GetAll = GetAll;
-        service.Create = Create;
-        service.Update = Update;
+        service.GetAll = GetAll; //las funciones que son expuestas
+        service.Create = Create; //todas estas son para crud del mantenimiento
+        service.Update = Update; 
         service.Delete = Delete;
 
         return service;
@@ -25,7 +25,7 @@
         
         }
 
-        function Update(newMed) {
+        function Update(newMed) {  //mejorar cambiar el tipo de rest al del tipo que esta comentado abajo
             return $http.put('http://farma-tica.azurewebsites.net/home/Medicine/Update', newMed).then(handleSuccess, handleError('Error actualizando pedido'));
         }
 
@@ -45,5 +45,14 @@
             };
         }
     }
+
+        //     function GetAll(boID) {   como este tipo 
+        //     var request=$http({
+        //         method:"post",
+        //         url: "http://farma-tica.azurewebsites.net/Pedido/GetAllByBranchOffice",
+        //         data: boID
+        //     });
+        //         return request;
+        // };
 
 })();

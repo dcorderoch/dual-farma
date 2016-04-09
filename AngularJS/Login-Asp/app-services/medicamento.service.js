@@ -2,15 +2,15 @@
     'use strict';
 
     angular
-        .module('app')
-        .factory('MedicamentoService', MedicamentoService);
+        .module('app') // pertenece a app y se llama Medicamento Service
+        .factory('MedicamentoService', MedicamentoService); //Fabrica Medicamento Service
 
     MedicamentoService.$inject = ['$http'];
     function MedicamentoService($http) {
         var service = {};
 
         service.GetAll = GetAll;
-        service.Create = Create;
+        service.Create = Create; //Esto no se esta utilizando por ahora, igual es solo para admin
         service.Update = Update;
         service.Delete = Delete;
 

@@ -3,31 +3,24 @@
 
     angular
         .module('app')
-        .factory('StatsService', StatsService);
+        .factory('StatsService', StatsService);//servicio para stats
 
     StatsService.$inject = ['$http'];
     function StatsService($http) {
         var service = {};
 
         service.GetPerCompany = GetPerCompany;
-        service.GetNewCompany = GetNewCompany;
-        service.GetTotCompany = GetTotCompany;
-        service.GetGlobalSales = GetGlobalSales;
+        service.GetNewCompany = GetNewCompany; //todos los servicios que expone los stats
+        service.GetTotCompany = GetTotCompany;  //disponible donde sea que se inyecte el servicio 
+        service.GetGlobalSales = GetGlobalSales; //mediante el controlleras = this
 
         return service;
+                    //servicios rest
 
-        function Create(login) {
-            var request = $http({
-            method: "post",
-            url: "http://farma-tica.azurewebsites.net/api/Login/Login",
-            data: login
-        });
-            return request;
-        };
 
         function GetPerCompany(CompanyID) {
             var response=$http({
-                method: "post",
+                method: "post",         //obtener el sales per compnay
                 url: "http://farma-tica.azurewebsites.net/api/Stats/SalesPerComp",
                 data : CompanyID
             });
@@ -37,7 +30,7 @@
 
         function GetNewCompany(CompanyID) {
             var response=$http({
-            method: "post",
+            method: "post",         //new sales
             url: "http://farma-tica.azurewebsites.net/api/Stats/NewSales",
             data : CompanyID
         });
@@ -46,7 +39,7 @@
 
         function GetTotCompany(CompanyID) {
             var response=$http({
-                method:"post",
+                method:"post",          //slaes per company
                 url:"http://farma-tica.azurewebsites.net/api/Stats/TotSalesPerComp",
                 data: CompanyID
             });
@@ -55,7 +48,7 @@
 
 
         function GetGlobalSales() {
-            var response=$http({
+            var response=$http({        //global saless
                 method:"get",
                 url: "http://farma-tica.azurewebsites.net/api//Stats/GlobalSales"
             });
@@ -63,7 +56,7 @@
         };
         // private functions
 
-        function handleSuccess(res) {
+        function handleSuccess(res) {       //manejo de errores
             return res.data;
         }
 

@@ -3,19 +3,19 @@
 
     angular
         .module('app')
-        .factory('UserService',UserService);
+        .factory('UserService',UserService);//servicio para el usuario
 
    UserService.$inject = ['$http'];
     function UserService($http) {
         
-        var service = {};
+        var service = {}; /de esta forma se pueden utilizar en los controladores
 
         return service;
 
-        service.Create = Create;
+        service.Create = Create;//diferentes funciones que tiene el servicio
 
         function Create(login) {
-            var request = $http({
+            var request = $http({   //esta no se utiliza  
             method: "post",
             url: "http://farma-tica.azurewebsites.net/api/Login/Login",
             data: login
