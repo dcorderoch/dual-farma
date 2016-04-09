@@ -1,0 +1,78 @@
+<div>
+<h3>Estadísticas para administradores</h3>
+
+
+<h4>Ventas totales por compania</h4>
+<p>{{vm.TotSalesPerComp}}</p>
+
+<div class="row">
+    <div class="col-md-12" >
+    <nav class= "navbar navbar-default" role= "navigation" >
+    <div class= "navbar-header" ></div>
+    </nav>
+        <h4>Ventas nuevas</h4>
+        <table class="table table-striped table-bordered">
+        <thead>
+        <th> Name&nbsp;</th>
+        <th>AmmountSold&nbsp;</th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="x in vm.newSales">
+              <p>gh</p>
+                <td>{{x.Name}}</td>
+                <td>{{x.AmmountSold}}</td>
+            </tr>
+          </tbody>    
+        </table>
+    </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-12" >
+  <nav class= "navbar navbar-default" role= "navigation" >
+    <div class= "navbar-header" ></div>
+    </nav>
+        <h4>Ventas globales</h4>
+        <table class="table table-striped table-bordered">
+          <thead>
+          <th> Name&nbsp;</th>
+          <th>AmmountSold&nbsp;</th>
+          </thead>
+        <tbody>
+            <tr ng-repeat="y in vm.globalsSales">
+                <p>hg</p>
+                <td>{{y.Name}}</td>
+                <td>{{y.AmmountSold}}</td>
+            </tr> 
+        </tbody>   
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12" >
+    <nav class= "navbar navbar-default" role= "navigation" >
+    <div class= "navbar-header" ></div>
+    </nav>
+        <h4>Ventas por Compania</h4>
+        <table class="table table-striped table-bordered">
+        <thead>
+        <th> Name&nbsp;</th>
+        <th>AmmountSold&nbsp;</th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="z in vm.salesPerCompany">
+                <p>jk</p>
+                <td>{{z.Name}}</td>
+                <td>{{z.AmmountSold}}</td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+</div>
+
+
+<p>&nbsp;</p>
+<p><a href="#/login" class="btn btn-primary">Cerrar Sesión</a></p>
+</div>
