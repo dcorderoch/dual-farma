@@ -33,9 +33,13 @@
                     if ( vm.userInfo[7] ==="2" ){ //se determina si es un gerente o dependiente
                         $location.path('/stats'); //vista de stats
                     }
-                    else{
+                    if (vm.userInfo[7] ==="1"){
                         $location.path('/'); //vista de pedidos
-                    }   
+                    }  
+                    else{
+                                          FlashService.Error(response.message);//errores
+                    vm.dataLoading = false;  
+                    } 
                 }, 
                 function(response) {             
                   FlashService.Error(response.message);//errores

@@ -36,7 +36,7 @@
         function CreateP(theOrder) {        //Falta esta parte hacerlo bien
             var request = $http({
                 method:"post",
-                url:"http://farma-tica.azurewebsites.net/Pedido/CreateWPrescription",
+                url:  "http://farma-tica.azurewebsites.net/api/Pedido/CreateWPrescription",
                 dara: theOrder
 
             });

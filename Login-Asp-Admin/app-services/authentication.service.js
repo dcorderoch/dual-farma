@@ -15,7 +15,7 @@
 
         return service;
 
-        function Login(ID,Pass, callback) {/ Para hacer un logeo, pero no se usa aqui sino en el controlador directamente
+        function Login(ID,Pass, callback) {// Para hacer un logeo, pero no se usa aqui sino en el controlador directamente
 
             $http.post("http://farma-tica.azurewebsites.net/api/Login/Login", { ID: ID, Pass: Pass })
                 .success(function (response,status) {

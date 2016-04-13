@@ -5,14 +5,16 @@
         .module('app')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['PedidoService', '$rootScope', 'FlashService'];
-    function HomeController(PedidoService,$rootScope, FlashService) {
-       
+    HomeController.$inject = ['PedidoService', '$rootScope', 'FlashService', '$scope'];
+    function HomeController(PedidoService,$rootScope, FlashService, $scope) {
+        $scope.pedido={};
+
         var vm = this;
         vm.createPedido= createPedido;  //variables locales y para vistas
         vm.createWPedido = createWPedido;
 
         function createPedido(){   //pedido sin prescripcion
+            console.log(vm.pedido);
             vm.dataLoading=true;      //se muestra un data loading mientras se hace el pedido
             PedidoService.Create(vm.pedido)
             .then(function(response) {
@@ -24,9 +26,13 @@
                 }
             });
         }
+
         function createWPedido(){
+            $scope.pedido.prescriptionImage = $scope.pedido.prescriptionImage.base64;
+            console.log(vm);
             vm.dataLoading=true;   //pedido sin prescripcion
-            PedidoService.CreateP(vm.pedido)
+            console.log($scope.pedido);
+            PedidoService.CreateP($scope.pedido)
             .then(function(response) {  //notar el .then es diferente al .success
                 if ( response.success){
                     FlashService.Success('Pedido Creado',true);

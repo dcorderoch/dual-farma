@@ -2,7 +2,7 @@
     'use strict';
  //El modulo principal del proyecto
     angular
-        .module('app', ['ngRoute', 'ngCookies']) //se llama a ngRoute (routeo entre paginas, y ngCookies para cookies)
+        .module('app', ['ngRoute', 'ngCookies','naif.base64']) //se llama a ngRoute (routeo entre paginas, y ngCookies para cookies)
         .config(config)   //funcion de config se llama de primero, no hay que cambiarlo
         .run(run);
       //la funcion run se llama de primero tambien, no hay que cambiarlo

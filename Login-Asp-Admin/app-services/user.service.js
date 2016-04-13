@@ -8,7 +8,7 @@
    UserService.$inject = ['$http'];
     function UserService($http) {
         
-        var service = {}; /de esta forma se pueden utilizar en los controladores
+        var service = {}; //de esta forma se pueden utilizar en los controladores
 
         return service;
 
