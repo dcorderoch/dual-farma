@@ -22,6 +22,7 @@
                 console.log($rootScope.sucursal );                                          //esta es una variable global
             $http.post("http://farma-tica.azurewebsites.net/api/Pedido/GetAllByBranchOffice", {  boID: $rootScope.sucursal  })
                 .then(function(response)  {         //notar si hay un then o success en el rest     //se obtuvo en login
+                    console.log(response);
                     vm.datosPedidos = response.data;  //se guarda los valores
                 }, 
                 function(response) {                //si no funciono

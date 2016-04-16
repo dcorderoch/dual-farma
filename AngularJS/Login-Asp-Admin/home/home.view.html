@@ -1,4 +1,4 @@
-﻿<!-- Este es un form, lo de input type = es el tipo de valor que se agarra, el name y el id lo puede ignorarlo -->
+<!-- Este es un form, lo de input type = es el tipo de valor que se agarra, el name y el id lo puede ignorarlo -->
 <!-- El ng-model es el tipo de dato con el que se esta relacionando del modelo, esto es lo mas importante de esta parte-->
 <!-- es importante que ng.model tenga el mismo nombre que se espera en el rest api -->
 <!-- El span se muestra si se omite una entrada del formulario --> 
@@ -55,7 +55,11 @@
     <a href="#/login" class="btn btn-link">Cancelar</a>
 </div>
 </form>
-
+ 
+</br>
+</br>
+</br>
+</br>
 
 <!--Se crea un pedido con prescripcion -->
 <!-- No esta terminado esta parte -->
@@ -64,56 +68,55 @@
 
 <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
     <label for="username">Sucursal de Recojo</label>
-    <input type="text" name="pickupOfficeId" id="username" class="form-control" ng-model="vm.pedido.pickupOfficeId" required />
+    <input type="text" name="pickupOfficeId" id="username" class="form-control" ng-model="pedido.pickupOfficeId" required />
     <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">La Sucursal de Recojo es requerida</span>
 </div>
 
 <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
     <label for="username">Cliente (Número de Cédula)</label>
-    <input type="text" name="clientId" id="username" class="form-control" ng-model="vm.pedido.clientId" required />
+    <input type="text" name="clientId" id="username" class="form-control" ng-model="pedido.clientId" required />
      <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">La Sucursal de Recojo es requerida</span>
 </div>
 
 <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
     <label for="username">Doctor ID</label>
-    <input type="text" name="clientId" id="username" class="form-control" ng-model="vm.pedido.DoctorId" required />
+    <input type="text" name="clientId" id="username" class="form-control" ng-model="pedido.DoctorId" required />
      <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">El ID de doctor es requerido</span>
 </div>
 
 <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
     <label for="username">Imagen de prescripciones</label>
-    <input type="file" name="file" id="file" class="form-control" ng-model="vm.pedido.prescriptionImage" required />
-    <button ng-click="vm.add()"> Agregar Imagen de prescripcion</button>
+    <input type="file" name="file" id="file" class="form-control" ng-model="pedido.prescriptionImage" base-sixty-four-input required/>
     <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">El ID de doctor es requerido</span>
 </div>
 
 <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
     <label for="username">Teléfono Preferido</label>
-    <input type="text" name="prefPhoneNumber" id="username" class="form-control" ng-model="vm.pedido.prefPhoneNumber" required />
+    <input type="text" name="prefPhoneNumber" id="username" class="form-control" ng-model="pedido.prefPhoneNumber" required />
      <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">La Sucursal de Recojo es requerida</span>
 </div>
 
 <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
     <label for="username">Tipo</label>
-    <input type="text" name="type" id="username" class="form-control" ng-model="vm.pedido.type" required />
+    <input type="text" name="type" id="username" class="form-control" ng-model="pedido.type" required />
      <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">La Sucursal de Recojo es requerida</span>
 </div>
 
 <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }"> 
     <label for="username">Medicinas</label>
-    <input type="text" name="type" id="username" class="form-control" ng-model="vm.pedido.medicineIds"  ng-list required />
+    <input type="text" name="type" id="username" class="form-control" ng-model="pedido.medicinesId"  ng-list required />
     <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">La Sucursal de Recojo es requerida</span>
 </div>
 
 <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }"> 
     <label for="username">Medicinas prescritas</label>
-    <input type="text" name="type" id="username" class="form-control" ng-model="vm.pedido.prescriptedMedicinesId"  ng-list required />
+    <input type="text" name="type" id="username" class="form-control" ng-model="pedido.prescriptedMedicinesId"  ng-list required />
     <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">La Sucursal de Recojo es requerida</span>
 </div>
 
 <div class="form-group"ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }" >
     <label for="input">Fecha y Hora de Recojo</label>
-    <input type="text" name="pickUpdDate" id="input" class="form-control" ng-model="vm.pedido.pickupdDate" required />
+    <input type="text" name="pickUpdDate" id="input" class="form-control" ng-model="pedido.pickupDate" required />
      <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">La Sucursal de Recojo es requerida</span>
 </div>
 
@@ -123,6 +126,19 @@
     <a href="#/login" class="btn btn-link">Cancelar</a>
 </div>
 </form>
+
+<p>&nbsp;</p>
+<p><a href="#/viewP" class="btn btn-link">Ver pedidos</a></p>
+
+<p>&nbsp;</p>
+<p><a href="#/ClientsManagement" class="btn btn-link">Ver Clientes</a></p>
+
+<p>&nbsp;</p>
+<p><a href="#/DoctorsManagement" class="btn btn-link">Ver Doctores</a></p>
+
+
+<p>&nbsp;</p>
+<p><a href="#/MedicamentoManagement" class="btn btn-link">Ver Medicos</a></p>
 
 <!-- Se puede cerrar sesion, note como se usa #/login en vez de /login que se usaria en javascript -->
 <p>&nbsp;</p>

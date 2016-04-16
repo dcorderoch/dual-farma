@@ -16,22 +16,42 @@
 
         return service;
 
-        function GetAll() {
-            return $http.get("http://farma-tica.azurewebsites.net//home/Medicine/AllMeds").then(handleSuccess, handleError('Error obteniendo los pedidos por cadena'));
+        function GetAll(SucursalID) {
+            var response=$http({
+                method:"post",
+                url:"http://farma-tica.azurewebsites.net/api/Medicine/AllMeds",
+                data :{"mID":SucursalID}
+            });
+            return response;    
         }
-
-        function Create(newMed) {
-            return $http.post("http://farma-tica.azurewebsites.net/Pedido/Create", newMed).then(handleSuccess, handleError('Error creando pedido'));
         
+        function Create(Medicine) {
+            var response=$http({
+                method:"post",
+                url:"http://farma-tica.azurewebsites.net/api/Medicine/Create",
+                data : Medicine
+            });
+            return response;    
+        }
+        
+        function Update(newMed) {
+            var response=$http({
+                method:"post",
+                url:"http://farma-tica.azurewebsites.net/api/Medicine/Update",
+                data : newMed
+            });
+            return response;    
         }
 
-        function Update(newMed) {  //mejorar cambiar el tipo de rest al del tipo que esta comentado abajo
-            return $http.put('http://farma-tica.azurewebsites.net/home/Medicine/Update', newMed).then(handleSuccess, handleError('Error actualizando pedido'));
+        function Delete(medicineId) {
+            var response=$http({
+                method:"post",
+                url:"http://farma-tica.azurewebsites.net/api/Medicine/Delete",
+                data : {"medicineId":medicineId}
+            });
+            return response;    
         }
 
-        function Delete(medToDel) {
-            return $http.delete('http://farma-tica.azurewebsites.net//home/Medicine/Delete',medToDel).then(handleSuccess, handleError('Error eliminando pedido'));
-        }
 
         // private functions
 

@@ -1,0 +1,138 @@
+<div class="row">       <!-- Formato bonito para tablas-->
+    <div class="col-md-12" >
+    <nav class= "navbar navbar-default" role= "navigation" >
+        <h4 style="color:blue;">   Doctores</h4>  <!-- titulo de tabla-->
+    <div class= "navbar-header" ></div>
+    </nav>
+        
+        <table class="table table-striped table-bordered">
+        <thead>
+        <th> Name&nbsp;</th>        <!-- tiene 2 encabezados-->
+        <th>Last Name 1&nbsp;</th>
+        <th>Last Name 2&nbsp;</th>
+        <th>Numero Doctor&nbsp;</th>    
+        <th>Place Residence&nbsp;</th>    
+          <th>Id Number&nbsp;</th>    
+        </thead>
+        <tbody>             <!-- el vm. algo debe exisitir en el controlador o en un servicio inyectado-->
+            <tr ng-repeat="doctor in allDoctors">   <!--el ng-repeat es importantisimo -->
+                                                <!--es como un for, itera en una lista -->
+                <td>{{doctor.Name}}</td>
+                <td>{{doctor.LastName1}}</td>
+                <td>{{doctor.LastName2}}</td>
+                <td>{{doctor.DoctorId}}</td>
+                <td>{{doctor.PlaceResidence}}</td>
+                <td>{{doctor.IdNumber}}</td>
+                <td><button ng-click="deleteDoctor(doctor.DoctorId)" type="button" class="btn btn-default" >Delete</button></td>
+                <td><button ng-click="toggle2(doctor.DoctorId)" type="button" class="btn btn-default" >Edit</button> </td>
+            </tr>           <!-- estos son los valores de la tabla-->
+          </tbody>    
+        </table>
+    </div>
+</div>
+</br>
+
+<button type="button" class="btn btn-primary"  ng-click="toggle()">Crear Doctor</button> 
+
+<div ng-show="mostrarCrear">
+ <form name="form" ng-submit="createDoctor()" role="form"><!-- ng-submit se da cuando se presiona submit abajo-->
+
+        <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+            <label for="username">Id de Doctor</label>
+            <input type="text" name="DoctorId" id="Id" class="form-control" ng-model="newDoctor.DoctorId" required />
+            <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">El id de doctor es requerido</span>
+        </div>
+     
+        <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+            <label for="username">Nombre</label>
+            <input type="text" name="Nombre" id="username" class="form-control" ng-model="newDoctor.Name" required />
+            <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">El nombre es requerido</span>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+            <label for="username">Numero Id</label>
+            <input type="text" name="PenaltiesNumber" id="PenaltiesNumber" class="form-control" ng-model="newDoctor.IdNumber" required />
+            <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">El numero ID es requerido</span>
+        </div>
+
+
+        <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+            <label for="username">Primer Apellido</label>
+            <input type="text" name="PrimerApellido" id="username" class="form-control" ng-model="newDoctor.LastName1" required />
+            <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">El primer apellido es requerido</span>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+            <label for="username">Segundo Apellido</label>
+            <input type="text" name="SegundoApellido" id="username" class="form-control" ng-model="newDoctor.LastName2" required />
+            <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">El segundo apellido es requerido</span>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+            <label for="input">Lugar de Residencia</label>
+            <input type="text" name="LugarResidencia" id="input" class="form-control" ng-model="newDoctor.PlaceResidence" required />
+            <span ng-show="form.input.$dirty && form.input.$error.required" class="help-block">El lugar de residencia es requerido</span>
+        </div>
+
+        <div class="form-actions">
+            <!--Boton submit-->
+            <button type="submit"  ng-disabled="vm.dataLoading" class="btn btn-primary">Crear</button>
+            <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+
+        </div>
+<!--<button type="button" class="btn btn-primary"  ng-click="toggle()">Cancelar</button> -->
+<!--Esa vara enorme es una imagen de carga que se mueve mientras se espera el resultado del api -->
+
+    </form>
+</div>
+
+<div ng-show="mostrarEditar">
+   <form name="form" ng-submit="editDoctor()" role="form"><!-- ng-submit se da cuando se presiona submit abajo-->
+
+        <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+            <label for="username">Nombre</label>
+            <input type="text" name="Nombre" id="username" class="form-control" ng-model="editarDoctor.Name" required />
+            <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">El nombre es requerido</span>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+            <label for="username">Numero de Id</label>
+            <input type="text" name="Id" id="Id" class="form-control" ng-model="editarDoctor.IdNumber" required />
+            <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">El primer apellido es requerido</span>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+            <label for="username">Primer Apellido</label>
+            <input type="text" name="PrimerApellido" id="username" class="form-control" ng-model="editarDoctor.LastName1" required />
+            <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">El primer apellido es requerido</span>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+            <label for="username">Segundo Apellido</label>
+            <input type="text" name="SegundoApellido" id="username" class="form-control" ng-model="editarDoctor.LastName2" required />
+            <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">El primer apellido es requerido</span>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+            <label for="input">Lugar de Residencia</label>
+            <input type="text" name="LugarResidencia" id="input" class="form-control" ng-model="editarDoctor.PlaceResidence" required />
+            <span ng-show="form.input.$dirty && form.input.$error.required" class="help-block">El lugar de residencia es requerido</span>
+        </div>
+
+        <div class="form-actions">
+            <!--Boton submit-->
+            <button type="submit"  ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Finalizado</button>
+            <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+
+        </div>
+<!--<button type="button" class="btn btn-primary"  ng-click="toggle()">Cancelar</button> -->
+<!--Esa vara enorme es una imagen de carga que se mueve mientras se espera el resultado del api -->
+
+    </form> 
+</div>
+
+    
+
+
+<p>&nbsp;</p>
+<p><a href="#/login" class="btn btn-primary">Cerrar Sesion</a></p>

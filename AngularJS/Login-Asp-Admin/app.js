@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
  //El modulo principal del proyecto
     angular
@@ -29,6 +29,26 @@
                 controller:  'PedidosController', 
                 templateUrl: 'pedidos/pedidos.view.html', 
                 controlerAs: 'vm'
+            })
+            .when('/ClientsManagement',{
+                controller: 'ClientController',
+                templateUrl: 'cliente/cliente.view.html',
+                controlerAs: 'vm'
+            })
+            .when('/DoctorsManagement',{
+                controller: 'DoctorController',
+                templateUrl: 'doctor/doctor.view.html',
+                controlerAs: 'vm'
+            }) 
+            .when('/RecetasManagement',{
+                controller: 'RecetaController',
+                templateUrl: 'receta/receta.view.html',
+                controlerAs: 'vm'
+            })   
+            .when('/MedicamentoManagement',{
+                controller: 'MedicamentoController',
+                templateUrl: 'medicamento/medicamento.view.html',
+                controllerAs:'vm'
             })
 
             .otherwise({ redirectTo: '/login' });//Esta es la url por defecto

@@ -1,24 +1,35 @@
 <div>
 <h3>Estadísticas para administradores</h3>
-
+    
+</div>
+</br>
+</br>
+</br>
 <!-- EL {{ }} es importantisismo porque muestra valores disponibles de los controladores en las vistas -->
 <!-- adentro hay un vm. algo estos deben estae definidos en el controlador o en algun servicio inyectado -->
-<h4>Ventas totales por compania</h4>
-<p>{{vm.TotSalesPerComp}}</p>
+<nav class= "navbar navbar-default" role= "navigation" >
+    <h4 style="color:blue;">   Ventas totales por compania</h4>  <!-- titulo de tabla-->
+<div class= "navbar-header" ></div>
+</nav>
+    <p>{{TotSalesPerComp.StatusCode}}</p>
+
+    </br>
+</br>
 
 <div class="row">       <!-- Formato bonito para tablas-->
     <div class="col-md-12" >
     <nav class= "navbar navbar-default" role= "navigation" >
+        <h4 style="color:blue;">   Ventas nuevas</h4>  <!-- titulo de tabla-->
     <div class= "navbar-header" ></div>
     </nav>
-        <h4>Ventas nuevas</h4>  <!-- titulo de tabla-->
+        
         <table class="table table-striped table-bordered">
         <thead>
         <th> Name&nbsp;</th>        <!-- tiene 2 encabezados-->
-        <th>AmmountSold&nbsp;</th>
+        <th>Ammount Sold&nbsp;</th>
         </thead>
         <tbody>             <!-- el vm. algo debe exisitir en el controlador o en un servicio inyectado-->
-            <tr ng-repeat="x in vm.newSales">   <!--el ng-repeat es importantisimo -->
+            <tr ng-repeat="x in newSales">   <!--el ng-repeat es importantisimo -->
                                                 <!--es como un for, itera en una lista -->
                 <td>{{x.Name}}</td>
                 <td>{{x.AmmountSold}}</td>
@@ -28,20 +39,21 @@
     </div>
 </div>
 
-
+    </br>
+</br>
 <div class="row">
   <div class="col-md-12" >
   <nav class= "navbar navbar-default" role= "navigation" >
+        <h4 style="color:blue;">   Ventas globales</h4>
     <div class= "navbar-header" ></div>
     </nav>
-        <h4>Ventas globales</h4>
         <table class="table table-striped table-bordered">
           <thead>
           <th> Name&nbsp;</th>
-          <th>AmmountSold&nbsp;</th>
+          <th>Ammount Sold&nbsp;</th>
           </thead>
         <tbody>
-            <tr ng-repeat="y in vm.globalsSales"> 
+            <tr ng-repeat="y in globalsSales"> 
                                                 <!-- basicamento igual al anterior -->
                 <td>{{y.Name}}</td>
                 <td>{{y.AmmountSold}}</td>
@@ -50,20 +62,21 @@
         </table>
     </div>
 </div>
-
+    </br>
+</br>
 <div class="row">
     <div class="col-md-12" >
     <nav class= "navbar navbar-default" role= "navigation" >
+                <h4 style="color:blue;">   Ventas por Compania</h4>
     <div class= "navbar-header" ></div>
     </nav>
-        <h4>Ventas por Compania</h4>
         <table class="table table-striped table-bordered">
         <thead>
         <th> Name&nbsp;</th>
-        <th>AmmountSold&nbsp;</th>
+        <th>Ammount Sold&nbsp;</th>
         </thead>
         <tbody>
-            <tr ng-repeat="z in vm.salesPerCompany">
+            <tr ng-repeat="z in salesPerCompany">
             
                 <td>{{z.Name}}</td>
                 <td>{{z.AmmountSold}}</td>

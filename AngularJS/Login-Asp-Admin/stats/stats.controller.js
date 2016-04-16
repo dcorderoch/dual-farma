@@ -10,10 +10,10 @@
         var vm = this;
         //se puede usar las funciones de los padres (dependencias del controlador)
 
-        vm.salesPerCompany = [];    //Estas funciones estan disponibles en las vistas con vm. ...
-        vm.newSales=[];
-        vm.TotSalesPerComp=[];
-        vm.globalsSales=[];
+        $scope.salesPerCompany = [];    //Estas funciones estan disponibles en las vistas con vm. ...
+        $scope.newSales=[];
+        $scope.TotSalesPerComp={};
+        $scope.globalsSales=[];
 
         initController();   // se ejecuta la funciones initcontroller
 
@@ -29,30 +29,34 @@
         function loadPerCompany( Company  ) {   
             StatsService.GetPerCompany(Company)
                 .then(function (response) {         //se copia el valor a vm.salesPerCompny para accesarlo en vistas
-                    vm.salesPerCompany = response.data;  //se obtiene los datos del rest
-                    console.log(vm.salesPerCompany);    //se imprime en consola para debug
+                    $scope.salesPerCompany = response.data;  //se obtiene los datos del rest
+                         console.log(" sales per comp ");
+                    console.log($scope.salesPerCompany);    //se imprime en consola para debug
                 });
         }
 
         function loadNewCompany( Company ) {
             StatsService.GetNewCompany(Company)
                 .then(function (response) {
-                    vm.newSales = response.data;    //igual al de arriba pero para new sales
-                    console.log(vm.newSales);
+                    $scope.newSales = response.data;    //igual al de arriba pero para new sales
+                         console.log("new sales ");
+                    console.log($scope.newSales);
                 });
         }
         function loadTotCompany( Company ) {
             StatsService.GetTotCompany(Company)         //igual pero para tot sales per company
                 .then(function (response) {
-                    vm.TotSalesPerComp = response.data;
-                     console.log(vm.TotSalesPerComp);
+                    $scope.TotSalesPerComp = response.data;
+                console.log("total sales per comp ");
+                     console.log($scope.TotSalesPerComp);
                 });
         }
         function loadGlobalSales() {
             StatsService.GetGlobalSales()
                 .then(function (response) {     //igual pero para  global sales
-                    vm.globalsSales = response.data;
-                    console.log(vm.globalsSales);
+                    $scope.globalsSales = response.data;
+                         console.log("global sales ");
+                    console.log($scope.globalsSales);
                 });
         }
     }    
