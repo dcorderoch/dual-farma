@@ -18,7 +18,7 @@
         function GetAll(boID) {
             var request=$http({
                 method:"post",       //esto no se ocupa en el caso de clientes.
-                url: "http://farma-tica.azurewebsites.net/Pedido/GetAllByBranchOffice",
+                url: "http://farma-tica.azurewebsites.net/api/Pedido/GetAllByBranchOffice",
                 data: boID      //mejor tipo de rest, hacer de esta forma los necesarios
             });
                 return request;
@@ -27,7 +27,7 @@
         function Create(theOrder) {  //MEJOR HACER LOS rest de esta forma
             var request =$http({ //Se crea un pedido sin prescripcion
             method: "post",//tipo metodo, se puede usar get o put
-            url: "http://farma-tica.azurewebsites.net/api/Pedido/Create",
+            url: "http://192.168.43.108:7444/api/Pedido/Create",
             data: theOrder          //parametros que pide el rest api
         });
             return request;
